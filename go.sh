@@ -1,15 +1,17 @@
 #!/bin/bash
 
-# What do you want to do?
+# lx1 range
+# lelt range
+# lp range
+# machine -- cetus, theta, ??
+# Test type
 #       nodewise performance?
 #       internode communication?
 #       intranode-communication?
 #       platform timer? mxm_tests? comm_tests?
 
-# lx1 range
-# lelt range
-# lp range
-# machine
+
+this_file="${BASH_SOURCE[0]}"
 
 lx1_list=
 lx1_set=false
@@ -25,11 +27,17 @@ lp_set=false
 machine_list=
 machine_set=false
 
-this_file="${BASH_SOURCE[0]}"
+test_list=
+test_set=false
 
 ## Read input arguments
 while [ $# -gt 0 ]; do
   case "$1" in
+         -h|--help)
+           echo "$help_msg"
+           print_configs
+           $exit_cmd
+           ;;
          -x|--lx1)
            shift
            lx1_list=$1
@@ -58,6 +66,11 @@ while [ $# -gt 0 ]; do
            machine_list=$1
            machine_set=true
            ;;
+         -t|--test)
+           shift
+           test_list=$1
+           test_set=true
+           ;;
   esac
   shift
 done # end reading arguments
@@ -67,10 +80,12 @@ echo "$lx1_set"
 echo "$lelt_set"
 echo "$lp_set"
 echo "$machine_set"
+echo "$test_set"
 
 if [ ${lx1_set} = false ] || [ ${lelt_set} = false ] \
-      || [ ${lp_set} = false ] || [ ${machine_set} = false ]; then
-  echo "You need to specify at least lx1, lelt, lp and machine parameters"
+      || [ ${lp_set} = false ] || [ ${machine_set} = false ] \
+      || [ ${test_set} = false ]; then
+  echo "You need to specify all lx1, lelt, lp, machine and test parameters"
 fi
 
 # Set ly1 and lz1 to lx1 by default if not specified
