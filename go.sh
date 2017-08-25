@@ -12,6 +12,35 @@
 
 
 this_file="${BASH_SOURCE[0]}"
+if [[ "${#BASH_ARGV[@]}" -ne "$#" ]]; then
+   script_is_sourced="yes"
+   exit_cmd=return
+else
+   script_is_sourced=""
+   exit_cmd=exit
+fi
+
+help_msg="
+$this_file [options]
+
+options:
+   -h|--help                   Print this usage information and exit
+   -x|--lx1 \"<list>\"         Specify a list of lx1 values for the run
+                                 (Mandatory, e.g., \"3 4 5 6\")
+   -y|--ly1 \"<list>\"         Specify a list of ly1 values for the run
+                                 (Optional, Default: lx1 list)
+   -z|--lz1 \"<list>\"         Specify a list of lz1 values for the run
+                                 (Optional, Default: lx1 list)
+   -e|--lelt \"<list>\"        Specify a list of lelt values for the run
+                                 (Mandatory, e.g., \"128 256\")
+   -n|--np \"<list>\"          Specify a list of MPI rank for the run
+                                 (Mandatory, e.g., \"2 4 8\")
+   -m|--machine \"<list>\"     Specify a machine for the run
+                                 (Mandatory, e.g., theta, cetus, ..)
+   -t|--test \"<list>\"        Specify a list of tests to be run
+                                 (Mandatory, e.g., scaling, pingpong,..)
+"
+debug=false
 
 lx1_list=
 lx1_set=false
@@ -21,10 +50,10 @@ lz1_list=
 lelt_list=
 lelt_set=false
 
-lp_list=
-lp_set=false
+np_list=
+np_set=false
 
-machine_list=
+machine=
 machine_set=false
 
 test_list=
@@ -35,7 +64,6 @@ while [ $# -gt 0 ]; do
   case "$1" in
          -h|--help)
            echo "$help_msg"
-           print_configs
            $exit_cmd
            ;;
          -x|--lx1)
@@ -56,14 +84,14 @@ while [ $# -gt 0 ]; do
            lelt_list=$1
            lelt_set=true
            ;;
-         -p|--lp)
+         -n|--np)
            shift
            lp_list=$1
            lp_set=true
            ;;
          -m|--machine)
            shift
-           machine_list=$1
+           machine=$1
            machine_set=true
            ;;
          -t|--test)
@@ -76,11 +104,13 @@ while [ $# -gt 0 ]; do
 done # end reading arguments
 
 # Check if the requited variables are set
-echo "$lx1_set"
-echo "$lelt_set"
-echo "$lp_set"
-echo "$machine_set"
-echo "$test_set"
+if [ ${debug} = true ]; then
+  echo "$lx1_set"
+  echo "$lelt_set"
+  echo "$lp_set"
+  echo "$machine_set"
+  echo "$test_set"
+fi
 
 if [ ${lx1_set} = false ] || [ ${lelt_set} = false ] \
       || [ ${lp_set} = false ] || [ ${machine_set} = false ] \
@@ -96,9 +126,11 @@ if [ ${#lz1_list} -eq 0 ]; then
   lz1_list=$lx1_list
 fi
 
-echo "lx1 = $lx1_list"
-echo "ly1 = $ly1_list"
-echo "lz1 = $lz1_list"
-echo "lelt = $lelt_list"
-echo "lp = $lp_list"
-echo "machine = $machine_list"
+if [ ${debug} = true ]; then
+  echo "lx1 = $lx1_list"
+  echo "ly1 = $ly1_list"
+  echo "lz1 = $lz1_list"
+  echo "lelt = $lelt_list"
+  echo "lp = $lp_list"
+  echo "machine = $machine"
+fi
