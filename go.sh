@@ -10,7 +10,6 @@
 #       intranode-communication?
 #       platform timer? mxm_tests? comm_tests?
 
-
 this_file="${BASH_SOURCE[0]}"
 if [[ "${#BASH_ARGV[@]}" -ne "$#" ]]; then
    script_is_sourced="yes"
@@ -35,10 +34,13 @@ options:
                                  (Mandatory, e.g., \"128 256\")
    -n|--np \"<list>\"          Specify a list of MPI rank for the run
                                  (Mandatory, e.g., \"2 4 8\")
-   -m|--machine \"<list>\"     Specify a machine for the run
+   -m|--machine \"machine\"    Specify a machine for the run
                                  (Mandatory, e.g., theta, cetus, ..)
    -t|--test \"<list>\"        Specify a list of tests to be run
                                  (Mandatory, e.g., scaling, pingpong,..)
+   -c|--case \"case_name\"     Specify a case to be used in benchmarking
+                                 (Use the full path of the case, e.g.,
+                                   /home/nek_user/cases/box)
 "
 debug=false
 
@@ -58,6 +60,9 @@ machine_set=false
 
 test_list=
 test_set=false
+
+case=
+case_set=false
 
 ## Read input arguments
 while [ $# -gt 0 ]; do
@@ -99,6 +104,11 @@ while [ $# -gt 0 ]; do
            test_list=$1
            test_set=true
            ;;
+         -c|--case)
+           shift
+           case=$1
+           case_set=true
+           ;;
   esac
   shift
 done # end reading arguments
@@ -110,12 +120,15 @@ if [ ${debug} = true ]; then
   echo "$lp_set"
   echo "$machine_set"
   echo "$test_set"
+  echo "$case_set"
 fi
 
 if [ ${lx1_set} = false ] || [ ${lelt_set} = false ] \
       || [ ${lp_set} = false ] || [ ${machine_set} = false ] \
-      || [ ${test_set} = false ]; then
-  echo "You need to specify all lx1, lelt, lp, machine and test parameters"
+      || [ ${test_set} = false ] || [ ${case_set} = false ]; then
+  echo "You need to specify all lx1, lelt, lp, machine, test and
+        case parameters"
+  $exit_cmd
 fi
 
 # Set ly1 and lz1 to lx1 by default if not specified
@@ -125,6 +138,32 @@ fi
 if [ ${#lz1_list} -eq 0 ]; then
   lz1_list=$lx1_list
 fi
+
+lx1_list=($lx1_list)
+ly1_list=($ly1_list)
+lz1_list=($lz1_list)
+lelt_list=($lelt_list)
+lp_list=($lp_list)
+test_list=($test_list)
+
+# See if Nek5000 exist in the current directory
+if [ -d "Nek5000" ]; then
+  echo "Using existing Nek5000 directory ..."
+else
+  echo "Cloning the latest version from github ..."
+  git clone https://github.com/Nek5000/Nek5000.git
+fi
+
+# Create the benchmark directories
+case_basename=$(basename $case)
+for test in $test_list; do
+  mkdir -p cases/$case_basename/$test
+done
+
+# Go through the test list and perform them
+for test in $test_list; do
+   . ./scaling.sh
+done
 
 if [ ${debug} = true ]; then
   echo "lx1 = $lx1_list"
