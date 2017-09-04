@@ -8,8 +8,3 @@ echo "|   case name:                                       |"
 echo "|   case name:                                       |"
 echo " ===================================================="
 
-for lx1 in $lx1_list; do
-   for lelt in $lelt_list; do
-     echo "Hi !!"
-   done
-done

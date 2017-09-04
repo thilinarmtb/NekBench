@@ -160,10 +160,12 @@ for test in $test_list; do
   mkdir -p cases/$case_basename/$test
 done
 
+. ./build.sh
+
 # Go through the test list and perform them
-for test in $test_list; do
-   . ./scaling.sh
-done
+#for test in $test_list; do
+#   . ./scaling.sh
+#done
 
 if [ ${debug} = true ]; then
   echo "lx1 = $lx1_list"
