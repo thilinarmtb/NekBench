@@ -7,7 +7,7 @@ function abs() {
   local in="${1}"
 
   if [ $in -lt 0 ]; then
-    in=$(( -1 * in ))
+    in=$(( -1*in ))
   fi
 
   echo $in
@@ -30,15 +30,15 @@ test_abs
 #-----------------------------------------------------------------------
 function max() {
   local arg_list=("${@}")
-  local max=0
+  local out=0
 
   for elem in "${arg_list[@]}"; do
-    if [ $elem -gt $max ]; then
-      max=$elem
+    if [ $elem -gt $out ]; then
+      out=$elem
     fi
   done
 
-  echo $max
+  echo $out
 }
 
 function test_max()
@@ -59,15 +59,17 @@ test_max
 #-----------------------------------------------------------------------
 function min() {
   local arg_list=("${@}")
-  local min="${arg_list[0]}"
+  local out="${arg_list[0]}"
+
+  echo "arglist: ${arg_list[@]}"
 
   for elem in "${arg_list[@]}"; do
-    if [ $elem -lt $min ]; then
-      min=$elem
+    if [ $elem -lt $out ]; then
+      out=$elem
     fi
   done
 
-  echo $min
+  echo $out
 }
 
 function test_min()
@@ -81,4 +83,4 @@ function test_min()
     echo "min: Failed. Result=${rslt}"
   fi
 }
-test_min
+#test_min
