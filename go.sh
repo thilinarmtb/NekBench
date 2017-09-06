@@ -141,7 +141,7 @@ if [ ${test_list} != "pingpong" ] && [ ${case_set} = false ]; then
   $exit_cmd
 elif [ ${test_list} = "pingpong" ]; then
   case_set=true
-  case="./pingpong"
+  case="./built-in/pngpng"
 fi
 
 # Set ly1 and lz1 to lx1 by default if not specified
@@ -151,22 +151,6 @@ fi
 if [ ${#lz1_list} -eq 0 ]; then
   lz1_list=$lx1_list
 fi
-
-#lx1_list=(${lx1_list})
-#ly1_list=($ly1_list)
-#lz1_list=($lz1_list)
-#lelt_list=(${lelt_list})
-#lp_list=(${lp_list})
-#test_list=(${test_list})
-#
-#if [ ${debug} = true ]; then
-#  echo "lx1 = $lx1_list"
-#  echo "ly1 = $ly1_list"
-#  echo "lz1 = $lz1_list"
-#  echo "lelt = $lelt_list"
-#  echo "lp = $lp_list"
-#  echo "machine = $machine"
-#fi
 
 # See if Nek5000 exist in the current directory
 if [ -d "Nek5000" ]; then
