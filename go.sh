@@ -109,8 +109,8 @@ while [ $# -gt 0 ]; do
            np_list=("${1}")
            np_set=true
            echo "Here: ${np_list}"
-           lp_min=$(min "${np_list}")
-           lp_max=$(max "${np_list[@]}")
+#           lp_min=$(min "${np_list}")
+#           lp_max=$(max "${np_list[@]}")
            ;;
          -m|--machine)
            shift
@@ -188,6 +188,8 @@ fi
 #-----------------------------------------------------------------------
 # Create the benchmark directories
 #-----------------------------------------------------------------------
+case=$(readlink -f $case)
+echo "case: $case"
 case_basename=$(basename $case)
 mkdir -p cases/$case_basename
 . ./build.sh
