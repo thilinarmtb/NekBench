@@ -42,6 +42,11 @@ options:
                                  (Use the full path of the case, e.g.,
                                    /home/nek_user/cases/box)
 "
+
+## Include helper functions
+. ./functions.sh
+
+## Variables
 debug=false
 
 lx1_list=
