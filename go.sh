@@ -1,14 +1,16 @@
 #!/bin/bash
 
+#-----------------------------------------------------------------------
 # lx1 range
 # lelt range
-# lp range
+# np range
 # machine -- cetus, theta, ??
 # Test type
 #       nodewise performance?
 #       internode communication?
 #       intranode-communication?
 #       platform timer? mxm_tests? comm_tests?
+#-----------------------------------------------------------------------
 
 this_file="${BASH_SOURCE[0]}"
 if [[ "${#BASH_ARGV[@]}" -ne "$#" ]]; then
@@ -43,10 +45,14 @@ options:
                                    /home/nek_user/cases/box)
 "
 
-## Include helper functions
+#-----------------------------------------------------------------------
+# Include helper functions
+#-----------------------------------------------------------------------
 . ./functions.sh
 
-## Variables
+#-----------------------------------------------------------------------
+# Variables
+#-----------------------------------------------------------------------
 debug=false
 
 lx1_list=
@@ -59,6 +65,8 @@ lelt_set=false
 
 np_list=
 np_set=false
+lp_min=
+lp_max=
 
 machine=
 machine_set=false
@@ -69,7 +77,9 @@ test_set=false
 case=
 case_set=false
 
-## Read input arguments
+#-----------------------------------------------------------------------
+# Read input arguments
+#-----------------------------------------------------------------------
 while [ $# -gt 0 ]; do
   case "$1" in
          -h|--help)
@@ -96,8 +106,10 @@ while [ $# -gt 0 ]; do
            ;;
          -n|--np)
            shift
-           lp_list=$1
-           lp_set=true
+           np_list=$1
+           np_set=true
+           np_min=$(min "${np_list[@]}")
+           np_max=$(max "${np_list[@]}")
            ;;
          -m|--machine)
            shift
@@ -118,11 +130,13 @@ while [ $# -gt 0 ]; do
   shift
 done # end reading arguments
 
+#-----------------------------------------------------------------------
 # Check if the requited variables are set
+#-----------------------------------------------------------------------
 if [ ${debug} = true ]; then
   echo "$lx1_set"
   echo "$lelt_set"
-  echo "$lp_set"
+  echo "$np_set"
   echo "$machine_set"
   echo "$test_set"
   echo "$case_set"
@@ -130,14 +144,14 @@ if [ ${debug} = true ]; then
   echo "ly1 = $ly1_list"
   echo "lz1 = $lz1_list"
   echo "lelt = $lelt_list"
-  echo "lp = $lp_list"
+  echo "np = $np_list"
   echo "machine = $machine"
 fi
 
 if [ ${lx1_set} = false ] || [ ${lelt_set} = false ] \
-      || [ ${lp_set} = false ] || [ ${machine_set} = false ] \
+      || [ ${np_set} = false ] || [ ${machine_set} = false ] \
       || [ ${test_set} = false ] ; then
-  echo "You need to specify all lx1, lelt, lp, machine and test parameters."
+  echo "You need to specify all lx1, lelt, np, machine and test parameters."
   $exit_cmd
 fi
 
@@ -149,7 +163,9 @@ elif [ ${test_list} = "pingpong" ]; then
   case="./built-in/pngpng"
 fi
 
+#-----------------------------------------------------------------------
 # Set ly1 and lz1 to lx1 by default if not specified
+#-----------------------------------------------------------------------
 if [ ${#ly1_list} -eq 0 ]; then
   ly1_list=$lx1_list
 fi
@@ -157,7 +173,9 @@ if [ ${#lz1_list} -eq 0 ]; then
   lz1_list=$lx1_list
 fi
 
+#-----------------------------------------------------------------------
 # See if Nek5000 exist in the current directory
+#-----------------------------------------------------------------------
 if [ -d "Nek5000" ]; then
   echo "Using existing Nek5000 directory ..."
 else
@@ -165,12 +183,16 @@ else
   git clone https://github.com/Nek5000/Nek5000.git
 fi
 
+#-----------------------------------------------------------------------
 # Create the benchmark directories
+#-----------------------------------------------------------------------
 case_basename=$(basename $case)
 mkdir -p cases/$case_basename
 . ./build.sh
 
+#-----------------------------------------------------------------------
 # Go through the test list and perform them
+#-----------------------------------------------------------------------
 for tst in $test_list; do
    if [ $tst = "scaling" ]; then
      . ./scaling.sh
@@ -184,6 +206,6 @@ if [ ${debug} = true ]; then
   echo "ly1 = $ly1_list"
   echo "lz1 = $lz1_list"
   echo "lelt = $lelt_list"
-  echo "lp = $lp_list"
+  echo "np = $np_list"
   echo "machine = $machine"
 fi
