@@ -48,7 +48,7 @@ options:
 #-----------------------------------------------------------------------
 # Include helper functions
 #-----------------------------------------------------------------------
-. ./functions.sh
+source ./functions.sh
 
 #-----------------------------------------------------------------------
 # Variables
@@ -88,29 +88,28 @@ while [ $# -gt 0 ]; do
            ;;
          -x|--lx1)
            shift
-           lx1_list=("${1}")
+           lx1_list=(${1})
            lx1_set=true
            ;;
          -y|--ly1)
            shift
-           ly1_list=("${1}")
+           ly1_list=(${1})
            ;;
          -z|--lz1)
            shift
-           lz1_list=("${1}")
+           lz1_list=(${1})
            ;;
          -e|--lelt)
            shift
-           lelt_list=("${1}")
+           lelt_list=(${1})
            lelt_set=true
            ;;
          -n|--np)
            shift
-           np_list=("${1}")
+           np_list=(${1})
            np_set=true
-           echo "Here: ${np_list}"
-#           lp_min=$(min "${np_list}")
-#           lp_max=$(max "${np_list[@]}")
+           lp_min=$(min "${np_list[@]}")
+           lp_max=$(max "${np_list[@]}")
            ;;
          -m|--machine)
            shift
@@ -119,7 +118,7 @@ while [ $# -gt 0 ]; do
            ;;
          -t|--test)
            shift
-           test_list=("${1}")
+           test_list=(${1})
            test_set=true
            ;;
          -c|--case)

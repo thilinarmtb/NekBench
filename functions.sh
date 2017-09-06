@@ -61,8 +61,6 @@ function min() {
   local arg_list=("${@}")
   local out="${arg_list[0]}"
 
-  echo "arglist: ${arg_list[@]}"
-
   for elem in "${arg_list[@]}"; do
     if [ $elem -lt $out ]; then
       out=$elem
@@ -83,4 +81,4 @@ function test_min()
     echo "min: Failed. Result=${rslt}"
   fi
 }
-#test_min
+test_min
