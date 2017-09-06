@@ -42,7 +42,7 @@ options:
                                  (Use the full path of the case, e.g.,
                                    /home/nek_user/cases/box)
 "
-debug=true
+debug=false
 
 lx1_list=
 lx1_set=false
