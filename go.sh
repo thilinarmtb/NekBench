@@ -131,10 +131,17 @@ fi
 
 if [ ${lx1_set} = false ] || [ ${lelt_set} = false ] \
       || [ ${lp_set} = false ] || [ ${machine_set} = false ] \
-      || [ ${test_set} = false ] || [ ${case_set} = false ]; then
-  echo "You need to specify all lx1, lelt, lp, machine, test and
-        case parameters"
+      || [ ${test_set} = false ] ; then
+  echo "You need to specify all lx1, lelt, lp, machine and test parameters."
   $exit_cmd
+fi
+
+if [ ${test_list} != "pingpong" ] && [ ${case_set} = false ]; then
+  echo "If the test is not equal to pingpong, need to specify a case name."
+  $exit_cmd
+elif [ ${test_list} = "pingpong" ]; then
+  case_set=true
+  case="./pingpong"
 fi
 
 # Set ly1 and lz1 to lx1 by default if not specified
@@ -175,9 +182,13 @@ mkdir -p cases/$case_basename
 . ./build.sh
 
 # Go through the test list and perform them
-#for test in $test_list; do
-#   . ./scaling.sh
-#done
+for tst in $test_list; do
+   if [ $tst = "scaling" ]; then
+     . ./scaling.sh
+   elif [ $tst = "pingpong" ]; then
+     . ./pingpong.sh
+   fi
+done
 
 if [ ${debug} = true ]; then
   echo "lx1 = $lx1_list"

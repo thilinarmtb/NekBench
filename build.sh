@@ -28,4 +28,4 @@ for tst in $test_list; do
   cd ..
 done
 
-cd ..
+cd ../..
