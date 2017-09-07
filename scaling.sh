@@ -17,7 +17,7 @@ for lelt in $lelt_list; do
 
         # Do the scaling test
         for np in $np_list; do
-          echo $np
+          $JOBS_DIR/submit.${machine} ${case_basename} ${np}
         done
       cd ..
     cd ..

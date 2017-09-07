@@ -1,0 +1,14 @@
+#!/bin/sh
+
+case=$1
+nprocs=$2
+mode=
+time=
+run_cmd=mpiexec
+
+echo ${case}      >  SESSION.NAME
+echo `pwd`'/'    >>  SESSION.NAME
+${run_cmd} -np ${nprocs} ./nek5000 > ${case}.log.${nprocs} &
+sleep 2
+pid=$!
+wait ${pid}

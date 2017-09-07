@@ -18,6 +18,7 @@
 BASE_DIR="$PWD"
 RUNS_DIR="$BASE_DIR/runs"
 NEK5_DIR=""
+JOBS_DIR="$BASE_DIR/jobscripts"
 
 THIS_FILE="${BASH_SOURCE[0]}"
 if [[ "${#BASH_ARGV[@]}" -ne "$#" ]]; then
