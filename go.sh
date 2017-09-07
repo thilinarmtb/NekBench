@@ -12,6 +12,12 @@
 #       platform timer? mxm_tests? comm_tests?
 #-----------------------------------------------------------------------
 
+#-----------------------------------------------------------------------
+# Constants
+#-----------------------------------------------------------------------
+BASE_DIR="$PWD"
+RUNS_DIR="$BASE_DIR/runs"
+
 this_file="${BASH_SOURCE[0]}"
 if [[ "${#BASH_ARGV[@]}" -ne "$#" ]]; then
    script_is_sourced="yes"
@@ -53,7 +59,7 @@ source ./functions.sh
 #-----------------------------------------------------------------------
 # Variables
 #-----------------------------------------------------------------------
-debug=true
+debug=false
 
 lx1_list=
 lx1_set=false
@@ -188,9 +194,8 @@ fi
 # Create the benchmark directories
 #-----------------------------------------------------------------------
 case=$(readlink -f $case)
-echo "case: $case"
 case_basename=$(basename $case)
-mkdir -p cases/$case_basename
+mkdir -p $RUNS_DIR/$case_basename
 . ./build.sh
 
 #-----------------------------------------------------------------------

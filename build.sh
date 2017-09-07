@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd cases/$case_basename
+cd $RUNS_DIR/$case_basename
 
 for tst in $test_list; do
   mkdir $tst
@@ -24,8 +24,8 @@ for tst in $test_list; do
     done
     cd ..
   done
-  
+
   cd ..
 done
 
-cd ../..
+cd $BASE_DIR
