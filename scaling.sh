@@ -11,13 +11,18 @@ for lelt in $lelt_list; do
   for lx1 in $lx1_list; do
     cd lx_"${lx1}"
       cd $case_basename
+        # Build the case
         cp $BASE_DIR/makeneks/makenek.${machine} .
-##      build and run
+        ./makenek.${machine} $case_basename
+
+        # Do the scaling test
+        for np in $np_list; do
+          echo $np
+        done
       cd ..
     cd ..
   done
   cd ..
 done
-
 
 cd $BASE_DIR

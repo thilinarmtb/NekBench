@@ -17,18 +17,17 @@
 #-----------------------------------------------------------------------
 BASE_DIR="$PWD"
 RUNS_DIR="$BASE_DIR/runs"
+NEK5_DIR=""
 
-this_file="${BASH_SOURCE[0]}"
+THIS_FILE="${BASH_SOURCE[0]}"
 if [[ "${#BASH_ARGV[@]}" -ne "$#" ]]; then
-   script_is_sourced="yes"
-   exit_cmd=return
+   EXIT_CMD=return
 else
-   script_is_sourced=""
-   exit_cmd=exit
+   EXIT_CMD=exit
 fi
 
-help_msg="
-$this_file [options]
+HELP_MSG="
+$THIS_FILE [options]
 
 options:
    -h|--help                   Print this usage information and exit
@@ -89,8 +88,8 @@ case_set=false
 while [ $# -gt 0 ]; do
   case "$1" in
          -h|--help)
-           echo "$help_msg"
-           $exit_cmd
+           echo "$HELP_MSG"
+           $EXIT_CMD
            ;;
          -x|--lx1)
            shift
@@ -159,12 +158,12 @@ if [ ${lx1_set} = false ] || [ ${lelt_set} = false ] \
       || [ ${np_set} = false ] || [ ${machine_set} = false ] \
       || [ ${test_set} = false ] ; then
   echo "You need to specify all lx1, lelt, np, machine and test parameters."
-  $exit_cmd
+  $EXIT_CMD
 fi
 
 if [ ${test_list} != "pingpong" ] && [ ${case_set} = false ]; then
   echo "If the test is not equal to pingpong, need to specify a case name."
-  $exit_cmd
+  $EXIT_CMD
 elif [ ${test_list} = "pingpong" ]; then
   case_set=true
   case="./built-in/pngpng"
