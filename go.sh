@@ -116,8 +116,8 @@ while [ $# -gt 0 ]; do
            shift
            nb_np_list="$1"
            nb_np_set=true
-           nb_lp_min=$(min "${np_list[@]}")
-           nb_lp_max=$(max "${np_list[@]}")
+           nb_lp_min=$(min "${nb_np_list[@]}")
+           nb_lp_max=$(max "${nb_np_list[@]}")
            ;;
          -m|--machine)
            shift
@@ -139,7 +139,7 @@ while [ $# -gt 0 ]; do
 done # end reading arguments
 
 #-----------------------------------------------------------------------
-# Check if the requited variables are set
+# Print debug information
 #-----------------------------------------------------------------------
 if [ ${nb_debug} = true ]; then
   echo "$nb_lx1_set"
@@ -158,17 +158,24 @@ if [ ${nb_debug} = true ]; then
   $NB_EXIT_CMD
 fi
 
+#-----------------------------------------------------------------------
+# Check if the requited variables are set
+#-----------------------------------------------------------------------
 if [ ${nb_lx1_set} = false ] || [ ${nb_lelt_set} = false ] \
       || [ ${nb_np_set} = false ] || [ ${nb_machine_set} = false ] \
-      || [ ${nb_test_set} = false ] ; then
-  echo "You need to specify all lx1, lelt, np, machine and test parameters."
+      || [ ${nb_test_set} = false ]; then
+  echo "All lx1, lelt, np, machine and test parameters must be provided."
   $NB_EXIT_CMD
 fi
 
-if [ ${nb_test_list} != "pingpong" ] && [ ${nb_case_set} = false ]; then
-  echo "If the test is not equal to pingpong, need to specify a case name."
-  $NB_EXIT_CMD
-elif [ ${nb_test_list} = "pingpong" ]; then
+nb_case=$(readlink -f $nb_case)
+nb_case_basename=$(basename $nb_case)
+if [ ${nb_test_list} != "pingpong" ]; then
+  if [ ${nb_case_set} = false ] || ! [ -d "${nb_case}" ]; then
+    echo "Case name missing or case does not exist."
+    $NB_EXIT_CMD
+  fi
+else
   nb_case_set=true
   nb_case="./built-in/pngpng"
 fi
@@ -196,8 +203,6 @@ fi
 #-----------------------------------------------------------------------
 # Create the benchmark directories
 #-----------------------------------------------------------------------
-nb_case=$(readlink -f $nb_case)
-nb_case_basename=$(basename $nb_case)
 mkdir -p $NB_RUNS_DIR/$nb_case_basename
 . ./build.sh
 
@@ -211,12 +216,3 @@ for tst in $nb_test_list; do
      . ./pingpong.sh
    fi
 done
-
-if [ ${nb_debug} = true ]; then
-  echo "lx1 = $nb_lx1_list"
-  echo "ly1 = $nb_ly1_list"
-  echo "lz1 = $nb_lz1_list"
-  echo "lelt = $nb_lelt_list"
-  echo "np = $np_list"
-  echo "machine = $machine"
-fi

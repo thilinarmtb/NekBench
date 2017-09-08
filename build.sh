@@ -17,8 +17,9 @@ for tst in $nb_test_list; do
           sed -i "s/lx1=[0-9]*/lx1=${lx1}/" SIZE
           sed -i "s/lxd=[0-9]*/lxd=${lxd}/" SIZE
           sed -i "s/lelt=[0-9]*/lelt=${lelt}/" SIZE
-          sed -i "s/lpmin=[0-9]*/lpmin=${lp_min}/" SIZE
-          sed -i "s/lpmax=[0-9]*/lpmax=${lp_max}/" SIZE
+          sed -i "s/lpmin=[0-9]*/lpmin=${nb_lp_min}/" SIZE
+          sed -i "s/lpmax=[0-9]*/lpmax=${nb_lp_max}/" SIZE
+          sed -i "s/lp=[0-9]*/lp=${nb_lp_max}/" SIZE
         cd ..
       cd ..
     done
