@@ -23,7 +23,6 @@ function test_abs() {
     echo "abs: Failed. Result=${rslt1}"
   fi
 }
-test_abs
 
 #-----------------------------------------------------------------------
 # max function
@@ -52,7 +51,6 @@ function test_max()
     echo "max: Failed. Result=${rslt}"
   fi 
 }
-test_max
 
 #-----------------------------------------------------------------------
 # min function
@@ -81,4 +79,12 @@ function test_min()
     echo "min: Failed. Result=${rslt}"
   fi
 }
-test_min
+
+#-----------------------------------------------------------------------
+# Test functions
+#-----------------------------------------------------------------------
+if [ ${nb_test_script} = true ]; then
+  test_abs
+  test_max
+  test_min
+fi

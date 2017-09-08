@@ -1,18 +1,18 @@
 #!/bin/sh
 
-cd $RUNS_DIR/$case_basename
+cd $NB_RUNS_DIR/$nb_case_basename
 
-for tst in $test_list; do
+for tst in $nb_test_list; do
   mkdir $tst
   cd $tst
-  for lelt in $lelt_list; do
+  for lelt in $nb_lelt_list; do
     mkdir lelt_"${lelt}"
     cd lelt_"${lelt}"
-    for lx1 in $lx1_list; do
+    for lx1 in $nb_lx1_list; do
       mkdir lx_"${lx1}"
       cd lx_"${lx1}"
-        cp -r "${case}" .
-        cd $case_basename
+        cp -r "${nb_case}" .
+        cd $nb_case_basename
           lxd=$(( 3*lx1/2 ))
           sed -i "s/lx1=[0-9]*/lx1=${lx1}/" SIZE
           sed -i "s/lxd=[0-9]*/lxd=${lxd}/" SIZE
@@ -28,4 +28,4 @@ for tst in $test_list; do
   cd ..
 done
 
-cd $BASE_DIR
+cd $NB_BASE_DIR

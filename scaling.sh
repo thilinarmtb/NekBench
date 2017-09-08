@@ -1,24 +1,24 @@
 #!/bin/sh
 
-echo " ================ Doing Scaling Test ================ "
-echo " case name: ${case_basename}"
+echo "================ Doing Scaling Test ================ "
+echo "case name: ${nb_case_basename}"
 
-cd $RUNS_DIR/$case_basename/scaling
+cd $NB_RUNS_DIR/$nb_case_basename/scaling
 
-for lelt in $lelt_list; do
+for lelt in $nb_lelt_list; do
   cd lelt_"${lelt}"
-  for lx1 in $lx1_list; do
+  for lx1 in $nb_lx1_list; do
     cd lx_"${lx1}"
-      cd $case_basename
+      cd $nb_case_basename
         # Build the case
-        echo "Building lelt=${lelt}, lx1=${lx1}"
-        cp $BASE_DIR/makeneks/makenek.${machine} .
-        ./makenek.${machine} $case_basename > buildlog
+        echo "  Building lelt=${lelt}, lx1=${lx1} ..."
+        cp $NB_MKNK_DIR/makenek.${nb_machine} .
+        ./makenek.${nb_machine} $nb_case_basename > buildlog
 
         # Do the scaling test
-        for np in $np_list; do
-          echo "Running the case with np=${np}"
-          $JOBS_DIR/submit.${machine} ${case_basename} ${np} scaling
+        for np in $nb_np_list; do
+          echo "    Running the case with np=${np} ..."
+          $NB_JOBS_DIR/submit.${nb_machine} ${nb_case_basename} ${np} scaling
         done
       cd ..
     cd ..
@@ -26,6 +26,6 @@ for lelt in $lelt_list; do
   cd ..
 done
 
-echo " ==================================================== "
+echo "==================================================== "
 
-cd $BASE_DIR
+cd $NB_BASE_DIR

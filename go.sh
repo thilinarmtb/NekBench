@@ -15,20 +15,21 @@
 #-----------------------------------------------------------------------
 # Constants
 #-----------------------------------------------------------------------
-BASE_DIR="$PWD"
-RUNS_DIR="$BASE_DIR/runs"
-NEK5_DIR=""
-JOBS_DIR="$BASE_DIR/jobscripts"
+NB_BASE_DIR="$PWD"
+NB_RUNS_DIR="$NB_BASE_DIR/runs"
+NB_JOBS_DIR="$NB_BASE_DIR/jobscripts"
+NB_MKNK_DIR="$NB_BASE_DIR/makeneks"
+NB_NEK5_DIR=""
 
-THIS_FILE="${BASH_SOURCE[0]}"
+NB_THIS_FILE="${BASH_SOURCE[0]}"
 if [[ "${#BASH_ARGV[@]}" -ne "$#" ]]; then
-   EXIT_CMD=return
+   NB_EXIT_CMD=return
 else
-   EXIT_CMD=exit
+   NB_EXIT_CMD=exit
 fi
 
-HELP_MSG="
-$THIS_FILE [options]
+NB_HELP_MSG="
+$NB_THIS_FILE [options]
 
 options:
    -h|--help                   Print this usage information and exit
@@ -52,36 +53,37 @@ options:
 "
 
 #-----------------------------------------------------------------------
+# Variables
+#-----------------------------------------------------------------------
+nb_debug=false
+nb_test_script=false
+
+nb_lx1_list=
+nb_lx1_set=false
+nb_ly1_list=
+nb_lz1_list=
+
+nb_lelt_list=
+nb_lelt_set=false
+
+nb_np_list=
+nb_np_set=false
+nb_lp_min=
+nb_lp_max=
+
+nb_machine=
+nb_machine_set=false
+
+nb_test_list=
+nb_test_set=false
+
+nb_case=
+nb_case_set=false
+
+#-----------------------------------------------------------------------
 # Include helper functions
 #-----------------------------------------------------------------------
 source ./functions.sh
-
-#-----------------------------------------------------------------------
-# Variables
-#-----------------------------------------------------------------------
-debug=false
-
-lx1_list=
-lx1_set=false
-ly1_list=
-lz1_list=
-
-lelt_list=
-lelt_set=false
-
-np_list=
-np_set=false
-lp_min=
-lp_max=
-
-machine=
-machine_set=false
-
-test_list=
-test_set=false
-
-case=
-case_set=false
 
 #-----------------------------------------------------------------------
 # Read input arguments
@@ -89,48 +91,48 @@ case_set=false
 while [ $# -gt 0 ]; do
   case "$1" in
          -h|--help)
-           echo "$HELP_MSG"
-           $EXIT_CMD
+           echo "$NB_HELP_MSG"
+           $NB_EXIT_CMD
            ;;
          -x|--lx1)
            shift
-           lx1_list="$1"
-           lx1_set=true
+           nb_lx1_list="$1"
+           nb_lx1_set=true
            ;;
          -y|--ly1)
            shift
-           ly1_list="$1"
+           nb_ly1_list="$1"
            ;;
          -z|--lz1)
            shift
-           lz1_list="$1"
+           nb_lz1_list="$1"
            ;;
          -e|--lelt)
            shift
-           lelt_list="$1"
-           lelt_set=true
+           nb_lelt_list="$1"
+           nb_lelt_set=true
            ;;
          -n|--np)
            shift
-           np_list="$1"
-           np_set=true
-           lp_min=$(min "${np_list[@]}")
-           lp_max=$(max "${np_list[@]}")
+           nb_np_list="$1"
+           nb_np_set=true
+           nb_lp_min=$(min "${np_list[@]}")
+           nb_lp_max=$(max "${np_list[@]}")
            ;;
          -m|--machine)
            shift
-           machine=$1
-           machine_set=true
+           nb_machine=$1
+           nb_machine_set=true
            ;;
          -t|--test)
            shift
-           test_list="$1"
-           test_set=true
+           nb_test_list="$1"
+           nb_test_set=true
            ;;
          -c|--case)
            shift
-           case=$1
-           case_set=true
+           nb_case=$1
+           nb_case_set=true
            ;;
   esac
   shift
@@ -139,46 +141,46 @@ done # end reading arguments
 #-----------------------------------------------------------------------
 # Check if the requited variables are set
 #-----------------------------------------------------------------------
-if [ ${debug} = true ]; then
-  echo "$lx1_set"
-  echo "$lelt_set"
-  echo "$np_set"
-  echo "$machine_set"
-  echo "$test_set"
-  echo "$case_set"
-  echo "lx1 = $lx1_list"
-  echo "ly1 = $ly1_list"
-  echo "lz1 = $lz1_list"
-  echo "lelt = $lelt_list"
-  echo "np = $np_list"
-  echo "machine = $machine"
-  echo "test = $test_list"
-  $EXIT_CMD
+if [ ${nb_debug} = true ]; then
+  echo "$nb_lx1_set"
+  echo "$nb_lelt_set"
+  echo "$nb_np_set"
+  echo "$nb_machine_set"
+  echo "$nb_test_set"
+  echo "$nb_case_set"
+  echo "lx1 = $nb_lx1_list"
+  echo "ly1 = $nb_ly1_list"
+  echo "lz1 = $nb_lz1_list"
+  echo "lelt = $nb_lelt_list"
+  echo "np = $nb_np_list"
+  echo "machine = $nb_machine"
+  echo "test = $nb_test_list"
+  $NB_EXIT_CMD
 fi
 
-if [ ${lx1_set} = false ] || [ ${lelt_set} = false ] \
-      || [ ${np_set} = false ] || [ ${machine_set} = false ] \
-      || [ ${test_set} = false ] ; then
+if [ ${nb_lx1_set} = false ] || [ ${nb_lelt_set} = false ] \
+      || [ ${nb_np_set} = false ] || [ ${nb_machine_set} = false ] \
+      || [ ${nb_test_set} = false ] ; then
   echo "You need to specify all lx1, lelt, np, machine and test parameters."
-  $EXIT_CMD
+  $NB_EXIT_CMD
 fi
 
-if [ ${test_list} != "pingpong" ] && [ ${case_set} = false ]; then
+if [ ${nb_test_list} != "pingpong" ] && [ ${nb_case_set} = false ]; then
   echo "If the test is not equal to pingpong, need to specify a case name."
-  $EXIT_CMD
-elif [ ${test_list} = "pingpong" ]; then
-  case_set=true
-  case="./built-in/pngpng"
+  $NB_EXIT_CMD
+elif [ ${nb_test_list} = "pingpong" ]; then
+  nb_case_set=true
+  nb_case="./built-in/pngpng"
 fi
 
 #-----------------------------------------------------------------------
 # Set ly1 and lz1 to lx1 by default if not specified
 #-----------------------------------------------------------------------
-if [ ${#ly1_list} -eq 0 ]; then
-  ly1_list=$lx1_list
+if [ ${#nb_ly1_list} -eq 0 ]; then
+  nb_ly1_list=$nb_lx1_list
 fi
-if [ ${#lz1_list} -eq 0 ]; then
-  lz1_list=$lx1_list
+if [ ${#nb_lz1_list} -eq 0 ]; then
+  nb_lz1_list=$nb_lx1_list
 fi
 
 #-----------------------------------------------------------------------
@@ -194,15 +196,15 @@ fi
 #-----------------------------------------------------------------------
 # Create the benchmark directories
 #-----------------------------------------------------------------------
-case=$(readlink -f $case)
-case_basename=$(basename $case)
-mkdir -p $RUNS_DIR/$case_basename
+nb_case=$(readlink -f $nb_case)
+nb_case_basename=$(basename $nb_case)
+mkdir -p $NB_RUNS_DIR/$nb_case_basename
 . ./build.sh
 
 #-----------------------------------------------------------------------
 # Go through the test list and perform them
 #-----------------------------------------------------------------------
-for tst in $test_list; do
+for tst in $nb_test_list; do
    if [ $tst = "scaling" ]; then
      . ./scaling.sh
    elif [ $tst = "pingpong" ]; then
@@ -210,11 +212,11 @@ for tst in $test_list; do
    fi
 done
 
-if [ ${debug} = true ]; then
-  echo "lx1 = $lx1_list"
-  echo "ly1 = $ly1_list"
-  echo "lz1 = $lz1_list"
-  echo "lelt = $lelt_list"
+if [ ${nb_debug} = true ]; then
+  echo "lx1 = $nb_lx1_list"
+  echo "ly1 = $nb_ly1_list"
+  echo "lz1 = $nb_lz1_list"
+  echo "lelt = $nb_lelt_list"
   echo "np = $np_list"
   echo "machine = $machine"
 fi
