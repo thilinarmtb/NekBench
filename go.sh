@@ -94,25 +94,25 @@ while [ $# -gt 0 ]; do
            ;;
          -x|--lx1)
            shift
-           lx1_list=(${1})
+           lx1_list="$1"
            lx1_set=true
            ;;
          -y|--ly1)
            shift
-           ly1_list=(${1})
+           ly1_list="$1"
            ;;
          -z|--lz1)
            shift
-           lz1_list=(${1})
+           lz1_list="$1"
            ;;
          -e|--lelt)
            shift
-           lelt_list=(${1})
+           lelt_list="$1"
            lelt_set=true
            ;;
          -n|--np)
            shift
-           np_list=(${1})
+           np_list="$1"
            np_set=true
            lp_min=$(min "${np_list[@]}")
            lp_max=$(max "${np_list[@]}")
@@ -124,7 +124,7 @@ while [ $# -gt 0 ]; do
            ;;
          -t|--test)
            shift
-           test_list=(${1})
+           test_list="$1"
            test_set=true
            ;;
          -c|--case)
@@ -153,6 +153,7 @@ if [ ${debug} = true ]; then
   echo "np = $np_list"
   echo "machine = $machine"
   echo "test = $test_list"
+  $EXIT_CMD
 fi
 
 if [ ${lx1_set} = false ] || [ ${lelt_set} = false ] \
