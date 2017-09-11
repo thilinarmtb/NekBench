@@ -1,0 +1,7 @@
+All people who contributed to NekBench by sending at least a patch or more (in
+the order of the date of their first contribution). You can generate this file
+by: git log --reverse --format="%aN <%aE>" | awk ' !x[$0]++'
+
+Thilina Rathnayake <thilinarmtb@gmail.com>
+Thilina Rathnayake <thilinarmtb@users.noreply.github.com>
+Kento Kaneko <kaneko2@illinois.edu>
