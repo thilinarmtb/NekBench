@@ -97,9 +97,9 @@ for a scaling test, each of these low level cases are run for all the values in 
   job submission system) the case.
 - Normally, you don't have to change these files. But if you need specific flags in the `makenek`
   file, feel free to edit.
-- Each `submit.<machine>` script takes three arguments. These are fed automatically by the script.
-  These arguments are different for each machine and depends on the job submission sustem each
-  machine uses (I will add more documentation on these submission files). For each machine,
+- Each `submit.<machine>` script takes three arguments. These are fed automatically by the `go.sh`
+  script. These arguments are different for each machine and depends on the job submission sustem
+  each machine uses (I will add more documentation on these submission files). For each machine,
   these arguments are created using the file in `machines/<machine>`. For example, for `linux`
   machines, these arguments are created inside `machines/linux`.
 
