@@ -4,7 +4,6 @@ echo "Nek5000        : ${NB_NEK5_DIR}"
 echo "makenek script : ${NB_MKNK_DIR}/makenek.${nb_machine}"
 echo "submit script  : ${NB_JOBS_DIR}/submit.${nb_machine}"
 
-. ${NB_MCHN_DIR}/${nb_machine}
 
 cd $NB_RUNS_DIR/$nb_case_basename/scaling
 
@@ -21,9 +20,10 @@ for lelt in $nb_lelt_list; do
         ./makenek.${nb_machine} $nb_case_basename > buildlog
 
         # Do the scaling test
-        for np in $nb_np_list; do
-          echo "    Running the case with np=${np} ..."
-          ${NB_RUN_CMD} ${NB_JOBS_DIR}/submit.${nb_machine} ${nb_case_basename} ${np} scaling
+        for nb_np in $nb_np_list; do
+          . ${NB_MCHN_DIR}/${nb_machine}
+          echo "    Running the case with np=${nb_np} ..."
+          ${NB_RUN_CMD} ${NB_JOBS_DIR}/submit.${nb_machine} ${nb_case_basename} ${nb_nnodes} scaling
         done
       cd ..
     cd ..

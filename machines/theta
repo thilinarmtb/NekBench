@@ -1,1 +1,3 @@
-NB_RUN_CMD=qsub
+nb_rpn=64
+nb_nnodes=$(( nb_np/nb_rpn ))
+NB_RUN_CMD=qsub -n $nnodes
