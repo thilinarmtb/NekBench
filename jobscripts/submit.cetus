@@ -1,0 +1,17 @@
+#!/bin/bash
+
+case=$1
+nprocs=$2
+test_type=$3
+
+echo $case     >  SESSION.NAME
+echo `pwd`'/' >>  SESSION.NAME
+
+touch $case.rea
+rm -f ioinfo
+mv $case.sch $case.sch1
+mv $case.sch $case.sch1
+ln $1.log.$2 $1.output
+ln $1.log.$2 logfile
+qsub -n $2 --mode c16 -A TurbFlowGen -t 1:00:00 -O `pwd`'/' $1 nek5000
+sleep 4

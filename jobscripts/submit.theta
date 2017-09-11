@@ -1,0 +1,24 @@
+#!/bin/bash -x
+#COBALT -t 60
+#COBALT -q debug-flat-quad
+#COBALT -A ATPESC2017
+
+case=$1
+nprocs=$2
+test_type=$3
+
+echo $case     >  SESSION.NAME
+echo `pwd`'/' >>  SESSION.NAME
+touch $case.rea
+rm -f ioinfo
+mv -f $case.his $case.his1
+mv -f $case.sch $case.sch1
+
+aprun -n $((COBALT_JOBSIZE*rpn)) \
+      -N $nprocs \
+      -d $thr \
+      -cc depth \
+      -j 1 \
+      ./nek5000
+
+exit $?
