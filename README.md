@@ -26,22 +26,22 @@ go.sh [options]
 
 options:
    -h|--help                   Print this usage information and exit
-   -x|--lx1 \"<list>\"         Specify a list of lx1 values for the run
-                                 (Mandatory, e.g., \"3 4 5 6\")
-   -y|--ly1 \"<list>\"         Specify a list of ly1 values for the run
-                                 (Optional, Default: lx1 list)
-   -z|--lz1 \"<list>\"         Specify a list of lz1 values for the run
-                                 (Optional, Default: lx1 list)
-   -e|--lelt \"<list>\"        Specify a list of lelt values for the run
-                                 (Mandatory, e.g., \"128 256\")
-   -n|--np \"<list>\"          Specify a list of MPI ranks for the run
-                                 (Mandatory, e.g., \"2 4 8\")
-   -m|--machine \"machine\"    Specify a machine for the run
-                                 (Mandatory, e.g., theta, cetus, ..)
-   -t|--test \"<list>\"        Specify a list of tests to be run
-                                 (Mandatory, e.g., scaling, pingpong,..)
-   -c|--case \"case_name\"     Specify the path of the case to be used
-                                 in benchmarking (e.g.,/home/nek_user/cases/box)
+   -x|--lx1 "<list>"         Specify a list of lx1 values for the run
+                               (Mandatory, e.g., "3 4 5 6")
+   -y|--ly1 "<list>"         Specify a list of ly1 values for the run
+                               (Optional, Default: lx1 list)
+   -z|--lz1 "<list>"         Specify a list of lz1 values for the run
+                               (Optional, Default: lx1 list)
+   -e|--lelt "<list>"        Specify a list of lelt values for the run
+                               (Mandatory, e.g., "128 256")
+   -n|--np "<list>"          Specify a list of MPI ranks for the run
+                               (Mandatory, e.g., "2 4 8")
+   -m|--machine "machine"    Specify a machine for the run
+                               (Mandatory, e.g., theta, cetus, ..)
+   -t|--test "<list>"        Specify a list of tests to be run
+                               (Mandatory, e.g., scaling, pingpong,..)
+   -c|--case "case_name"     Specify the path of the case to be used
+                               in benchmarking (e.g.,/home/nek_user/cases/box)
 ```
 
 Below is an example usage of the ``go.sh`` script:
@@ -83,7 +83,7 @@ for each test is not necessary, we will figure that out when we start using this
 benchmarks).
 
 Under each test directory, there will be a separate directory for each value in the `lelt`
-list. Similarly, under each of these `lelt` direcotries, there will be a separate directory for
+list. Similarly, under each of these `lelt` directories, there will be a separate directory for
 each `lx1` value (Currently, `ly1`, and `lz1` list values are ignored) and the case specified
 in the script will be copied inside of this directory. Finally, when the benchmarks are run,
 for a scaling test, each of these low level cases are run for all the values in the `np` list.
@@ -91,7 +91,7 @@ for a scaling test, each of these low level cases are run for all the values in 
 ### Important notes (must read before using the script !)
 
 - When the `go.sh` script is run, `makenek` file for the given machine is searched inside `makeneks`
-  directory and the job submission script is searched inside `jobscripts` direcotry. 
+  directory and the job submission script is searched inside `jobscripts` directory.
 - For example, if you specified `-m "linux"`, `makeneks/makenek.linux` is used for building the
   given case and `jobscripts/submit.linux` is used for running (or submitting, if the machine uses
   job submission system) the case.
@@ -102,7 +102,7 @@ for a scaling test, each of these low level cases are run for all the values in 
   each machine uses (I will add more documentation on these submission files). For each machine,
   these arguments are created using the file in `machines/<machine>`. For example, for `linux`
   machines, these arguments are created inside `machines/linux`.
-- Case direcotry name and the case name inside it should be the same i.e., if your
+- Case directory name and the case name inside it should be the same i.e., if your
   case directory is `/home/foo/eddy`, then there should be `eddy.usr`, `eddy.rea`
   and `eddy.map` inside that directory.
 
