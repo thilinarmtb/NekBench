@@ -88,13 +88,20 @@ each `lx1` value (Currently, `ly1`, and `lz1` list values are ignored) and the c
 in the script will be copied inside of this directory. Finally, when the benchmarks are run,
 for a scaling test, each of these low level cases are run for all the values in the `np` list.
 
-When the `go.sh` script is run, `makenek` file for the given machine is looked inside `makeneks`
-directory and the job submission script is looked inside `jobscripts` direcotry. For example,
-if you specified `-m "linux"`, `makeneks/makenek.linux` is used for building the given case
-and `jobscripts/submit.linux` is used for running ( or submitting, if the machine uses job
-submission system) the case.
+### Important notes (must read before using the script !)
 
-### Important notes
+- When the `go.sh` script is run, `makenek` file for the given machine is looked inside `makeneks`
+  directory and the job submission script is looked inside `jobscripts` direcotry. 
+- For example, if you specified `-m "linux"`, `makeneks/makenek.linux` is used for building the
+  given case and `jobscripts/submit.linux` is used for running (or submitting, if the machine uses
+  job submission system) the case.
+- Normally, you don't have to change these files. But if you need specific flags in the `makenek`
+  file, feel free to edit.
+- Each `submit.<machine>` script takes three arguments. These are fed automatically by the script.
+  These arguments are different for each machine and depends on the job submission sustem each
+  machine uses (I will add more documentation on these submission files). For each machine,
+  these arguments are created using the file in `machines/<machine>`. For example, for `linux`
+  machines, these arguments are created inside `machines/linux`.
 
 ### Developer documentation
 
