@@ -50,7 +50,8 @@ Below is an example usage of the ``go.sh`` script:
 ./go.sh -x "6 7" -e "100 200" -n "4 8" -m "linux" -t "scaling" -c "/home/foo/NekTests/eddy_uv"
 ```
 Once this command is executed, it will create a benchmark run for a scaling study under a
-folder named ``runs``. The directory structure will look like follows:
+folder named ``runs``. Note that all the parameters are lists except `-m / --machine` and
+`-c / --case`. The directory structure will look like follows:
 
 ```
 .
@@ -83,7 +84,11 @@ benchmarks).
 
 Under each test directory, there will be a separate directory for each value in the `lelt`
 list. Similarly, under each of these `lelt` direcotries, there will be a separate directory for
-each `lx1` value (Currently, `ly1`, and `lz1` list values are ignored).
+each `lx1` value (Currently, `ly1`, and `lz1` list values are ignored) and the case specified
+in the script will be copied inside of this directory.
+
+Finally, when the benchmarks are run, for a scaling test, each of these low level cases are run
+for all the values in the `np` list.
 
 ### Important notes
 
