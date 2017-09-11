@@ -12,12 +12,12 @@ for tst in $nb_test_list; do
         cp -r "${nb_case}" .
         cd $nb_case_basename
           lxd=$(( 3*lx1/2 ))
-          sed -i "s/lx1[\s]*=[\s]*[0-9]*/lx1=${lx1}/" SIZE
-          sed -i "s/lxd[\s]*=[\s]*[0-9]*/lxd=${lxd}/" SIZE
-          sed -i "s/lelt[\s]*=[\s]*[0-9]*/lelt=${lelt}/" SIZE
-          sed -i "s/lpmin[\s]*=[\s]*[0-9]*/lpmin=${nb_lp_min}/" SIZE
-          sed -i "s/lpmax[\s]*=[\s]*[0-9]*/lpmax=${nb_lp_max}/" SIZE
-          sed -i "s/lp[\s]*=[\s]*[0-9]*/lp=${nb_lp_max}/" SIZE
+          sed -i.backup "s/lx1[\s]*=[\s]*[0-9]*/lx1=${lx1}/" SIZE
+          sed -i.backup "s/lxd[\s]*=[\s]*[0-9]*/lxd=${lxd}/" SIZE
+          sed -i.backup "s/lelt[\s]*=[\s]*[0-9]*/lelt=${lelt}/" SIZE
+          sed -i.backup "s/lpmin[\s]*=[\s]*[0-9]*/lpmin=${nb_lp_min}/" SIZE
+          sed -i.backup "s/lpmax[\s]*=[\s]*[0-9]*/lpmax=${nb_lp_max}/" SIZE
+          sed -i.backup "s/lp[\s]*=[\s]*[0-9]*/lp=${nb_lp_max}/" SIZE
         cd ..
       cd ..
     done
