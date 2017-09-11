@@ -56,7 +56,7 @@ options:
 #-----------------------------------------------------------------------
 # Variables
 #-----------------------------------------------------------------------
-nb_debug=false
+nb_debug=true
 nb_test_script=true
 
 nb_lx1_list=
@@ -67,7 +67,7 @@ nb_lz1_list=
 nb_lelt_list=
 nb_lelt_set=false
 
-nb_np_list=
+nb_np_list=""
 nb_np_set=false
 nb_lp_min=
 nb_lp_max=
@@ -117,8 +117,8 @@ while [ $# -gt 0 ]; do
            shift
            nb_np_list="$1"
            nb_np_set=true
-           nb_lp_min=$(min "${nb_np_list[@]}")
-           nb_lp_max=$(max "${nb_np_list[@]}")
+           nb_lp_min=$(min ${nb_np_list[@]})
+           nb_lp_max=$(max ${nb_np_list[@]})
            ;;
          -m|--machine)
            shift
