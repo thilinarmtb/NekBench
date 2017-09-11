@@ -4,10 +4,8 @@
 #COBALT -A ATPESC2017
 
 case=$1
-nprocs=$2
+rpn=$2
 test_type=$3
-
-rpn=64
 
 echo $case     >  SESSION.NAME
 echo `pwd`'/' >>  SESSION.NAME
@@ -16,7 +14,7 @@ rm -f ioinfo
 mv -f $case.his $case.his1
 mv -f $case.sch $case.sch1
 
-aprun -n $nprocs \
+aprun -n $(( COBALT_JOBSIZE*rpn )) \
       -N $rpn \
       -d $thr \
       -cc depth \

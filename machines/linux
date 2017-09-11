@@ -1,3 +1,3 @@
-nb_rpn=
+nb_rpn=$nb_np
 nb_nnodes=$nb_np
 NB_RUN_CMD=.

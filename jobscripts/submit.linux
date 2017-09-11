@@ -3,10 +3,9 @@
 case=$1
 nprocs=$2
 test_type=$3
-run_cmd=mpiexec
 
 echo ${case}      >  SESSION.NAME
 echo `pwd`'/'    >>  SESSION.NAME
-${run_cmd} -np ${nprocs} ./nek5000 > ${case}.log.${test_type}.${nprocs} &
+mpiexec -np ${nprocs} ./nek5000 > ${case}.log.${test_type}.${nprocs} &
 pid=$!
 wait ${pid}
