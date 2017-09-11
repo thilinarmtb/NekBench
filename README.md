@@ -120,5 +120,5 @@ for a scaling test, each of these low level cases are run for all the values in 
 ### Caveats
 
 * `lx1`, `lelt`, `lp`, `lpmin`, `lpmax` and `lxd` in your case's `SIZE` file should have integer
-  expressions initializing them i.e., you can't have something like `parameter(lelt=lelg/lpmax + 4)`,
-  If this is the case, sed substitution fails (We will support these expression in future).
+  expressions initializing them i.e., you can't have something like `parameter(lelt=lelg/lpmin + 4)`,
+  If this is the case, sed substitution fails (We will support these expressions in future).
