@@ -18,9 +18,10 @@ in this page.
 ### Running benchmarks
 
 Main script used in benchmarking is the ``go.sh`` which can be found on the source root of the
-repository. If you run ``./go.sh --help``, it will print out a basic help message describing
-all the parameters that can be passed into the ``go.sh`` script.
-```sh
+repository. If you run ``./go.sh --help`` or ``go.sh -h``, it will print out a basic help message
+describing all the parameters that can be passed into the ``go.sh`` script.
+
+```
 go.sh [options]
 
 options:
@@ -43,6 +44,36 @@ options:
                                  (Use the full path of the case, e.g.,
                                    /home/nek_user/cases/box)
 ```
+
+Below is an example usage of the ``go.sh`` script.
+
+```sh
+./go.sh -x "6 7" -e "100 200" -n "4 8" -m "linux" -t "scaling" -c "/home/foo/NekTests/eddy_uv"
+```
+Once this command is executed, it will create a benchmark run for a scaling study under a
+folder named ``runs``. The directory structure will look like follows:
+```
+├── go.sh
+.
+.
+├── README.md
+├── runs
+│   └── eddy_uv
+│       └── scaling
+│           ├── lelt_100
+│           │   ├── lx_6
+│           │   │   └── eddy_uv
+│           │   └── lx_7
+│           │       └── eddy_uv
+│           └── lelt_200
+│               ├── lx_6
+│               │   └── eddy_uv
+│               └── lx_7
+│                   └── eddy_uv
+└── scaling.sh
+```
+
+### Important notes
 
 ### Developer documentation
 
