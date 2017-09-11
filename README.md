@@ -113,8 +113,12 @@ for a scaling test, each of these low level cases are run for all the values in 
 - `build.sh` - creates the directory structure for a particular benchmark run depending
   on the parameters given to `go.sh` script.
 - `scaling.sh / pingpong.sh` - contains logic for scaling and ping-pong benchmarks.
+- Case direcotry name and the case name inside it should be the same i.e., if your
+  case directory is `/home/foo/eddy`, then there should be `eddy.usr`, `eddy.rea`
+  and `eddy.map` inside that directory.
 
 ### Caveats
-* Constants in Caps, variables in lowercase
-* Case direcotry name and the case name should be the same
-* lxd should have an integer expression, otherwise sed fails
+
+* `lx1`, `lelt`, `lp`, `lpmin`, `lpmax` and `lxd` in your case's `SIZE` file should have integer
+  expressions initializing them i.e., you can't have something like `parameter(lelt=lelg/lpmax + 4)`,
+  If this is the case, sed substitution fails (We will support these expression in future).
