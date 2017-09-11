@@ -18,6 +18,10 @@ case=$1
 nprocs=$2
 test_type=$3
 
+# Cori KNL specific settings
+ppn=64 # Use only 64 cores in the node
+ncpus=$(( 272/ppn )) # floor of 272/ppn
+
 echo $case     >  SESSION.NAME
 echo `pwd`'/' >>  SESSION.NAME
 touch $case.rea
@@ -26,4 +30,4 @@ mv -f $case.his $case.his1
 mv -f $case.sch $case.sch1
 
 #run the application:
-srun -n $nprocs -c 4 --cpu_bind=cores numactl -p 1 nek5000
+srun -n $nprocs -c $ncpus --cpu_bind=cores numactl -p 1 nek5000
