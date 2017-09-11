@@ -52,7 +52,10 @@ Below is an example usage of the ``go.sh`` script.
 ```
 Once this command is executed, it will create a benchmark run for a scaling study under a
 folder named ``runs``. The directory structure will look like follows:
-```
+
+```.
+├── build.sh
+
 ├── go.sh
 .
 .
