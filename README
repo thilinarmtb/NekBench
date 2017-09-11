@@ -1,5 +1,23 @@
-# NekBench - Scripts for benchmarking Nek5000
+## NekBench - Scripts for benchmarking Nek5000
+### Introduction
 
+This repository contains scripts for benchmarking [Nek5000](https://nek5000.mcs.anl.gov/), a fast and scalable open-source
+spectral element solver for CFD in different platforms from normal linux desktop and laptop
+machines to super computers at ALCF, NERSC, etc. This is written using bash scripting language
+and should run without any problem on any Unix-like operating system which supports bash.
+
+### Setting up the repository
+
+You can clone the git repository directly using `git`:
+```bash
+git clone https://github.com/thilinarmtb/NekBench.git
+```
+or you can download the repository as a zip archive by clicking the `clone or download` button
+in this page.
+
+### Running benchmarks
+
+### Caveat
 * Constants in Caps, variables in lowercase
 * Case direcotry name and the case name should be the same
 * lxd should have an integer expression, otherwise sed fails
