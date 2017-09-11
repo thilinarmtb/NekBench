@@ -85,10 +85,14 @@ benchmarks).
 Under each test directory, there will be a separate directory for each value in the `lelt`
 list. Similarly, under each of these `lelt` direcotries, there will be a separate directory for
 each `lx1` value (Currently, `ly1`, and `lz1` list values are ignored) and the case specified
-in the script will be copied inside of this directory.
+in the script will be copied inside of this directory. Finally, when the benchmarks are run,
+for a scaling test, each of these low level cases are run for all the values in the `np` list.
 
-Finally, when the benchmarks are run, for a scaling test, each of these low level cases are run
-for all the values in the `np` list.
+When the `go.sh` script is run, `makenek` file for the given machine is looked inside `makeneks`
+directory and the job submission script is looked inside `jobscripts` direcotry. For example,
+if you specified `-m "linux"`, `makeneks/makenek.linux` is used for building the given case
+and `jobscripts/submit.linux` is used for running ( or submitting, if the machine uses job
+submission system) the case.
 
 ### Important notes
 
