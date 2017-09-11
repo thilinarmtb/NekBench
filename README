@@ -1,3 +1,5 @@
+# NekBench - Scripts for benchmarking Nek5000
+
 * Constants in Caps, variables in lowercase
 * Case direcotry name and the case name should be the same
 * lxd should have an integer expression, otherwise sed fails
