@@ -90,8 +90,8 @@ for a scaling test, each of these low level cases are run for all the values in 
 
 ### Important notes (must read before using the script !)
 
-- When the `go.sh` script is run, `makenek` file for the given machine is looked inside `makeneks`
-  directory and the job submission script is looked inside `jobscripts` direcotry. 
+- When the `go.sh` script is run, `makenek` file for the given machine is searched inside `makeneks`
+  directory and the job submission script is searched inside `jobscripts` direcotry. 
 - For example, if you specified `-m "linux"`, `makeneks/makenek.linux` is used for building the
   given case and `jobscripts/submit.linux` is used for running (or submitting, if the machine uses
   job submission system) the case.
