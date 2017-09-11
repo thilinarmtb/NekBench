@@ -105,6 +105,15 @@ for a scaling test, each of these low level cases are run for all the values in 
 
 ### Developer documentation
 
+- Names of the constants used in the scripts starts with `NB_` and variable
+  names start with `nb_`. If you add new constants/variables, try to follow
+  this standard.
+- `functions.sh` - is the place to put functions if you end up reusing them again
+  and again.
+- `build.sh` - creates the directory structure for a particular benchmark run depending
+  on the parameters given to `go.sh` script.
+- `scaling.sh / pingpong.sh` - contains logic for scaling and ping-pong benchmarks.
+
 ### Caveats
 * Constants in Caps, variables in lowercase
 * Case direcotry name and the case name should be the same
