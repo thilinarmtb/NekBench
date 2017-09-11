@@ -19,7 +19,7 @@ NB_BASE_DIR="$PWD"
 NB_RUNS_DIR="$NB_BASE_DIR/runs"
 NB_JOBS_DIR="$NB_BASE_DIR/jobscripts"
 NB_MKNK_DIR="$NB_BASE_DIR/makeneks"
-NB_NEK5_DIR=""
+NB_NEK5_DIR="$NB_BASE_DIR/Nek5000"
 
 NB_THIS_FILE="${BASH_SOURCE[0]}"
 if [[ "${#BASH_ARGV[@]}" -ne "$#" ]]; then
