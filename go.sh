@@ -20,6 +20,7 @@ NB_RUNS_DIR="$NB_BASE_DIR/runs"
 NB_JOBS_DIR="$NB_BASE_DIR/jobscripts"
 NB_MKNK_DIR="$NB_BASE_DIR/makeneks"
 NB_NEK5_DIR="$NB_BASE_DIR/Nek5000"
+NB_MCHN_DIR="$NB_BASE_DIR/machines"
 
 NB_THIS_FILE="${BASH_SOURCE[0]}"
 if [[ "${#BASH_ARGV[@]}" -ne "$#" ]]; then
@@ -56,7 +57,7 @@ options:
 # Variables
 #-----------------------------------------------------------------------
 nb_debug=false
-nb_test_script=false
+nb_test_script=true
 
 nb_lx1_list=
 nb_lx1_set=false

@@ -4,6 +4,8 @@ echo "Nek5000        : ${NB_NEK5_DIR}"
 echo "makenek script : ${NB_MKNK_DIR}/makenek.${nb_machine}"
 echo "submit script  : ${NB_JOBS_DIR}/submit.${nb_machine}"
 
+. ${NB_MCHN_DIR}/${nb_machine}
+
 cd $NB_RUNS_DIR/$nb_case_basename/scaling
 
 export NB_NEK5_DIR # get rid of this export and matching unset
@@ -21,7 +23,7 @@ for lelt in $nb_lelt_list; do
         # Do the scaling test
         for np in $nb_np_list; do
           echo "    Running the case with np=${np} ..."
-          $NB_JOBS_DIR/submit.${nb_machine} ${nb_case_basename} ${np} scaling
+          ${NB_RUN_CMD} ${NB_JOBS_DIR}/submit.${nb_machine} ${nb_case_basename} ${np} scaling
         done
       cd ..
     cd ..

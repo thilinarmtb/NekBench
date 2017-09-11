@@ -1,1 +1,1 @@
-run_cmd=sbatch
+NB_RUN_CMD=sbatch

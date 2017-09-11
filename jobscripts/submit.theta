@@ -7,6 +7,8 @@ case=$1
 nprocs=$2
 test_type=$3
 
+rpn=64
+
 echo $case     >  SESSION.NAME
 echo `pwd`'/' >>  SESSION.NAME
 touch $case.rea
@@ -14,8 +16,8 @@ rm -f ioinfo
 mv -f $case.his $case.his1
 mv -f $case.sch $case.sch1
 
-aprun -n $((COBALT_JOBSIZE*rpn)) \
-      -N $nprocs \
+aprun -n $nprocs \
+      -N $rpn \
       -d $thr \
       -cc depth \
       -j 1 \
