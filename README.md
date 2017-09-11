@@ -40,9 +40,8 @@ options:
                                  (Mandatory, e.g., theta, cetus, ..)
    -t|--test \"<list>\"        Specify a list of tests to be run
                                  (Mandatory, e.g., scaling, pingpong,..)
-   -c|--case \"case_name\"     Specify a case to be used in benchmarking
-                                 (Use the full path of the case, e.g.,
-                                   /home/nek_user/cases/box)
+   -c|--case \"case_name\"     Specify the path of the case to be used
+                                 in benchmarking (e.g.,/home/nek_user/cases/box)
 ```
 
 Below is an example usage of the ``go.sh`` script:
