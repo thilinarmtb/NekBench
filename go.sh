@@ -42,7 +42,7 @@ options:
                                  (Optional, Default: lx1 list)
    -e|--lelt \"<list>\"        Specify a list of lelt values for the run
                                  (Mandatory, e.g., \"128 256\")
-   -n|--np \"<list>\"          Specify a list of MPI rank for the run
+   -n|--np \"<list>\"          Specify a list of MPI ranks for the run
                                  (Mandatory, e.g., \"2 4 8\")
    -m|--machine \"machine\"    Specify a machine for the run
                                  (Mandatory, e.g., theta, cetus, ..)
