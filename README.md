@@ -102,6 +102,9 @@ for a scaling test, each of these low level cases are run for all the values in 
   each machine uses (I will add more documentation on these submission files). For each machine,
   these arguments are created using the file in `machines/<machine>`. For example, for `linux`
   machines, these arguments are created inside `machines/linux`.
+- Case direcotry name and the case name inside it should be the same i.e., if your
+  case directory is `/home/foo/eddy`, then there should be `eddy.usr`, `eddy.rea`
+  and `eddy.map` inside that directory.
 
 ### Developer documentation
 
@@ -113,9 +116,6 @@ for a scaling test, each of these low level cases are run for all the values in 
 - `build.sh` - creates the directory structure for a particular benchmark run depending
   on the parameters given to `go.sh` script.
 - `scaling.sh / pingpong.sh` - contains logic for scaling and ping-pong benchmarks.
-- Case direcotry name and the case name inside it should be the same i.e., if your
-  case directory is `/home/foo/eddy`, then there should be `eddy.usr`, `eddy.rea`
-  and `eddy.map` inside that directory.
 
 ### Caveats
 
