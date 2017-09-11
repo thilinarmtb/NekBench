@@ -153,6 +153,8 @@ if [ ${nb_debug} = true ]; then
   echo "lz1 = $nb_lz1_list"
   echo "lelt = $nb_lelt_list"
   echo "np = $nb_np_list"
+  echo "lp_min = $nb_lp_min"
+  echo "lp_max = $nb_lp_max"
   echo "machine = $nb_machine"
   echo "test = $nb_test_list"
   $NB_EXIT_CMD

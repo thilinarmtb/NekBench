@@ -1,9 +1,12 @@
-#!/bin/sh
-
 echo "================ Doing Scaling Test ================ "
-echo "case name: ${nb_case_basename}"
+echo "case name      : ${nb_case_basename}"
+echo "Nek5000        : ${NB_NEK5_DIR}"
+echo "makenek script : ${NB_MKNK_DIR}/makenek.${nb_machine}"
+echo "submit script  : ${NB_JOBS_DIR}/submit.${nb_machine}"
 
 cd $NB_RUNS_DIR/$nb_case_basename/scaling
+
+export NB_NEK5_DIR # get rid of this export and matching unset
 
 for lelt in $nb_lelt_list; do
   cd lelt_"${lelt}"
@@ -25,6 +28,8 @@ for lelt in $nb_lelt_list; do
   done
   cd ..
 done
+
+unset NB_NEK5_DIR
 
 echo "==================================================== "
 
