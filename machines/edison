@@ -1,0 +1,4 @@
+nb_arg3=$nb_np
+nb_arg4=24
+nb_nnodes=$(( nb_np/nb_arg4 ))
+NB_RUN_CMD="sbatch -N $nb_nnodes -p regular -t 01:00:00"
