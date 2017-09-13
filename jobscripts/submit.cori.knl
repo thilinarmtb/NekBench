@@ -1,10 +1,4 @@
 #!/bin/bash
-#SBATCH -C knl,quad,flat
-#SBATCH -p regular
-#SBATCH -J NekBench
-#SBATCH --mail-user=user@mailserver.com
-#SBATCH --mail-type=ALL
-#SBATCH -t 01:00:00
 
 # Cori KNL instructions:
 # http://www.nersc.gov/users/computational-systems/cori/running-jobs/general-running-jobs-recommendations/
