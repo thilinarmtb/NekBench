@@ -24,4 +24,4 @@ mv -f $case.his $case.his1
 mv -f $case.sch $case.sch1
 
 #run the application:
-srun -n $nprocs -c $ncpus --cpu_bind=threads ./nek5000 > ${case}.log.${test_type}.${nprocs} 2>&1
+srun -n $nprocs -c $ncpus --cpu_bind=cores ./nek5000 > ${case}.log.${test_type}.${nprocs} 2>&1
