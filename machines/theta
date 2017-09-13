@@ -1,4 +1,4 @@
 nb_arg3=64
 nb_arg4=
 nb_nnodes=$(( nb_np/nb_arg3 ))
-NB_RUN_CMD="qsub -n $nb_nnodes"
+NB_RUN_CMD="qsub -n $nb_nnodes --attrs mcdram=flat:numa=quad -q default -t 60 -A ATPESC2017"

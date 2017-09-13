@@ -1,7 +1,4 @@
 #!/bin/bash -x
-#COBALT -t 60
-#COBALT -q flat-quad
-#COBALT -A ATPESC2017
 
 case=$1
 test_type=$2
