@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Cori Haswell instructions:
+# http://www.nersc.gov/users/computational-systems/cori/running-jobs/general-running-jobs-recommendations/
+
+#OpenMP settings:
+export OMP_NUM_THREADS=1
+export OMP_PLACES=threads
+export OMP_PROC_BIND=spread
+
+case=$1
+test_type=$2
+nprocs=$3
+ppn=$4 # processes per node
+
+# Cori KNL specific settings
+ncpus=$(( 64/ppn )) # floor of 64/ppn
+
+echo $case     >  SESSION.NAME
+echo `pwd`'/' >>  SESSION.NAME
+touch $case.rea
+rm -f ioinfo
+mv -f $case.his $case.his1
+mv -f $case.sch $case.sch1
+
+#run the application:
+srun -n $nprocs -c $ncpus --cpu_bind=cores numactl -p 1 ./nek5000 > ${case}.log.${test_type}.${nprocs} 2>&1
