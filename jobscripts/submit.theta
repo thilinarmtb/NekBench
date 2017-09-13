@@ -7,6 +7,8 @@ case=$1
 test_type=$2
 rpn=$3
 
+thr=1
+
 echo $case     >  SESSION.NAME
 echo `pwd`'/' >>  SESSION.NAME
 touch $case.rea
