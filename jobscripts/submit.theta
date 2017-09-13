@@ -4,8 +4,8 @@
 #COBALT -A ATPESC2017
 
 case=$1
-rpn=$2
-test_type=$3
+test_type=$2
+rpn=$3
 
 echo $case     >  SESSION.NAME
 echo `pwd`'/' >>  SESSION.NAME

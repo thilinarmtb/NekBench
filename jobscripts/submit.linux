@@ -1,8 +1,8 @@
 #!/bin/sh
 
 case=$1
-nprocs=$2
-test_type=$3
+test_type=$2
+nprocs=$3
 
 echo ${case}      >  SESSION.NAME
 echo `pwd`'/'    >>  SESSION.NAME

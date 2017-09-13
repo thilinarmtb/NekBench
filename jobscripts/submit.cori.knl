@@ -1,11 +1,10 @@
 #!/bin/bash
-#SBATCH -N 32
 #SBATCH -C knl,quad,flat
 #SBATCH -p regular
 #SBATCH -J NekBench
 #SBATCH --mail-user=user@mailserver.com
 #SBATCH --mail-type=ALL
-#SBATCH -t 00:30:00
+#SBATCH -t 01:00:00
 
 # Cori KNL instructions:
 # http://www.nersc.gov/users/computational-systems/cori/running-jobs/general-running-jobs-recommendations/
@@ -15,8 +14,8 @@ export OMP_PLACES=threads
 export OMP_PROC_BIND=spread
 
 case=$1
-nprocs=$2
-test_type=$3
+test_type=$2
+nprocs=$3
 
 # Cori KNL specific settings
 ppn=64 # Use only 64 cores in the node
