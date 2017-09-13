@@ -1,3 +1,4 @@
+#!/bin/bash
 #-------------------------------------------------------------------------------
 # Nek5000 build file for machine "cori.knl"
 #-------------------------------------------------------------------------------
@@ -18,8 +19,8 @@ PPLIST=""
 #-------------------------------------------------------------------------------
 
 # optional compiler flags
-#FFLAGS=""
-#CFLAGS=""
+FFLAGS="-xMIC-AVX512"
+CFLAGS="-xMIC-AVX512"
 
 # optional linking flags
 #USR_LFLAGS+=" -L/usr/lib -lfoo"
