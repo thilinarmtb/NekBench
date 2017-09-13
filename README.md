@@ -88,7 +88,7 @@ each `lx1` value (Currently, `ly1`, and `lz1` list values are ignored) and the c
 in the script will be copied inside of this directory. Finally, when the benchmarks are run,
 for a scaling test, each of these low level cases are run for all the values in the `np` list.
 
-Currently, NekBench has been succesfully tested on `linux`, `theta`, `cori.knl` and `edison`
+Currently, NekBench has been succesfully tested on `linux`, `theta`, and `cori.knl`
 machine types for `scaling` tests.
 
 ### Important notes (must read before using the script !)
