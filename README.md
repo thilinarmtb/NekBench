@@ -88,8 +88,14 @@ each `lx1` value (Currently, `ly1`, and `lz1` list values are ignored) and the c
 in the script will be copied inside of this directory. Finally, when the benchmarks are run,
 for a scaling test, each of these low level cases are run for all the values in the `np` list.
 
+Currently, NekBench has been succesfully tested on `linux`, `theta`, `cori.knl` and `edison`
+machine types for `scaling` tests.
+
 ### Important notes (must read before using the script !)
 
+- Case directory name and the case name inside it should be the same i.e., if your
+  case directory is `/home/foo/eddy`, then there should be `eddy.usr`, `eddy.rea`
+  and `eddy.map` inside that directory.
 - When the `go.sh` script is run, `makenek` file for the given machine is searched inside `makeneks`
   directory and the job submission script is searched inside `jobscripts` directory.
 - For example, if you specified `-m "linux"`, `makeneks/makenek.linux` is used for building the
@@ -102,9 +108,6 @@ for a scaling test, each of these low level cases are run for all the values in 
   each machine uses (I will add more documentation on these submission files). For each machine,
   these arguments are created using the file in `machines/<machine>`. For example, for `linux`
   machines, these arguments are created inside `machines/linux`.
-- Case directory name and the case name inside it should be the same i.e., if your
-  case directory is `/home/foo/eddy`, then there should be `eddy.usr`, `eddy.rea`
-  and `eddy.map` inside that directory.
 
 ### Developer documentation
 
@@ -122,12 +125,3 @@ for a scaling test, each of these low level cases are run for all the values in 
 - `lx1`, `lelt`, `lp`, `lpmin`, `lpmax` and `lxd` in your case's `SIZE` file should have integer
   expressions initializing them i.e., you can't have something like `parameter(lelt=lelg/lpmin + 4)`,
   If this is the case, sed substitution fails (We will support these expressions in future).
-
-### Todo
-
-- Move machine specific calculations in `jobscripts/submit.<machine>` (submission files) to the machine
-  files: `machines/<machine>`.
-- Add pre-run and post-run scripts for machines so that user can set the environment and to other processing
-  activities. For a given machine, these can be stored in a folder under `machines`.
-- Add queue limits for each machine, so that the NekBench scripts will respect these limits when submitting
-  jobs.
