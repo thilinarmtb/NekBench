@@ -16,9 +16,9 @@ export OMP_PROC_BIND=spread
 case=$1
 test_type=$2
 nprocs=$3
+ppn=$4 # processes per node
 
 # Cori KNL specific settings
-ppn=64 # Use only 64 cores in the node
 ncpus=$(( 272/ppn )) # floor of 272/ppn
 
 echo $case     >  SESSION.NAME
