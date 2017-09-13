@@ -18,9 +18,9 @@ PPLIST=""
 # WHAT FOLLOWS ARE OPTIONAL SETTINGS
 #-------------------------------------------------------------------------------
 
-# optional compiler flags
-FFLAGS="-xMIC-AVX512"
-CFLAGS="-xMIC-AVX512"
+# optional compiler flags, uncomment if you use craype-haswell environment
+#FFLAGS="-xMIC-AVX512"
+#CFLAGS="-xMIC-AVX512"
 
 # optional linking flags
 #USR_LFLAGS+=" -L/usr/lib -lfoo"
