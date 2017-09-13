@@ -3,6 +3,7 @@ cd $NB_RUNS_DIR/$nb_case_basename
 for tst in $nb_test_list; do
   mkdir $tst
   cd $tst
+
   for lelt in $nb_lelt_list; do
     mkdir lelt_"${lelt}"
     cd lelt_"${lelt}"

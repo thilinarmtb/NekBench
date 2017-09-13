@@ -25,7 +25,7 @@ describing all the parameters that can be passed into the ``go.sh`` script.
 go.sh [options]
 
 options:
-   -h|--help                   Print this usage information and exit
+   -h|--help                 Print this usage information and exit
    -x|--lx1 "<list>"         Specify a list of lx1 values for the run
                                (Mandatory, e.g., "3 4 5 6")
    -y|--ly1 "<list>"         Specify a list of ly1 values for the run
