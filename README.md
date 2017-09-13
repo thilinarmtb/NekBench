@@ -119,6 +119,15 @@ for a scaling test, each of these low level cases are run for all the values in 
 
 ### Caveats
 
-* `lx1`, `lelt`, `lp`, `lpmin`, `lpmax` and `lxd` in your case's `SIZE` file should have integer
+- `lx1`, `lelt`, `lp`, `lpmin`, `lpmax` and `lxd` in your case's `SIZE` file should have integer
   expressions initializing them i.e., you can't have something like `parameter(lelt=lelg/lpmin + 4)`,
   If this is the case, sed substitution fails (We will support these expressions in future).
+
+### Todo
+
+- Move machine specific calculations in `jobscripts/submit.<machine>` (submission files) to the machine
+  files: `machines/<machine>`.
+- Add pre-run and post-run scripts for machines so that user can set the environment and to other processing
+  activities. For a given machine, these can be stored in a folder under `machines`.
+- Add queue limits for each machine, so that the NekBench scripts will respect these limits when submitting
+  jobs.
