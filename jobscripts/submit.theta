@@ -6,6 +6,7 @@
 case=$1
 test_type=$2
 rpn=$3
+nprocs=$(( COBALT_JOBSIZE*rpn ))
 
 thr=1
 
@@ -16,11 +17,11 @@ rm -f ioinfo
 mv -f $case.his $case.his1
 mv -f $case.sch $case.sch1
 
-aprun -n $(( COBALT_JOBSIZE*rpn )) \
+aprun -n $nprocs \
       -N $rpn \
       -d $thr \
       -cc depth \
       -j 1 \
-      ./nek5000
+      ./nek5000 > ${case}.log.${test_type}.${nprocs} 2>&1
 
 exit $?
