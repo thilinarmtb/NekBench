@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------------------
 
 # source path 
-SOURCE_ROOT="$NB_NEK5_DIR/Nek5000" 
+SOURCE_ROOT="${NB_NEK5_DIR}"
 SOURCE_ROOT_GSLIB="$SOURCE_ROOT/3rd_party/gslib/src" 
 
 # Fortran/C compiler
