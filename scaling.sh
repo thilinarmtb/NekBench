@@ -23,7 +23,7 @@ for lelt in $nb_lelt_list; do
         for nb_np in $nb_np_list; do
           . ${NB_MCHN_DIR}/${nb_machine}
           echo "    Running the case with np=${nb_np} ..."
-          ${NB_RUN_CMD} ${NB_JOBS_DIR}/submit.${nb_machine} ${nb_case_basename} ${nb_rpn} scaling
+          ${NB_RUN_CMD} ${NB_JOBS_DIR}/submit.${nb_machine} ${nb_case_basename} ${nb_arg3} scaling
         done
       cd ..
     cd ..
