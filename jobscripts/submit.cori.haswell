@@ -13,7 +13,7 @@ test_type=$2
 nprocs=$3
 ppn=$4 # processes per node
 
-# Cori KNL specific settings
+# Cori Haswell specific settings
 ncpus=$(( 64/ppn )) # floor of 64/ppn
 
 echo $case     >  SESSION.NAME
