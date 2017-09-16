@@ -17,8 +17,13 @@ for lelt in $nb_lelt_list; do
         # Build the case
         echo "  Building lelt=${lelt}, lx1=${lx1} ..."
         cp $NB_MKNK_DIR/makenek.${nb_machine} .
-        ./makenek.${nb_machine} $nb_case_basename > buildlog
+        ./makenek.${nb_machine} $nb_case_basename > build.log 2>build.error
 
+        if [ ! -f ./nek5000 ]; then
+          echo "    Building Nek5000 failed. See build.error for details. Exitting ..."
+          echo "==================================================== "
+          $NB_EXIT_CMD
+        fi
         # Do the scaling test
         for nb_np in $nb_np_list; do
           . ${NB_MCHN_DIR}/${nb_machine}
