@@ -1,14 +1,14 @@
 cd $NB_RUNS_DIR/$nb_case_basename
 
 for tst in $nb_test_list; do
-  mkdir $tst
+  mkdir $tst 2>/dev/null
   cd $tst
 
   for lelt in $nb_lelt_list; do
-    mkdir lelt_"${lelt}"
+    mkdir lelt_"${lelt}" 2>/dev/null
     cd lelt_"${lelt}"
     for lx1 in $nb_lx1_list; do
-      mkdir lx_"${lx1}"
+      mkdir lx_"${lx1}" 2>/dev/null
       cd lx_"${lx1}"
         cp -r "${nb_case}" .
         cd $nb_case_basename
