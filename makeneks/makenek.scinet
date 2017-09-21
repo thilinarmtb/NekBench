@@ -8,7 +8,7 @@ SOURCE_ROOT="${NB_NEK5_DIR}"
 SOURCE_ROOT_GSLIB="$SOURCE_ROOT/3rd_party/gslib/src" 
 
 # Fortran/C compiler
-F77="mpif77 -qsuppress=cmpmsg"
+F77="mpif77"
 CC="mpicc"
 
 # pre-processor list (set to "?" to get a list of available symbols)
