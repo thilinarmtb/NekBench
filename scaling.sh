@@ -7,8 +7,6 @@ echo "submit script  : ${NB_JOBS_DIR}/submit.${nb_machine}"
 
 cd $NB_RUNS_DIR/$nb_case_basename/scaling
 
-export NB_NEK5_DIR # get rid of this export and matching unset
-
 for lelt in $nb_lelt_list; do
   cd lelt_"${lelt}"
   for lx1 in $nb_lx1_list; do
@@ -20,7 +18,7 @@ for lelt in $nb_lelt_list; do
         ./makenek.${nb_machine} $nb_case_basename > build.log 2>build.error
 
         if [ ! -f ./nek5000 ]; then
-          echo "    Building Nek5000 failed. See build.error for details. Exitting ..."
+          echo "    Building failed. See 'build.error'. Exitting ..."
           echo "==================================================== "
           $NB_EXIT_CMD
         fi
@@ -28,15 +26,14 @@ for lelt in $nb_lelt_list; do
         for nb_np in $nb_np_list; do
           . ${NB_MCHN_DIR}/${nb_machine}
           echo "    Running the case with np=${nb_np} ..."
-          ${NB_RUN_CMD} ${NB_JOBS_DIR}/submit.${nb_machine} ${nb_case_basename} scaling ${nb_arg3} ${nb_arg4}
+          ${NB_RUN_CMD} ${NB_JOBS_DIR}/submit.${nb_machine} \
+                 ${nb_case_basename} scaling ${nb_np} ${nb_ppn}
         done
       cd ..
     cd ..
   done
   cd ..
 done
-
-unset NB_NEK5_DIR
 
 echo "==================================================== "
 
