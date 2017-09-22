@@ -4,12 +4,12 @@
 # Variables referenced from outside: $nb_np
 
 nb_arg3=$nb_np
-nb_rpn=32
+nb_ppn=32
 nb_project=ATPESC2017
 nb_queue=default
 nb_time=60
 
-nb_nnodes=$(( nb_np/nb_rpn ))
+nb_nnodes=$(( nb_np/nb_ppn ))
 
 if [ $nb_nnodes = 0 ]; then
   NB_RUN_CMD=":"

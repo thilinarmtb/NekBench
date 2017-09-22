@@ -4,11 +4,11 @@
 # Variables referenced from outside: $nb_np
 
 nb_arg3=$nb_np
-nb_rpn=24
+nb_ppn=24
 nb_partition=regular
 nb_time=01:00:00
 
-nb_nnodes=$(( nb_np/nb_arg4 ))
+nb_nnodes=$(( nb_np/nb_ppn ))
 
 if [ $nb_nnodes = 0 ]; then
   NB_RUN_CMD=":"
