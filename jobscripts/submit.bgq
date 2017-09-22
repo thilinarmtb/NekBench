@@ -2,20 +2,19 @@
 
 case=$1
 test_type=$2
-rpn=$3
-nprocs=$(( COBALT_JOBSIZE*rpn ))
+nprocs=$3
+ppn=$4
 
 echo $case     >  SESSION.NAME
 echo `pwd`'/' >>  SESSION.NAME
-
 touch $case.rea
 rm -f ioinfo
 mv $case.sch $case.sch1
 mv $case.his $case.his1
 
 runjob --np $nprocs \
-       -p $rpn \
+       -p   $ppn \
        --block $COBALT_PARTNAME \
-        --verbose=INFO : ./nek5000 > ${case}.log.${test_type}.${nprocs} 2>&1
+       --verbose=INFO : ./nek5000 > ${case}.log.${test_type}.${nprocs} 2>&1
 
-sleep 4
+sleep 2
