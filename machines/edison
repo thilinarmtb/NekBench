@@ -1,4 +1,19 @@
+#!/bin/sh
+
+# Machine: Edison
+# Variables referenced from outside: $nb_np
+
 nb_arg3=$nb_np
 nb_arg4=24
+nb_partition=regular
+nb_time=01:00:00
+
 nb_nnodes=$(( nb_np/nb_arg4 ))
-NB_RUN_CMD="sbatch -N $nb_nnodes -p regular -t 01:00:00"
+
+if [ $nb_nnodes = 0 ]; then
+  NB_RUN_CMD=":"
+else
+  NB_RUN_CMD="sbatch -N $nb_nnodes
+                     -p $nb_partition
+                     -t $nb_time"
+fi
