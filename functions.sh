@@ -81,7 +81,7 @@ function test_min()
 #-----------------------------------------------------------------------
 # Test functions
 #-----------------------------------------------------------------------
-if [ ${nb_test_script} = true ]; then
+if [ ${nb_test_functions} = true ]; then
   test_abs
   test_max
   test_min
