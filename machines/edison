@@ -4,7 +4,7 @@
 # Variables referenced from outside: $nb_np
 
 nb_arg3=$nb_np
-nb_arg4=24
+nb_rpn=24
 nb_partition=regular
 nb_time=01:00:00
 

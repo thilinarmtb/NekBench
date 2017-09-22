@@ -1,9 +1,9 @@
-#!/bin/bash -x
+#!/bin/bash
 
 case=$1
 test_type=$2
-rpn=$3
-nprocs=$(( COBALT_JOBSIZE*rpn ))
+nprocs=$3
+ppn=$4
 
 thr=1
 
@@ -15,7 +15,7 @@ mv -f $case.his $case.his1
 mv -f $case.sch $case.sch1
 
 aprun -n $nprocs \
-      -N $rpn \
+      -N $ppn \
       -d $thr \
       -cc depth \
       -j 1 \

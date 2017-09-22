@@ -3,7 +3,7 @@
 # Machine: BG/Q
 # Variables referenced from outside: $nb_np
 
-nb_arg3=
+nb_arg3=$nb_np
 nb_rpn=32
 nb_project=ATPESC2017
 nb_queue=default

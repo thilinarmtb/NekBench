@@ -4,7 +4,6 @@
 # Variables referenced from outside: $nb_np
 
 nb_arg3=$nb_np
-nb_arg4=
 
 if [ $nb_nb = 0 ]; then
   NB_RUN_CMD=":"
