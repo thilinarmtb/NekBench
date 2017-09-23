@@ -66,16 +66,16 @@ nb_lz1_list=
 nb_lelt_list=
 nb_lelt_set=false
 
-nb_np_list=""
-nb_np_set=false
-nb_lp_min=
-nb_lp_max=
+nb_np_list="1" # <- default value
+nb_np_set=true
+nb_lp_min="1"  # <- default value
+nb_lp_max="1"  # <- default value
 
 nb_machine=
 nb_machine_set=false
 
-nb_test_list=
-nb_test_set=false
+nb_test_list="scaling" # <- default value
+nb_test_set=true
 
 nb_case=
 nb_case_set=false
