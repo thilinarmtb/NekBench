@@ -12,6 +12,9 @@ for tst in $nb_test_list; do
         cp -r "${nb_case}" .
         cd $nb_case_basename
           lxd=$(( 3*lx1/2 ))
+          if [ ${lxd_even} = true ]
+            lxd=$(( $lxd - ($lxd % 2) ))
+          fi
           sed -i.backup "s/lx1[\s]*=[\s]*[0-9]*/lx1=${lx1}/" SIZE
           sed -i.backup "s/lxd[\s]*=[\s]*[0-9]*/lxd=${lxd}/" SIZE
           sed -i.backup "s/lelt[\s]*=[\s]*[0-9]*/lelt=${lelt}/" SIZE

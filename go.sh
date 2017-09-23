@@ -80,6 +80,8 @@ nb_test_set=false
 nb_case=
 nb_case_set=false
 
+nb_even_lxd=false
+
 #-----------------------------------------------------------------------
 # Include helper functions
 #-----------------------------------------------------------------------
@@ -133,6 +135,9 @@ while [ $# -gt 0 ]; do
            shift
            nb_case=$1
            nb_case_set=true
+           ;;
+         --even-lxd)
+           nb_even_lxd=true
            ;;
   esac
   shift
