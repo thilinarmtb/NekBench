@@ -129,7 +129,6 @@ while [ $# -gt 0 ]; do
          -t|--test)
            shift
            nb_test_list="$1"
-           nb_test_set=true
            ;;
          -c|--case)
            shift
@@ -169,9 +168,8 @@ fi
 # Check if the requited variables are set
 #-----------------------------------------------------------------------
 if [ ${nb_lx1_set} = false ] || [ ${nb_lelt_set} = false ] \
-      || [ ${nb_np_set} = false ] || [ ${nb_machine_set} = false ] \
-      || [ ${nb_test_set} = false ]; then
-  echo "All lx1, lelt, np, machine and test parameters must be provided."
+      || [ ${nb_np_set} = false ] || [ ${nb_machine_set} = false ]; then
+  echo "All lx1, lelt, np and machine parameters must be provided."
   $NB_EXIT_CMD
 fi
 
