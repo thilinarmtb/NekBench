@@ -68,8 +68,8 @@ nb_lelt_set=false
 
 nb_np_list="1" # <- default value
 nb_np_set=true
-nb_lp_min=
-nb_lp_max=
+nb_lp_min="1"  # <- default value
+nb_lp_max="1"  # <- default value
 
 nb_machine=
 nb_machine_set=false
