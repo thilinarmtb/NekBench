@@ -33,7 +33,7 @@ NB_HELP_MSG="
 $NB_THIS_FILE [options]
 
 options:
-   -h|--help                   Print this usage information and exit
+   -h|--help                 Print this usage information and exit
    -x|--lx1 \"<list>\"         Specify a list of lx1 values for the run
                                  (Mandatory, e.g., \"3 4 5 6\")
    -y|--ly1 \"<list>\"         Specify a list of ly1 values for the run
@@ -43,13 +43,14 @@ options:
    -e|--lelt \"<list>\"        Specify a list of lelt values for the run
                                  (Mandatory, e.g., \"128 256\")
    -n|--np \"<list>\"          Specify a list of MPI ranks for the run
-                                 (Mandatory, e.g., \"2 4 8\")
+                                 (e.g., \"2 4 8\"; Default: 1)
    -m|--machine \"machine\"    Specify a machine for the run
                                  (Mandatory, e.g., theta, cetus, ..)
    -t|--test \"<list>\"        Specify a list of tests to be run
-                                 (Mandatory, e.g., scaling, pingpong,..)
+                                 (e.g., scaling, pingpong,...; Default: scaling)
    -c|--case \"case_name\"     Specify the path of the case to be used
                                  in benchmarking (e.g.,/home/nek_user/cases/box)
+   --even-lxd                Round down lxd to an even value
 "
 
 #-----------------------------------------------------------------------
