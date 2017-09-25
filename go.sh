@@ -133,7 +133,7 @@ while [ $# -gt 0 ]; do
            ;;
          -c|--case)
            shift
-           nb_case=$1
+           nb_case_list=$1
            nb_case_set=true
            ;;
          --even-lxd)
@@ -175,8 +175,11 @@ if [ ${nb_lx1_set} = false ] || [ ${nb_lelt_set} = false ] \
   $NB_EXIT_CMD
 fi
 
-nb_case=$(readlink -f $nb_case)
-nb_case_basename=$(basename $nb_case)
+for i in {0..$(( ${#nb_case_list[@]} - 1 )) }; do
+  nb_case_list[$i]=$(readline $nb_case_list[$i])
+  nb_case_basename_list[$i]=$(basename $nb_case_list[$i])
+done
+
 if [ ${nb_test_list} != "pingpong" ]; then
   if [ ${nb_case_set} = false ] || ! [ -d "${nb_case}" ]; then
     echo "Case name missing or case does not exist."
