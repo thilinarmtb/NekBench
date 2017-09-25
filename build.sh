@@ -1,4 +1,4 @@
-cd $NB_RUNS_DIR/$nb_case_basename
+cd $NB_RUNS_DIR
 
 for tst in $nb_test_list; do
   mkdir $tst 2>/dev/null
