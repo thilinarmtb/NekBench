@@ -5,7 +5,7 @@ echo "makenek script : ${NB_MKNK_DIR}/makenek.${nb_machine}"
 echo "submit script  : ${NB_JOBS_DIR}/submit.${nb_machine}"
 
 
-cd $NB_RUNS_DIR/$nb_case_basename/scaling
+cd $NB_RUNS_DIR/scaling
 
 export NB_NEK5_DIR # get rid of this export and matching unset
 
