@@ -34,21 +34,21 @@ $NB_THIS_FILE [options]
 
 options:
    -h|--help                 Print this usage information and exit
-   -x|--lx1 "<list>"         Specify a list of lx1 values for the run
-                               (Mandatory, e.g., "3 4 5 6")
-   -y|--ly1 "<list>"         Specify a list of ly1 values for the run
+   -x|--lx1 \"<list>\"         Specify a list of lx1 values for the run
+                               (Mandatory, e.g., \"3 4 5 6\")
+   -y|--ly1 \"<list>\"         Specify a list of ly1 values for the run
                                (Optional, Default: lx1 list)
-   -z|--lz1 "<list>"         Specify a list of lz1 values for the run
+   -z|--lz1 \"<list>\"         Specify a list of lz1 values for the run
                                (Optional, Default: lx1 list)
-   -e|--lelt "<list>"        Specify a list of lelt values for the run
-                               (Mandatory, e.g., "128 256")
-   -n|--np "<list>"          Specify a list of MPI ranks for the run
-                               (e.g., "2 4 8"; Default: 1)
-   -m|--machine "machine"    Specify a machine for the run
+   -e|--lelt \"<list>\"        Specify a list of lelt values for the run
+                               (Mandatory, e.g., \"128 256\")
+   -n|--np \"<list>\"          Specify a list of MPI ranks for the run
+                               (e.g., \"2 4 8\"; Default: 1)
+   -m|--machine \"machine\"    Specify a machine for the run
                                (Mandatory, e.g., theta, cetus, ..)
-   -t|--test "<list>"        Specify a list of tests to be run
+   -t|--test \"<list>\"        Specify a list of tests to be run
                                (e.g., scaling, pingpong,...; Default: scaling)
-   -c|--case "case_name"     Specify the path of the case to be used
+   -c|--case \"case_name\"     Specify the path of the case to be used
                                in benchmarking (e.g.,/home/nek_user/cases/box)
    --even-lxd                Round down lxd to an even value
 "
