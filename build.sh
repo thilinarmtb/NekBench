@@ -10,6 +10,9 @@ for tst in $nb_test_list; do
     for lx1 in $nb_lx1_list; do
       mkdir lx_"${lx1}" 2>/dev/null
       cd lx_"${lx1}"
+      for i in {0..$(( ${#nb_case_list[@]} - 1 ))}; do
+        nb_case=nb_case_list[$i]
+        nb_case_basename=nb_case_basename_list[$i]
         cp -r "${nb_case}" .
         cd $nb_case_basename
           lxd=$(( 3*lx1/2 ))
@@ -23,6 +26,7 @@ for tst in $nb_test_list; do
           sed -i.backup "s/lpmax[\s]*=[\s]*[0-9]*/lpmax=${nb_lp_max}/" SIZE
           sed -i.backup "s/lp[\s]*=[\s]*[0-9]*/lp=${nb_lp_max}/" SIZE
         cd ..
+      done
       cd ..
     done
     cd ..

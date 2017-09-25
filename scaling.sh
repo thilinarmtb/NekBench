@@ -13,9 +13,10 @@ for lelt in $nb_lelt_list; do
   cd lelt_"${lelt}"
   for lx1 in $nb_lx1_list; do
     cd lx_"${lx1}"
+    for nb_case_basename in $nb_case_basename_list; do
       cd $nb_case_basename
         # Build the case
-        echo "  Building lelt=${lelt}, lx1=${lx1} ..."
+        echo "  Building case=${nb_case_basename}, lelt=${lelt}, lx1=${lx1} ..."
         cp $NB_MKNK_DIR/makenek.${nb_machine} .
         ./makenek.${nb_machine} $nb_case_basename > build.log 2>build.error
 
@@ -31,6 +32,7 @@ for lelt in $nb_lelt_list; do
           ${NB_RUN_CMD} ${NB_JOBS_DIR}/submit.${nb_machine} ${nb_case_basename} scaling ${nb_arg3} ${nb_arg4}
         done
       cd ..
+    done
     cd ..
   done
   cd ..
