@@ -176,7 +176,7 @@ if [ ${nb_lx1_set} = false ] || [ ${nb_lelt_set} = false ] \
 fi
 
 for i in {0..$(( ${#nb_case_list[@]} - 1 )) }; do
-  nb_case_list[$i]=$(readline $nb_case_list[$i])
+  nb_case_list[$i]=$(readlink $nb_case_list[$i])
   nb_case_basename_list[$i]=$(basename $nb_case_list[$i])
 done
 
