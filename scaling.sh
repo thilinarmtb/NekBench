@@ -4,10 +4,10 @@ echo "Nek5000        : ${NB_NEK5_DIR}"
 echo "makenek script : ${NB_MKNK_DIR}/makenek.${nb_machine}"
 echo "submit script  : ${NB_JOBS_DIR}/submit.${nb_machine}"
 
+# Get rid of this export and matching unset
+export NB_NEK5_DIR
 
 cd $NB_RUNS_DIR/scaling
-
-export NB_NEK5_DIR # get rid of this export and matching unset
 
 for lelt in $nb_lelt_list; do
   cd lelt_"${lelt}"
@@ -20,7 +20,7 @@ for lelt in $nb_lelt_list; do
         ./makenek.${nb_machine} $nb_case_basename > build.log 2>build.error
 
         if [ ! -f ./nek5000 ]; then
-          echo "    Building Nek5000 failed. See build.error for details. Exitting ..."
+          echo "    Building failed. See 'build.error'. Exitting ..."
           echo "==================================================== "
           $NB_EXIT_CMD
         fi
@@ -28,7 +28,7 @@ for lelt in $nb_lelt_list; do
         for nb_np in $nb_np_list; do
           . ${NB_MCHN_DIR}/${nb_machine}
           echo "    Running the case with np=${nb_np} ..."
-          ${NB_RUN_CMD} ${NB_JOBS_DIR}/submit.${nb_machine} ${nb_case_basename} scaling ${nb_arg3} ${nb_arg4}
+          ${NB_RUN_CMD} ${NB_JOBS_DIR}/submit.${nb_machine} ${nb_case_basename} scaling ${nb_np} ${nb_ppn}
         done
       cd ..
     cd ..
@@ -36,8 +36,8 @@ for lelt in $nb_lelt_list; do
   cd ..
 done
 
-unset NB_NEK5_DIR
-
 echo "==================================================== "
 
 cd $NB_BASE_DIR
+
+unset NB_NEK5_DIR

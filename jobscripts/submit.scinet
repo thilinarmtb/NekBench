@@ -6,7 +6,7 @@ nprocs=$3
 ppn=$4 # processes per node
 
 # Cori KNL specific settings
-ncpus=$(( 40/ppn )) # floor of 272/ppn
+ncpus=$(( 40/ppn ))
 
 echo $case     >  SESSION.NAME
 echo `pwd`'/' >>  SESSION.NAME

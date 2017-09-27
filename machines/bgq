@@ -1,4 +1,22 @@
-nb_arg3=32
-nb_arg4=
-nb_nnodes=$(( nb_np/nb_arg3 ))
-NB_RUN_CMD="qsub -n $nb_nnodes -q default -t 60 -A ATPESC2017 --mode script"
+#!/bin/sh
+
+# Machine: BG/Q
+# Variables referenced from outside: $nb_np
+
+nb_arg3=$nb_np
+nb_ppn=32
+nb_project=ATPESC2017
+nb_queue=default
+nb_time=60
+
+nb_nnodes=$(( nb_np/nb_ppn ))
+
+if [ $nb_nnodes = 0 ]; then
+  NB_RUN_CMD=":"
+else
+  NB_RUN_CMD="qsub -n $nb_nnodes
+                   -q $nb_queue
+                   -t $nb_time
+                   -A $nb_project
+                   --mode script"
+fi

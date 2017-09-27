@@ -1,4 +1,19 @@
+#!/bin/sh
+
+# Machine: SciNet - Ceres
+# Variables referenced from outside: $nb_np
+
 nb_arg3=$nb_np
-nb_arg4=16
-nb_nnodes=$(( nb_np/nb_arg4 ))
-NB_RUN_CMD="sbatch -N $nb_nnodes -p short -t 01:00:00"
+nb_ppn=16
+nb_partition=short
+nb_time=01:00:00
+
+nb_nnodes=$(( nb_np/nb_ppn ))
+
+if [ $nb_nnodes = 0 ]; then
+  NB_RUN_CMD=":"
+else
+  NB_RUN_CMD="sbatch -N $nb_nnodes
+                     -p $nb_partition
+                     -t $nb_time"
+fi

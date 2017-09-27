@@ -56,8 +56,8 @@ options:
 #-----------------------------------------------------------------------
 # Variables
 #-----------------------------------------------------------------------
-nb_debug=false
-nb_test_script=true
+nb_debug_scripts=false
+nb_test_functions=false
 
 nb_lx1_list=
 nb_lx1_set=false
@@ -146,7 +146,7 @@ done # end reading arguments
 #-----------------------------------------------------------------------
 # Print debug information
 #-----------------------------------------------------------------------
-if [ ${nb_debug} = true ]; then
+if [ ${nb_debug_scripts} = true ]; then
   echo "$nb_lx1_set"
   echo "$nb_lelt_set"
   echo "$nb_np_set"
