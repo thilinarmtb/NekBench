@@ -36,11 +36,11 @@ options:
                                (Mandatory, e.g., "128 256")
    -n|--np "<list>"          Specify a list of MPI ranks for the run
                                (e.g., "2 4 8"; Default: 1)
-   -m|--machine "machine"    Specify a machine for the run
+   -m|--machine machine_name Specify a machine for the run
                                (Mandatory, e.g., theta, cetus, ..)
    -t|--test "<list>"        Specify a list of tests to be run
                                (e.g., scaling, pingpong,...; Default: scaling)
-   -c|--case "case_name"     Specify the path of the case to be used
+   -c|--case case_name       Specify the path of the case to be used
                                in benchmarking (e.g.,/home/nek_user/cases/box)
    --even-lxd                Round down lxd to an even value
 ```

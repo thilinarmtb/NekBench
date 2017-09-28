@@ -44,11 +44,11 @@ options:
                                  (Mandatory, e.g., \"128 256\")
    -n|--np \"<list>\"          Specify a list of MPI ranks for the run
                                  (e.g., \"2 4 8\"; Default: 1)
-   -m|--machine \"machine\"    Specify a machine for the run
+   -m|--machine machine_name Specify a machine for the run
                                  (Mandatory, e.g., theta, cetus, ..)
    -t|--test \"<list>\"        Specify a list of tests to be run
                                  (e.g., scaling, pingpong,...; Default: scaling)
-   -c|--case \"case_name\"     Specify the path of the case to be used
+   -c|--case case_name       Specify the path of the case to be used
                                  in benchmarking (e.g.,/home/nek_user/cases/box)
    --even-lxd                Round down lxd to an even value
 "
@@ -174,14 +174,14 @@ if [ ${nb_lx1_set} = false ] || [ ${nb_lelt_set} = false ] \
   $NB_EXIT_CMD
 fi
 
-nb_case=$(readlink -f $nb_case)
+if [ ${nb_case_set} = false ] || ! [ -d "${nb_case}" ]; then
+  echo "Case name missing or case does not exist."
+  $NB_EXIT_CMD
+fi
+nb_case=$(cd $nb_case ; pwd)
 nb_case_basename=$(basename $nb_case)
-if [ ${nb_test_list} != "pingpong" ]; then
-  if [ ${nb_case_set} = false ] || ! [ -d "${nb_case}" ]; then
-    echo "Case name missing or case does not exist."
-    $NB_EXIT_CMD
-  fi
-else
+
+if [ ${nb_test_list} = "pingpong" ] && [ ${nb_case_set} = false ]; then
   nb_case_set=true
   nb_case="./built-in/pngpng"
 fi
