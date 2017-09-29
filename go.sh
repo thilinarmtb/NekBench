@@ -139,6 +139,11 @@ while [ $# -gt 0 ]; do
          --even-lxd)
            nb_even_lxd=true
            ;;
+         clean)
+           rm -rf $NB_RUNS_DIR/*
+           echo "rm -rf $NB_RUNS_DIR/*"
+           exit
+           ;;
   esac
   shift
 done # end reading arguments
