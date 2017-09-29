@@ -1,4 +1,4 @@
-cd $NB_RUNS_DIR
+cd $NB_RUNS_DIR/$nb_machine
 
 for tst in $nb_test_list; do
   mkdir $tst 2>/dev/null

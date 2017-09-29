@@ -44,11 +44,11 @@ options:
                                  (Mandatory, e.g., \"128 256\")
    -n|--np \"<list>\"          Specify a list of MPI ranks for the run
                                  (e.g., \"2 4 8\"; Default: 1)
-   -m|--machine \"machine\"    Specify a machine for the run
+   -m|--machine machine_name Specify a machine for the run
                                  (Mandatory, e.g., theta, cetus, ..)
    -t|--test \"<list>\"        Specify a list of tests to be run
                                  (e.g., scaling, pingpong,...; Default: scaling)
-   -c|--case \"case_name\"     Specify the path of the case to be used
+   -c|--case case_name       Specify the path of the case to be used
                                  in benchmarking (e.g.,/home/nek_user/cases/box)
    --even-lxd                Round down lxd to an even value
 "
@@ -67,13 +67,13 @@ nb_lz1_list=
 nb_lelt_list=
 nb_lelt_set=false
 
-nb_np_list="1" # <- default value
+nb_np_list="4" # <- default value
 nb_np_set=true
-nb_lp_min="1"  # <- default value
-nb_lp_max="1"  # <- default value
+nb_lp_min="4"  # <- default value
+nb_lp_max="4"  # <- default value
 
-nb_machine=
-nb_machine_set=false
+nb_machine="linux"
+nb_machine_set=true
 
 nb_test_list="scaling" # <- default value
 nb_test_set=true
@@ -169,19 +169,19 @@ fi
 # Check if the requited variables are set
 #-----------------------------------------------------------------------
 if [ ${nb_lx1_set} = false ] || [ ${nb_lelt_set} = false ] \
-      || [ ${nb_np_set} = false ] || [ ${nb_machine_set} = false ]; then
-  echo "All lx1, lelt, np and machine parameters must be provided."
+      || [ ${nb_np_set} = false ]; then
+  echo "All lx1, lelt, and np parameters must be provided."
   $NB_EXIT_CMD
 fi
 
-nb_case=$(readlink -f $nb_case)
+if [ ${nb_case_set} = false ] || ! [ -d "${nb_case}" ]; then
+  echo "Case name missing or case does not exist."
+  $NB_EXIT_CMD
+fi
+nb_case=$(cd $nb_case ; pwd)
 nb_case_basename=$(basename $nb_case)
-if [ ${nb_test_list} != "pingpong" ]; then
-  if [ ${nb_case_set} = false ] || ! [ -d "${nb_case}" ]; then
-    echo "Case name missing or case does not exist."
-    $NB_EXIT_CMD
-  fi
-else
+
+if [ ${nb_test_list} = "pingpong" ] && [ ${nb_case_set} = false ]; then
   nb_case_set=true
   nb_case="./built-in/pngpng"
 fi
@@ -209,7 +209,7 @@ fi
 #-----------------------------------------------------------------------
 # Create the benchmark directories
 #-----------------------------------------------------------------------
-mkdir -p $NB_RUNS_DIR/
+mkdir -p $NB_RUNS_DIR/$nb_machine 2> /dev/null
 . ./build.sh
 
 #-----------------------------------------------------------------------
