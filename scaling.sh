@@ -1,7 +1,7 @@
 echo "================ Doing Scaling Test ================ "
 echo "case name      : ${nb_case_basename}"
 echo "Nek5000        : ${NB_NEK5_DIR}"
-echo "makenek script : ${NB_MKNK_DIR}/makenek.${nb_machine}"
+echo "makenek script : ${NB_MKNK_DIR}/${nb_machine}.makenek"
 echo "submit script  : ${NB_JOBS_DIR}/submit.${nb_machine}"
 
 # Get rid of this export and matching unset
@@ -16,8 +16,8 @@ for lelt in $nb_lelt_list; do
       cd $nb_case_basename
         # Build the case
         echo "  Building lelt=${lelt}, lx1=${lx1} ..."
-        cp $NB_MKNK_DIR/makenek.${nb_machine} .
-        ./makenek.${nb_machine} $nb_case_basename > build.log 2>build.error
+        cp $NB_MKNK_DIR/${nb_machine}.makenek .
+        ./${nb_machine}.makenek $nb_case_basename > build.log 2>build.error
 
         if [ ! -f ./nek5000 ]; then
           echo "    Building failed. See 'build.error'. Exitting ..."
