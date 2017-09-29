@@ -51,6 +51,7 @@ options:
    -c|--case case_name       Specify the path of the case to be used
                                  in benchmarking (e.g.,/home/nek_user/cases/box)
    --even-lxd                Round down lxd to an even value
+   clean                     Clean the runs directory
 "
 
 #-----------------------------------------------------------------------
