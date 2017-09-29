@@ -16,12 +16,13 @@ for tst in $nb_test_list; do
           if [ ${nb_even_lxd} = true ]; then
             lxd=$(( $lxd - ($lxd % 2) ))
           fi
-          sed -i.backup "s/lx1[\s]*=[\s]*[0-9]*/lx1=${lx1}/" SIZE
-          sed -i.backup "s/lxd[\s]*=[\s]*[0-9]*/lxd=${lxd}/" SIZE
-          sed -i.backup "s/lelt[\s]*=[\s]*[0-9]*/lelt=${lelt}/" SIZE
-          sed -i.backup "s/lpmin[\s]*=[\s]*[0-9]*/lpmin=${nb_lp_min}/" SIZE
-          sed -i.backup "s/lpmax[\s]*=[\s]*[0-9]*/lpmax=${nb_lp_max}/" SIZE
-          sed -i.backup "s/lp[\s]*=[\s]*[0-9]*/lp=${nb_lp_max}/" SIZE
+          perl -pe "s/lx1=.*?(?=(,|\)))/lx1=${lx1}/" SIZE      | \
+          perl -pe "s/lxd=.*?(?=(,|\)))/lxd=${lxd}/"           | \
+          perl -pe "s/lelt=.*?(?=(,|\)))/lelt=${lelt}/"        | \
+          perl -pe "s/lpmin=.*?(?=(,|\)))/lpmin=${nb_lp_min}/" | \
+          perl -pe "s/lpmax=.*?(?=(,|\)))/lpmax=${nb_lp_max}/" | \
+          perl -pe "s/lp=.*?(?=(,|\)))/lp=${nb_lp_max}/"       > nb.SIZE
+          mv nb.SIZE SIZE
         cd ..
       cd ..
     done
