@@ -79,10 +79,55 @@ function test_min()
 }
 
 #-----------------------------------------------------------------------
+# print function
+#-----------------------------------------------------------------------
+function print() {
+  local msg=$1
+  local indent=$2
+  local out=""
+
+  if [ $indent -gt 0 ]; then
+    for i in `seq 1 1 $indent`; do
+      out=${out}"."
+    done
+  fi
+
+  out=${out}${msg}
+  echo ${out}
+}
+
+function test_print() {
+  local passed=1
+  local msg=
+
+  msg=$(print "ttt" 0)
+  if [ $msg != "ttt" ]; then
+    passed=0
+  fi
+
+  msg=$(print "ttt" 2)
+  if [ $msg != "..ttt" ]; then
+    passed=0
+  fi
+
+  msg=$(print "ttt" 4)
+  if [ $msg != "....ttt" ]; then
+    passed=0
+  fi
+
+  if [ $passed -eq 1 ]; then
+    echo "print: Passed."
+  else
+    echo "print: Failed."
+  fi
+}
+
+#-----------------------------------------------------------------------
 # Test functions
 #-----------------------------------------------------------------------
 if [ ${nb_test_functions} = true ]; then
   test_abs
   test_max
   test_min
+  test_print
 fi

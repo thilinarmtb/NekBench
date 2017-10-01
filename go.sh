@@ -57,7 +57,7 @@ options:
 # Variables
 #-----------------------------------------------------------------------
 nb_debug_scripts=false
-nb_test_functions=false
+nb_test_functions=true
 
 nb_lx1_list=
 nb_lx1_set=false
