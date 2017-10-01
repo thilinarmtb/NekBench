@@ -203,7 +203,11 @@ if [ -d "Nek5000" ]; then
   echo "Using existing Nek5000 directory ..."
 else
   echo "Cloning the latest version from github ..."
-  git clone https://github.com/Nek5000/Nek5000.git
+  git clone https://github.com/Nek5000/Nek5000.git > git.log 2> git.error
+  if [ ! -d "Nek5000" ]; then
+    echo "Cloning failed. See git.error. Exitting ..."
+    $NB_EXIT_CMD
+  fi
 fi
 
 #-----------------------------------------------------------------------
