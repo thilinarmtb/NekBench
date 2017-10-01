@@ -62,7 +62,7 @@ folder named ``runs``. Note that all the parameters are lists except `-m / --mac
 .
 ├── README.md
 ├── runs
-│   └── eddy_uv
+│   └── linux
 │       └── scaling
 │           ├── lelt_100
 │           │   ├── lx_6
