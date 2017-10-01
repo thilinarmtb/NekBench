@@ -17,6 +17,5 @@ else
   NB_RUN_CMD="qsub -n $nb_nnodes
                    -q $nb_queue
                    -t $nb_time
-                   -A $nb_project
-                   --attrs mcdram=flat:numa=quad"
+                   -A $nb_project"
 fi
