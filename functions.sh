@@ -81,44 +81,24 @@ function test_min()
 #-----------------------------------------------------------------------
 # print function
 #-----------------------------------------------------------------------
-function print() {
+function iprint() {
   local msg=$1
-  local indent=$2
-  local out=""
+  local indntlvl=
 
-  if [ $indent -gt 0 ]; then
-    for i in `seq 1 1 $indent`; do
-      out=${out}"."
-    done
-  fi
-
-  out=${out}${msg}
-  echo ${out}
-}
-
-function test_print() {
-  local passed=1
-  local msg=
-
-  msg=$(print "ttt" 0)
-  if [ $msg != "ttt" ]; then
-    passed=0
-  fi
-
-  msg=$(print "ttt" 2)
-  if [ $msg != "..ttt" ]; then
-    passed=0
-  fi
-
-  msg=$(print "ttt" 4)
-  if [ $msg != "....ttt" ]; then
-    passed=0
-  fi
-
-  if [ $passed -eq 1 ]; then
-    echo "print: Passed."
+  if [ $# -eq 2 ]; then
+    indntlvl=$2
   else
-    echo "print: Failed."
+    indntlvl=0
+  fi
+
+  if [ $indntlvl -eq 0 ]; then
+    echo $msg
+  elif [ $indntlvl -eq 1 ]; then
+    sed -e "s/^/  /g" <<< ${msg}
+  elif [ $indntlvl -eq 2 ]; then
+    sed -e "s/^/    /g" <<< ${msg}
+  elif [ $indntlvl -eq 3 ]; then
+    sed -e "s/^/      /g" <<< ${msg}
   fi
 }
 
@@ -129,5 +109,4 @@ if [ ${nb_test_functions} = true ]; then
   test_abs
   test_max
   test_min
-  test_print
 fi
