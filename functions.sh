@@ -116,6 +116,18 @@ function create_next_run_dir()
 }
 
 #-----------------------------------------------------------------------
+# dump_metadata function
+#-----------------------------------------------------------------------
+function dump_metadata()
+{
+  local git_sha=$(cd $NB_NEK5_DIR; git rev-parse HEAD; cd ..)
+  echo "git commit: $git_sha" >> README
+  echo "lelt: ${nb_lelt_list}" >> README
+  echo "lx1: ${nb_lx1_list}" >> README
+  echo "np: ${nb_np_list}" >> README
+}
+
+#-----------------------------------------------------------------------
 # Test functions
 #-----------------------------------------------------------------------
 if [ ${nb_test_functions} = true ]; then

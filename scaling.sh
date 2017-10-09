@@ -10,8 +10,8 @@ export NB_NEK5_DIR
 # cd to the test dir
 cd $NB_BENCH_DIR/$nb_machine/scaling
 # cd to current run_dir
-nb_cur_dir=$(get_cur_run_dir)
-cd $nb_cur_dir
+cur_dir=$(get_cur_run_dir)
+cd $cur_dir
 
 for lelt in $nb_lelt_list; do
   cd lelt_"${lelt}"
@@ -39,6 +39,9 @@ for lelt in $nb_lelt_list; do
   done
   cd ..
 done
+
+# Dump the benchmark metadata to a README file inside the run directory
+dump_metadata
 
 echo "==================================================== "
 
