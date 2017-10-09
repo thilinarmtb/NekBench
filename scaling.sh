@@ -40,6 +40,8 @@ for lelt in $nb_lelt_list; do
   cd ..
 done
 
+# Get out of current run directory
+cd ..
 # Dump the benchmark metadata to a README file inside the run directory
 dump_metadata
 
