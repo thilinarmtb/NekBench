@@ -16,11 +16,13 @@
 # Constants
 #-----------------------------------------------------------------------
 NB_BASE_DIR="$PWD"
-NB_RUNS_DIR="$NB_BASE_DIR/runs"
+NB_BENCH_DIR="$NB_BASE_DIR/benchmarks"
 NB_JOBS_DIR="$NB_BASE_DIR/jobscripts"
 NB_MKNK_DIR="$NB_BASE_DIR/makeneks"
 NB_NEK5_DIR="$NB_BASE_DIR/Nek5000"
 NB_MCHN_DIR="$NB_BASE_DIR/machines"
+NB_RUN_DIR_PREFIX="run"
+NB_RUN_DIR_NUM_LEN=3
 
 NB_THIS_FILE="${BASH_SOURCE[0]}"
 if [[ "${#BASH_ARGV[@]}" -ne "$#" ]]; then
@@ -57,7 +59,7 @@ options:
 # Variables
 #-----------------------------------------------------------------------
 nb_debug_scripts=false
-nb_test_functions=false
+nb_test_functions=true
 
 nb_lx1_list=
 nb_lx1_set=false
@@ -209,7 +211,7 @@ fi
 #-----------------------------------------------------------------------
 # Create the benchmark directories
 #-----------------------------------------------------------------------
-mkdir -p $NB_RUNS_DIR/$nb_machine 2> /dev/null
+mkdir -p $NB_BENCH_DIR/$nb_machine 2> /dev/null
 . ./build.sh
 
 #-----------------------------------------------------------------------

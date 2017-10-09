@@ -7,7 +7,11 @@ echo "submit script  : ${NB_JOBS_DIR}/${nb_machine}.submit"
 # Get rid of this export and matching unset
 export NB_NEK5_DIR
 
-cd $NB_RUNS_DIR/$nb_machine/scaling
+# cd to the test dir
+cd $NB_BENCH_DIR/$nb_machine/scaling
+# cd to current run_dir
+nb_cur_dir=$(get_cur_run_dir)
+cd $nb_cur_dir
 
 for lelt in $nb_lelt_list; do
   cd lelt_"${lelt}"

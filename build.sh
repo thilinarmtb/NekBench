@@ -1,8 +1,15 @@
-cd $NB_RUNS_DIR/$nb_machine
+cd $NB_BENCH_DIR/$nb_machine
+
+echo "Building directory structure ..."
 
 for tst in $nb_test_list; do
+  # Create test directory if it does not exist
   mkdir $tst 2>/dev/null
   cd $tst
+
+  # Create next run directory
+  nb_run_dir_name=$(create_next_run_dir)
+  cd $nb_run_dir_name
 
   for lelt in $nb_lelt_list; do
     mkdir lelt_"${lelt}" 2>/dev/null
@@ -29,6 +36,9 @@ for tst in $nb_test_list; do
     cd ..
   done
 
+  ## Get out of run directory
+  cd ..
+  ## Get out of test directory
   cd ..
 done
 

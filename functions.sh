@@ -47,7 +47,7 @@ function test_max()
     echo "max: Passed. Result=${rslt}"
   else
     echo "max: Failed. Result=${rslt}"
-  fi 
+  fi
 }
 
 #-----------------------------------------------------------------------
@@ -76,6 +76,43 @@ function test_min()
   else
     echo "min: Failed. Result=${rslt}"
   fi
+}
+
+#-----------------------------------------------------------------------
+# get_cur_run_dir function
+#-----------------------------------------------------------------------
+function get_cur_run_dir()
+{
+  local dir_list=($(ls | grep ${NB_RUN_DIR_PREFIX} 2> /dev/null))
+
+  if [ -z "${dir_list}" ]; then # no previous runs
+    echo "Error: No run directories found, exitting ..."
+    $NB_EXIT_CMD
+  else
+    local n=${#dir_list[@]}
+    echo ${dir_list[$((n - 1))]}
+  fi
+}
+
+#-----------------------------------------------------------------------
+# create_next_run_dir function
+#-----------------------------------------------------------------------
+function create_next_run_dir()
+{
+  local dir_list=($(ls | grep ${NB_RUN_DIR_PREFIX} 2> /dev/null))
+  local dir_name=""
+
+  if [ -z "${dir_list}" ]; then # no previous runs
+    printf -v dir_name "${NB_RUN_DIR_PREFIX}%0${NB_RUN_DIR_NUM_LEN}d" 0
+  else
+    dir_name=$(get_cur_run_dir)
+    local number=${dir_name: $(( -1*NB_RUN_DIR_NUM_LEN )) }
+    number=$(( number + 1 ))
+    printf -v dir_name "${NB_RUN_DIR_PREFIX}%0${NB_RUN_DIR_NUM_LEN}d" $number
+  fi
+
+  mkdir $dir_name
+  echo $dir_name
 }
 
 #-----------------------------------------------------------------------
