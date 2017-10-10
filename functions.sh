@@ -131,6 +131,31 @@ function dump_metadata()
 }
 
 #-----------------------------------------------------------------------
+# print function
+#-----------------------------------------------------------------------
+function iprint()
+{
+  local msg=$1
+  local indntlvl=
+
+  if [ $# -eq 2 ]; then
+    indntlvl=$2
+  else
+    indntlvl=0
+  fi
+
+  if [ $indntlvl -eq 0 ]; then
+    echo $msg
+  elif [ $indntlvl -eq 1 ]; then
+    sed -e "s/^/  /g" <<< ${msg}
+  elif [ $indntlvl -eq 2 ]; then
+    sed -e "s/^/    /g" <<< ${msg}
+  elif [ $indntlvl -eq 3 ]; then
+    sed -e "s/^/      /g" <<< ${msg}
+  fi
+}
+
+#-----------------------------------------------------------------------
 # Test functions
 #-----------------------------------------------------------------------
 if [ ${nb_test_functions} = true ]; then
