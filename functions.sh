@@ -47,7 +47,7 @@ function test_max()
     echo "max: Passed. Result=${rslt}"
   else
     echo "max: Failed. Result=${rslt}"
-  fi 
+  fi
 }
 
 #-----------------------------------------------------------------------
@@ -79,9 +79,62 @@ function test_min()
 }
 
 #-----------------------------------------------------------------------
+# get_cur_run_dir function
+#-----------------------------------------------------------------------
+function get_cur_run_dir()
+{
+  local dir_list=($(ls | grep ${NB_RUN_DIR_PREFIX} 2> /dev/null))
+
+  if [ -z "${dir_list}" ]; then # no previous runs
+    echo "Error: No run directories found, exitting ..."
+    $NB_EXIT_CMD
+  else
+    local n=${#dir_list[@]}
+    echo ${dir_list[$((n - 1))]}
+  fi
+}
+
+#-----------------------------------------------------------------------
+# create_next_run_dir function
+#-----------------------------------------------------------------------
+function create_next_run_dir()
+{
+  local dir_list=($(ls | grep ${NB_RUN_DIR_PREFIX} 2> /dev/null))
+  local dir_name=""
+
+  if [ -z "${dir_list}" ]; then # no previous runs
+    printf -v dir_name "${NB_RUN_DIR_PREFIX}%0${NB_RUN_DIR_NUM_LEN}d" 0
+  else
+    dir_name=$(get_cur_run_dir)
+    local number=${dir_name: $(( -1*NB_RUN_DIR_NUM_LEN )) }
+    number=$(( number + 1 ))
+    printf -v dir_name "${NB_RUN_DIR_PREFIX}%0${NB_RUN_DIR_NUM_LEN}d" $number
+  fi
+
+  mkdir $dir_name
+  echo $dir_name
+}
+
+#-----------------------------------------------------------------------
+# dump_metadata function
+#-----------------------------------------------------------------------
+function dump_metadata()
+{
+  local run_id=$(get_cur_run_dir)
+  local git_sha=$(cd $NB_NEK5_DIR; git rev-parse HEAD; cd ..)
+
+  echo "run id    : ${run_id}"       >> ${run_id}/README
+  echo "git commit: ${git_sha}"      >> ${run_id}/README
+  echo "lelt      : ${nb_lelt_list}" >> ${run_id}/README
+  echo "lx1       : ${nb_lx1_list}"  >> ${run_id}/README
+  echo "np        : ${nb_np_list}"   >> ${run_id}/README
+}
+
+#-----------------------------------------------------------------------
 # print function
 #-----------------------------------------------------------------------
-function iprint() {
+function iprint()
+{
   local msg=$1
   local indntlvl=
 
