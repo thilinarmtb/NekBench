@@ -1,11 +1,11 @@
 iprint "================ Doing Scaling Test ================ "
 iprint "case name      : ${nb_case_basename}"
-iprint "Nek5000        : ${NB_NEK5_DIR}"
+iprint "Nek5000        : ${nb_nek5_dir}"
 iprint "makenek script : ${NB_MKNK_DIR}/${nb_machine}.makenek"
 iprint "submit script  : ${NB_JOBS_DIR}/${nb_machine}.submit"
 
 # Get rid of this export and matching unset
-export NB_NEK5_DIR
+export nb_nek5_dir
 
 # cd to the test dir
 cd $NB_BENCH_DIR/$nb_machine/scaling
@@ -54,4 +54,4 @@ iprint "==================================================== "
 
 cd $NB_BASE_DIR
 
-unset NB_NEK5_DIR
+unset nb_nek5_dir

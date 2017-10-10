@@ -19,7 +19,6 @@ NB_BASE_DIR="$PWD"
 NB_BENCH_DIR="$NB_BASE_DIR/benchmarks"
 NB_JOBS_DIR="$NB_BASE_DIR/jobscripts"
 NB_MKNK_DIR="$NB_BASE_DIR/makeneks"
-NB_NEK5_DIR="$NB_BASE_DIR/Nek5000"
 NB_MCHN_DIR="$NB_BASE_DIR/machines"
 NB_RUN_DIR_PREFIX="run"
 NB_RUN_DIR_NUM_LEN=3
@@ -205,24 +204,32 @@ if [ ${#nb_lz1_list} -eq 0 ]; then
 fi
 
 #-----------------------------------------------------------------------
-# See if Nek5000 exist in the current directory
+# Create the benchmark directories
 #-----------------------------------------------------------------------
-if [ -d "Nek5000" ]; then
-  iprint "Using existing Nek5000 directory ..."
+mkdir -p $NB_BENCH_DIR/$nb_machine 2> /dev/null
+. ./build.sh
+
+#-----------------------------------------------------------------------
+# Finding Nek5000 repo:
+# - First look in the machine directory
+# - Then look in the NB_BENCH_DIR
+# - If not found in the above places, clone from git
+#-----------------------------------------------------------------------
+nb_nek5_dir="$NB_BENCH_DIR/$nb_machine/Nek5000"
+if [ -d "$nb_nek5_dir" ]; then
+  iprint "Using existing Nek5000 directory: $nb_nek5_dir"
+elif [ -d "$NB_BASE_DIR/Nek5000" ]; then
+  cp -r $NB_BASE_DIR/Nek5000  $nb_nek5_dir
+  iprint "Using existing Nek5000 directory: $NB_BASE_DIR/Nek5000"
 else
-  iprint "Cloning the latest version from github ..."
-  git clone https://github.com/Nek5000/Nek5000.git > git.log 2> git.error
-  if [ ! -d "Nek5000" ]; then
+  iprint "Cloning Nek5000 from github to $nb_nek5_dir"
+  git clone https://github.com/Nek5000/Nek5000.git $nb_nek5_dir > git.log 2> git.error
+  if [ ! -d "$nb_nek5_dir" ]; then
     iprint "Cloning failed. See git.error. Exitting ..." 1
     $NB_EXIT_CMD
   fi
 fi
 
-#-----------------------------------------------------------------------
-# Create the benchmark directories
-#-----------------------------------------------------------------------
-mkdir -p $NB_BENCH_DIR/$nb_machine 2> /dev/null
-. ./build.sh
 
 #-----------------------------------------------------------------------
 # Go through the test list and perform them
