@@ -1,10 +1,10 @@
 #!/bin/bash
 #-------------------------------------------------------------------------------
-# Nek5000 build file for Cori KNL machines
+# Nek5000 build file
 #-------------------------------------------------------------------------------
 
 # source path
-SOURCE_ROOT="$nb_nek5_dir"
+SOURCE_ROOT="${nb_nek5_dir}"
 SOURCE_ROOT_GSLIB="$SOURCE_ROOT/3rd_party/gslib/src"
 
 # Fortran/C compiler
