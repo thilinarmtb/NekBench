@@ -1,4 +1,7 @@
-## NekBench - Scripts for benchmarking Nek5000 (Outdated, will be updated soon)
+## NekBench - Scripts for benchmarking Nek5000
+
+(Documentation is outdated, will be updated soon)
+
 ### Introduction
 
 This repository contains scripts for benchmarking [Nek5000](https://nek5000.mcs.anl.gov/), a fast and scalable open-source
