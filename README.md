@@ -1,4 +1,7 @@
 ## NekBench - Scripts for benchmarking Nek5000
+
+(Documentation is outdated, will be updated soon)
+
 ### Introduction
 
 This repository contains scripts for benchmarking [Nek5000](https://nek5000.mcs.anl.gov/), a fast and scalable open-source
@@ -43,6 +46,7 @@ options:
    -c|--case case_name       Specify the path of the case to be used
                                in benchmarking (e.g.,/home/nek_user/cases/box)
    --even-lxd                Round down lxd to an even value
+   clean                     Clean the runs directory
 ```
 
 Below is an example usage of the ``go.sh`` script:
