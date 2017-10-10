@@ -57,7 +57,7 @@ options:
 # Variables
 #-----------------------------------------------------------------------
 nb_debug_scripts=false
-nb_test_functions=false
+nb_test_functions=true
 
 nb_lx1_list=
 nb_lx1_set=false
@@ -94,7 +94,7 @@ source ./functions.sh
 while [ $# -gt 0 ]; do
   case "$1" in
          -h|--help)
-           echo "$NB_HELP_MSG"
+           iprint "$NB_HELP_MSG"
            $NB_EXIT_CMD
            ;;
          -x|--lx1)
@@ -147,21 +147,21 @@ done # end reading arguments
 # Print debug information
 #-----------------------------------------------------------------------
 if [ ${nb_debug_scripts} = true ]; then
-  echo "$nb_lx1_set"
-  echo "$nb_lelt_set"
-  echo "$nb_np_set"
-  echo "$nb_machine_set"
-  echo "$nb_test_set"
-  echo "$nb_case_set"
-  echo "lx1 = $nb_lx1_list"
-  echo "ly1 = $nb_ly1_list"
-  echo "lz1 = $nb_lz1_list"
-  echo "lelt = $nb_lelt_list"
-  echo "np = $nb_np_list"
-  echo "lp_min = $nb_lp_min"
-  echo "lp_max = $nb_lp_max"
-  echo "machine = $nb_machine"
-  echo "test = $nb_test_list"
+  iprint "$nb_lx1_set"
+  iprint "$nb_lelt_set"
+  iprint "$nb_np_set"
+  iprint "$nb_machine_set"
+  iprint "$nb_test_set"
+  iprint "$nb_case_set"
+  iprint "lx1 = $nb_lx1_list"
+  iprint "ly1 = $nb_ly1_list"
+  iprint "lz1 = $nb_lz1_list"
+  iprint "lelt = $nb_lelt_list"
+  iprint "np = $nb_np_list"
+  iprint "lp_min = $nb_lp_min"
+  iprint "lp_max = $nb_lp_max"
+  iprint "machine = $nb_machine"
+  iprint "test = $nb_test_list"
   $NB_EXIT_CMD
 fi
 
@@ -170,12 +170,12 @@ fi
 #-----------------------------------------------------------------------
 if [ ${nb_lx1_set} = false ] || [ ${nb_lelt_set} = false ] \
       || [ ${nb_np_set} = false ]; then
-  echo "All lx1, lelt, and np parameters must be provided."
+  iprint "All lx1, lelt, and np parameters must be provided."
   $NB_EXIT_CMD
 fi
 
 if [ ${nb_case_set} = false ] || ! [ -d "${nb_case}" ]; then
-  echo "Case name missing or case does not exist."
+  iprint "Case name missing or case does not exist."
   $NB_EXIT_CMD
 fi
 nb_case=$(cd $nb_case ; pwd)
@@ -200,10 +200,14 @@ fi
 # See if Nek5000 exist in the current directory
 #-----------------------------------------------------------------------
 if [ -d "Nek5000" ]; then
-  echo "Using existing Nek5000 directory ..."
+  iprint "Using existing Nek5000 directory ..."
 else
-  echo "Cloning the latest version from github ..."
-  git clone https://github.com/Nek5000/Nek5000.git
+  iprint "Cloning the latest version from github ..."
+  git clone https://github.com/Nek5000/Nek5000.git > git.log 2> git.error
+  if [ ! -d "Nek5000" ]; then
+    iprint "Cloning failed. See git.error. Exitting ..."
+    $NB_EXIT_CMD
+  fi
 fi
 
 #-----------------------------------------------------------------------
