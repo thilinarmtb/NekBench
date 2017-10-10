@@ -1,9 +1,10 @@
+#!/bin/bash
 #-------------------------------------------------------------------------------
 # Nek5000 build file for machine "linux"
 #-------------------------------------------------------------------------------
 
 # source path
-SOURCE_ROOT="${NB_NEK5_DIR}"
+SOURCE_ROOT="${nb_nek5_dir}"
 echo "Source root: ${SOURCE_ROOT}"
 SOURCE_ROOT_GSLIB="$SOURCE_ROOT/3rd_party/gslib/src"
 
