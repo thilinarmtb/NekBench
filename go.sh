@@ -51,6 +51,7 @@ options:
                                  (e.g., scaling, pingpong,...; Default: scaling)
    -c|--case case_name       Specify the path of the case to be used
                                  in benchmarking (e.g.,/home/nek_user/cases/box)
+   -p|--plot options         Plot the benchmark data
    --even-lxd                Round down lxd to an even value
    clean                     Clean the runs directory
 "
@@ -84,6 +85,10 @@ nb_case=
 nb_case_set=false
 
 nb_even_lxd=false
+
+nb_plot_set=false
+nb_runid_list=
+nb_runid_set=false
 
 #-----------------------------------------------------------------------
 # Include helper functions
@@ -138,6 +143,12 @@ while [ $# -gt 0 ]; do
            nb_case=$1
            nb_case_set=true
            ;;
+         -p|--plot)
+           shift
+           nb_plot=true
+           nb_runid_list="$1"
+           nb_runid_set=true
+           ;;
          --even-lxd)
            nb_even_lxd=true
            ;;
@@ -172,6 +183,22 @@ if [ ${nb_debug_scripts} = true ]; then
   $NB_EXIT_CMD
 fi
 
+#-----------------------------------------------------------------------
+# Check if user wants to plot. If so, plot and exit
+#-----------------------------------------------------------------------
+if [ $nb_plot = true ]; then
+  if [ ${#nb_runid} -eq 0 ]; then
+    iprint "No runid's are given for plotting. Exitting ..."
+  else
+    for $runid in $nb_runid; do
+      for $tst in $nb_test_list; do
+        ./plot $nb_machine $tst $runid
+      done
+    done
+  fi
+
+  $NB_EXIT_CMD
+fi
 #-----------------------------------------------------------------------
 # Check if the requited variables are set
 #-----------------------------------------------------------------------
