@@ -145,8 +145,8 @@ while [ $# -gt 0 ]; do
            ;;
          -p|--plot)
            shift
-           nb_plot=true
-           nb_runid_list="$1"
+           nb_plot_set=true
+           nb_runid_list=$1
            nb_runid_set=true
            ;;
          --even-lxd)
@@ -186,13 +186,14 @@ fi
 #-----------------------------------------------------------------------
 # Check if user wants to plot. If so, plot and exit
 #-----------------------------------------------------------------------
-if [ $nb_plot = true ]; then
-  if [ ${#nb_runid} -eq 0 ]; then
+if [ $nb_plot_set = true ]; then
+  if [ ${#nb_runid_list} -eq 0 ]; then
+    echo "No runid's are given for plotting. Exitting ..."
     iprint "No runid's are given for plotting. Exitting ..."
   else
-    for $runid in $nb_runid; do
-      for $tst in $nb_test_list; do
-        ./plot $nb_machine $tst $runid
+    for runid in $nb_runid_list; do
+      for tst in $nb_test_list; do
+        . ./plot.sh $nb_machine $tst $runid
       done
     done
   fi
