@@ -128,6 +128,7 @@ function dump_metadata()
   echo "lelt      : ${nb_lelt_list}" >> ${run_id}/README
   echo "lx1       : ${nb_lx1_list}"  >> ${run_id}/README
   echo "np        : ${nb_np_list}"   >> ${run_id}/README
+  echo "ppn       : ${nb_ppn}"       >> ${run_id}/README
 }
 
 #-----------------------------------------------------------------------
