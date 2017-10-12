@@ -188,11 +188,6 @@ fi
 nb_case=$(cd $nb_case ; pwd)
 nb_case_basename=$(basename $nb_case)
 
-if [ ${nb_test_list} = "pingpong" ] && [ ${nb_case_set} = false ]; then
-  nb_case_set=true
-  nb_case="./built-in/pngpng"
-fi
-
 #-----------------------------------------------------------------------
 # Set ly1 and lz1 to lx1 by default if not specified
 #-----------------------------------------------------------------------
