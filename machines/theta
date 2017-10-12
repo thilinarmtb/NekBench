@@ -3,9 +3,9 @@
 # Machine: Theta
 # Variables referenced from outside: $nb_np
 
-nb_arg3=$nb_np
-nb_ppn=64
-nb_project=ATPESC2017
+nb_np=${nb_np:-64}
+nb_ppn=${nb_ppn:-64}
+nb_project=GasJetsCyl_tesp
 nb_queue=default
 nb_time=60
 

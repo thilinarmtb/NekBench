@@ -45,9 +45,11 @@ options:
                                  (Mandatory, e.g., \"128 256\")
    -n|--np \"<list>\"          Specify a list of MPI ranks for the run
                                  (e.g., \"2 4 8\"; Default: 1)
+   -p|--ppn \"<list>\"         Specify a list of MPI ranks per node for the run
+                                 (e.g., \"2 4 8\"; Default: 1)
    -m|--machine machine_name Specify a machine for the run
                                  (Mandatory, e.g., theta, cetus, ..)
-   -t|--test \"<list>\"        Specify a list of tests to be run
+   -t|--tag name             Specify a name for the run
                                  (e.g., scaling, pingpong,...; Default: scaling)
    -c|--case case_name       Specify the path of the case to be used
                                  in benchmarking (e.g.,/home/nek_user/cases/box)
@@ -75,11 +77,14 @@ nb_np_set=true
 nb_lp_min="4"  # <- default value
 nb_lp_max="4"  # <- default value
 
+nb_ppn_list=
+nb_ppn_set=false
+
 nb_machine="linux"
 nb_machine_set=true
 
-nb_test_list="scaling" # <- default value
-nb_test_set=true
+nb_tag=
+nb_tag_set=false
 
 nb_case=
 nb_case_set=false
@@ -87,13 +92,17 @@ nb_case_set=false
 nb_even_lxd=false
 
 nb_plot_set=false
-nb_runid_list=
-nb_runid_set=false
+nb_tag_list=
+nb_tag_set=false
 
 #-----------------------------------------------------------------------
 # Include helper functions
 #-----------------------------------------------------------------------
 source ./functions.sh
+
+#-----------------------------------------------------------------------
+# Print welcome message
+#-----------------------------------------------------------------------
 
 #-----------------------------------------------------------------------
 # Read input arguments
@@ -129,25 +138,31 @@ while [ $# -gt 0 ]; do
            nb_lp_min=$(min ${nb_np_list[@]})
            nb_lp_max=$(max ${nb_np_list[@]})
            ;;
+         -p|--ppn)
+           shift
+           nb_ppn_list="$1"
+           nb_ppn_set=true
+           ;;
          -m|--machine)
            shift
            nb_machine=$1
            nb_machine_set=true
            ;;
-         -t|--test)
+         -t|--tag)
            shift
-           nb_test_list="$1"
+           nb_tag=$1
+           nb_tag_set=true
            ;;
          -c|--case)
            shift
            nb_case=$1
            nb_case_set=true
            ;;
-         -p|--plot)
+         --plot)
            shift
            nb_plot_set=true
-           nb_runid_list=$1
-           nb_runid_set=true
+           nb_tag_list=$1
+           nb_tag_set=true
            ;;
          --even-lxd)
            nb_even_lxd=true
@@ -169,7 +184,7 @@ if [ ${nb_debug_scripts} = true ]; then
   iprint "$nb_lelt_set"
   iprint "$nb_np_set"
   iprint "$nb_machine_set"
-  iprint "$nb_test_set"
+  iprint "$nb_tag_set"
   iprint "$nb_case_set"
   iprint "lx1 = $nb_lx1_list"
   iprint "ly1 = $nb_ly1_list"
@@ -179,7 +194,7 @@ if [ ${nb_debug_scripts} = true ]; then
   iprint "lp_min = $nb_lp_min"
   iprint "lp_max = $nb_lp_max"
   iprint "machine = $nb_machine"
-  iprint "test = $nb_test_list"
+  iprint "tag = $nb_tag"
   $NB_EXIT_CMD
 fi
 
@@ -200,12 +215,13 @@ if [ $nb_plot_set = true ]; then
 
   $NB_EXIT_CMD
 fi
+
 #-----------------------------------------------------------------------
 # Check if the requited variables are set
 #-----------------------------------------------------------------------
 if [ ${nb_lx1_set} = false ] || [ ${nb_lelt_set} = false ] \
-      || [ ${nb_np_set} = false ]; then
-  iprint "All lx1, lelt, and np parameters must be provided."
+      || [ ${nb_np_set} = false ] || [ $nb_tag_set = false ] ; then
+  iprint "lx1, lelt, tag and np parameters must be provided. Exitting ..."
   $NB_EXIT_CMD
 fi
 
@@ -216,20 +232,31 @@ fi
 nb_case=$(cd $nb_case ; pwd)
 nb_case_basename=$(basename $nb_case)
 
-if [ ${nb_test_list} = "pingpong" ] && [ ${nb_case_set} = false ]; then
-  nb_case_set=true
-  nb_case="./built-in/pngpng"
+if [ ${nb_ppn_set} = true ]; then
+  if [ ${#nb_np_list[@]} -ne ${#nb_ppn_list[@]} ]; then
+    iprint "len(ppn list) != len(np list). Ignoring ppn list ..."
+    nb_ppn_set=false
+  fi
 fi
 
 #-----------------------------------------------------------------------
 # Set ly1 and lz1 to lx1 by default if not specified
 #-----------------------------------------------------------------------
-if [ ${#nb_ly1_list} -eq 0 ]; then
+if [ ${#nb_ly1_list[@]} -eq 0 ]; then
   nb_ly1_list=$nb_lx1_list
 fi
-if [ ${#nb_lz1_list} -eq 0 ]; then
+if [ ${#nb_lz1_list[@]} -eq 0 ]; then
   nb_lz1_list=$nb_lx1_list
 fi
+
+#-----------------------------------------------------------------------
+# Convert input lists to bash arrays
+#-----------------------------------------------------------------------
+nb_lx1_list=("$nb_lx1_list")
+nb_ly1_list=("$nb_ly1_list")
+nb_lz1_list=("$nb_lz1_list")
+nb_lelt_list=("$nb_lelt_list")
+nb_np_list=("$nb_np_list")
 
 #-----------------------------------------------------------------------
 # Create the benchmark directories
@@ -258,14 +285,7 @@ else
   fi
 fi
 
-
 #-----------------------------------------------------------------------
-# Go through the test list and perform them
+# Run the case with the tag
 #-----------------------------------------------------------------------
-for tst in $nb_test_list; do
-   if [ $tst = "scaling" ]; then
-     . ./scaling.sh
-   elif [ $tst = "pingpong" ]; then
-     . ./pingpong.sh
-   fi
-done
+. ./bench.sh $nb_tag

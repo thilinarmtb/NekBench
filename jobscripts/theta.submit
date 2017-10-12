@@ -19,6 +19,6 @@ aprun -n $nprocs \
       -d $thr \
       -cc depth \
       -j 1 \
-      ./nek5000 > ${case}.log.${test_type}.${nprocs} 2>&1
+      ./nek5000 > ${case}.log.${test_type}.${nprocs}.${ppn} 2>&1
 
 exit $?
