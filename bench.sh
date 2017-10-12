@@ -1,4 +1,4 @@
-iprint "================ Doing Scaling Test ================ "
+iprint "================ Benchmark Run: $nb_tag ================ "
 iprint "case name      : ${nb_case_basename}"
 iprint "Nek5000        : ${nb_nek5_dir}"
 iprint "makenek script : ${NB_MKNK_DIR}/${nb_machine}.makenek"
@@ -8,10 +8,7 @@ iprint "submit script  : ${NB_JOBS_DIR}/${nb_machine}.submit"
 export nb_nek5_dir
 
 # cd to the test dir
-cd $NB_BENCH_DIR/$nb_machine/scaling
-# cd to current run_dir
-cur_dir=$(get_cur_run_dir)
-cd $cur_dir
+cd $NB_BENCH_DIR/$nb_machine/$nb_tag
 
 for lelt in $nb_lelt_list; do
   cd lelt_"${lelt}"
@@ -33,21 +30,33 @@ for lelt in $nb_lelt_list; do
         fi
 
         iprint "Build successful ..." 2
-        # Do the scaling test
-        for nb_np in $nb_np_list; do
-          . ${NB_MCHN_DIR}/${nb_machine}
-          iprint "Running the case with np=${nb_np} ..." 2
-          ${NB_RUN_CMD} ${NB_JOBS_DIR}/${nb_machine}.submit ${nb_case_basename} scaling ${nb_np} ${nb_ppn}
-        done
+        # Do the pingpong test
+        if [ $nb_ppn_set = false ]; then
+          for nb_np in $nb_np_list; do
+            . ${NB_MCHN_DIR}/${nb_machine}
+            iprint "Running the case with np=${nb_np} ppn=${nb_ppn}..." 2
+            ${NB_RUN_CMD} ${NB_JOBS_DIR}/${nb_machine}.submit \
+                           ${nb_case_basename} ${nb_tag} ${nb_np} ${nb_ppn}
+          done
+        else
+          index=0
+          nb_ppn_list=($nb_ppn_list)
+          for nb_np in $nb_np_list; do
+            nb_ppn=${nb_ppn_list[$index]}
+            . ${NB_MCHN_DIR}/${nb_machine}
+            iprint "Running the case with np=${nb_np} ppn=${nb_ppn}..." 2
+            ${NB_RUN_CMD} ${NB_JOBS_DIR}/${nb_machine}.submit \
+                           ${nb_case_basename} ${nb_tag} ${nb_np} ${nb_ppn}
+            index=$(( index + 1 ))
+          done
+        fi
       cd ..
     cd ..
   done
   cd ..
 done
 
-# Get out of current run directory
-cd ..
-# Dump the benchmark metadata to a README file inside the run directory
+# Dump the benchmark metadata to a README file inside the tag directory
 dump_metadata
 
 iprint "==================================================== "

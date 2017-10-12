@@ -3,7 +3,8 @@
 # Machine: Linux - Desktops/Laptops
 # Variables referenced from outside: $nb_np
 
-nb_arg3=$nb_np
+nb_np=${nb_np:-4}
+nb_ppn=$nb_np
 
 if [ $nb_np = 0 ]; then
   NB_RUN_CMD=":"

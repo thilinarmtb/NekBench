@@ -120,15 +120,13 @@ function create_next_run_dir()
 #-----------------------------------------------------------------------
 function dump_metadata()
 {
-  local run_id=$(get_cur_run_dir)
   local git_sha=$(cd $nb_nek5_dir; git rev-parse HEAD; cd ..)
 
-  echo "run id    : ${run_id}"       >> ${run_id}/README
-  echo "git commit: ${git_sha}"      >> ${run_id}/README
-  echo "lelt      : ${nb_lelt_list}" >> ${run_id}/README
-  echo "lx1       : ${nb_lx1_list}"  >> ${run_id}/README
-  echo "np        : ${nb_np_list}"   >> ${run_id}/README
-  echo "ppn       : ${nb_ppn}"       >> ${run_id}/README
+  echo "git commit: ${git_sha}"              >> README
+  echo "lelt      : ${nb_lelt_list}"         >> README
+  echo "lx1       : ${nb_lx1_list}"          >> README
+  echo "np        : ${nb_np_list}"           >> README
+  echo "ppn       : ${nb_ppn_list:-$nb_ppn}" >> README
 }
 
 #-----------------------------------------------------------------------
