@@ -4,7 +4,7 @@
 # Variables referenced from outside: $nb_np
 
 nb_np=${nb_np:-16}
-nb_ppn=${np_ppn:-16}
+nb_ppn=${nb_ppn:-16}
 nb_partition=short
 nb_time=01:00:00
 
