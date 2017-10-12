@@ -15,6 +15,7 @@ mv $case.his $case.his1
 runjob --np $nprocs \
        -p   $ppn \
        --block $COBALT_PARTNAME \
-       --verbose=INFO : ./nek5000 > ${case}.log.${test_type}.${nprocs} 2>&1
+       --verbose=INFO : ./nek5000 > \
+             ${case}.log.${test_type}.${nprocs}.${ppn} 2>&1
 
 sleep 2

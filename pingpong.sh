@@ -1,4 +1,4 @@
-iprint "================ Doing Scaling Test ================ "
+iprint "================ Doing Pingpong Test ================ "
 iprint "case name      : ${nb_case_basename}"
 iprint "Nek5000        : ${nb_nek5_dir}"
 iprint "makenek script : ${NB_MKNK_DIR}/${nb_machine}.makenek"
@@ -8,7 +8,7 @@ iprint "submit script  : ${NB_JOBS_DIR}/${nb_machine}.submit"
 export nb_nek5_dir
 
 # cd to the test dir
-cd $NB_BENCH_DIR/$nb_machine/scaling
+cd $NB_BENCH_DIR/$nb_machine/pingpong
 # cd to current run_dir
 cur_dir=$(get_cur_run_dir)
 cd $cur_dir
@@ -33,12 +33,26 @@ for lelt in $nb_lelt_list; do
         fi
 
         iprint "Build successful ..." 2
-        # Do the scaling test
-        for nb_np in $nb_np_list; do
+        # Do the pingpong test
+        if [ $nb_ppn_set = false ]; then
           . ${NB_MCHN_DIR}/${nb_machine}
-          iprint "Running the case with np=${nb_np} ..." 2
-          ${NB_RUN_CMD} ${NB_JOBS_DIR}/${nb_machine}.submit ${nb_case_basename} scaling ${nb_np} ${nb_ppn}
-        done
+          for nb_np in $nb_np_list; do
+            iprint "Running the case with np=${nb_np} ppn=${nb_ppn}..." 2
+            ${NB_RUN_CMD} ${NB_JOBS_DIR}/${nb_machine}.submit \
+                           ${nb_case_basename} pingpong ${nb_np} ${nb_ppn}
+          done
+        else
+          length=${#nb_np_list[@]}
+          length=$(( length - 1 ))
+          for i in `seq 0 1 $length`; do
+            nb_np=${nb_np_list[$i]}
+            nb_ppn=${nb_ppn_list[$i]}
+            . ${NB_MCHN_DIR}/${nb_machine}
+            iprint "Running the case with np=${nb_np} ppn=${nb_ppn}..." 2
+            ${NB_RUN_CMD} ${NB_JOBS_DIR}/${nb_machine}.submit \
+                           ${nb_case_basename} pingpong ${nb_np} ${nb_ppn}
+          done
+        fi
       cd ..
     cd ..
   done

@@ -33,12 +33,26 @@ for lelt in $nb_lelt_list; do
         fi
 
         iprint "Build successful ..." 2
-        # Do the scaling test
-        for nb_np in $nb_np_list; do
-          . ${NB_MCHN_DIR}/${nb_machine}
-          iprint "Running the case with np=${nb_np} ..." 2
-          ${NB_RUN_CMD} ${NB_JOBS_DIR}/${nb_machine}.submit ${nb_case_basename} scaling ${nb_np} ${nb_ppn}
-        done
+        # Do the pingpong test
+        if [ $nb_ppn_set = false ]; then
+          for nb_np in $nb_np_list; do
+            . ${NB_MCHN_DIR}/${nb_machine}
+            iprint "Running the case with np=${nb_np} ppn=${nb_ppn}..." 2
+            ${NB_RUN_CMD} ${NB_JOBS_DIR}/${nb_machine}.submit \
+                           ${nb_case_basename} scaling ${nb_np} ${nb_ppn}
+          done
+        else
+          length=${#nb_np_list[@]}
+          length=$(( length - 1 ))
+          for i in `seq 0 1 $length`; do
+            nb_np=${nb_np_list[$i]}
+            nb_ppn=${nb_ppn_list[$i]}
+            . ${NB_MCHN_DIR}/${nb_machine}
+            iprint "Running the case with np=${nb_np} ppn=${nb_ppn}..." 2
+            ${NB_RUN_CMD} ${NB_JOBS_DIR}/${nb_machine}.submit \
+                           ${nb_case_basename} scaling ${nb_np} ${nb_ppn}
+          done
+        fi
       cd ..
     cd ..
   done

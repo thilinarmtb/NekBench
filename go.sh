@@ -45,6 +45,8 @@ options:
                                  (Mandatory, e.g., \"128 256\")
    -n|--np \"<list>\"          Specify a list of MPI ranks for the run
                                  (e.g., \"2 4 8\"; Default: 1)
+   -p|--ppn \"<list>\"         Specify a list of MPI ranks per node for the run
+                                 (e.g., \"2 4 8\"; Default: 1)
    -m|--machine machine_name Specify a machine for the run
                                  (Mandatory, e.g., theta, cetus, ..)
    -t|--test \"<list>\"        Specify a list of tests to be run
@@ -73,6 +75,9 @@ nb_np_list="4" # <- default value
 nb_np_set=true
 nb_lp_min="4"  # <- default value
 nb_lp_max="4"  # <- default value
+
+nb_ppn_list=
+nb_ppn_set=false
 
 nb_machine="linux"
 nb_machine_set=true
@@ -123,6 +128,11 @@ while [ $# -gt 0 ]; do
            nb_np_set=true
            nb_lp_min=$(min ${nb_np_list[@]})
            nb_lp_max=$(max ${nb_np_list[@]})
+           ;;
+         -p|--ppn)
+           shift
+           nb_ppn_list="$1"
+           nb_ppn_set=true
            ;;
          -m|--machine)
            shift
@@ -177,7 +187,7 @@ fi
 #-----------------------------------------------------------------------
 if [ ${nb_lx1_set} = false ] || [ ${nb_lelt_set} = false ] \
       || [ ${nb_np_set} = false ]; then
-  iprint "All lx1, lelt, and np parameters must be provided."
+  iprint "All lx1, lelt, and np parameters must be provided. Exitting ..."
   $NB_EXIT_CMD
 fi
 
@@ -188,13 +198,20 @@ fi
 nb_case=$(cd $nb_case ; pwd)
 nb_case_basename=$(basename $nb_case)
 
+if [ ${nb_ppn_set} = true ]; then
+  if [ ${#nb_np_list[@]} -ne ${#nb_ppn_list[@]} ]; then
+    iprint "len(ppn list) != len(np list). Ignoring ppn list ..."
+    nb_ppn_set=false
+  fi
+fi
+
 #-----------------------------------------------------------------------
 # Set ly1 and lz1 to lx1 by default if not specified
 #-----------------------------------------------------------------------
-if [ ${#nb_ly1_list} -eq 0 ]; then
+if [ ${#nb_ly1_list[@]} -eq 0 ]; then
   nb_ly1_list=$nb_lx1_list
 fi
-if [ ${#nb_lz1_list} -eq 0 ]; then
+if [ ${#nb_lz1_list[@]} -eq 0 ]; then
   nb_lz1_list=$nb_lx1_list
 fi
 
@@ -234,5 +251,7 @@ for tst in $nb_test_list; do
      . ./scaling.sh
    elif [ $tst = "pingpong" ]; then
      . ./pingpong.sh
+   else
+     iprint "Invalid test type: $tst. Skipping ..."
    fi
 done

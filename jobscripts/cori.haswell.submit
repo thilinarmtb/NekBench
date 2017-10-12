@@ -26,6 +26,7 @@ mv -f $case.sch $case.sch1
 #run the application:
 srun -n $nprocs \
      -c $ncpus \
-     --cpu_bind=cores ./nek5000 > ${case}.log.${test_type}.${nprocs} 2>&1
+     --cpu_bind=cores ./nek5000 > \
+          ${case}.log.${test_type}.${nprocs}.${ppn} 2>&1
 
 sleep 2
