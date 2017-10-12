@@ -49,7 +49,7 @@ options:
                                  (e.g., \"2 4 8\"; Default: 1)
    -m|--machine machine_name Specify a machine for the run
                                  (Mandatory, e.g., theta, cetus, ..)
-   -t|--test \"<list>\"        Specify a list of tests to be run
+   -t|--tag name             Specify a name for the run
                                  (e.g., scaling, pingpong,...; Default: scaling)
    -c|--case case_name       Specify the path of the case to be used
                                  in benchmarking (e.g.,/home/nek_user/cases/box)
@@ -82,8 +82,8 @@ nb_ppn_set=false
 nb_machine="linux"
 nb_machine_set=true
 
-nb_test_list="scaling" # <- default value
-nb_test_set=true
+nb_tag=
+nb_tag_set=false
 
 nb_case=
 nb_case_set=false
@@ -94,6 +94,10 @@ nb_even_lxd=false
 # Include helper functions
 #-----------------------------------------------------------------------
 source ./functions.sh
+
+#-----------------------------------------------------------------------
+# Print welcome message
+#-----------------------------------------------------------------------
 
 #-----------------------------------------------------------------------
 # Read input arguments
@@ -139,9 +143,10 @@ while [ $# -gt 0 ]; do
            nb_machine=$1
            nb_machine_set=true
            ;;
-         -t|--test)
+         -t|--tag)
            shift
-           nb_test_list="$1"
+           nb_tag=$1
+           nb_tag_set=true
            ;;
          -c|--case)
            shift
@@ -168,7 +173,7 @@ if [ ${nb_debug_scripts} = true ]; then
   iprint "$nb_lelt_set"
   iprint "$nb_np_set"
   iprint "$nb_machine_set"
-  iprint "$nb_test_set"
+  iprint "$nb_tag_set"
   iprint "$nb_case_set"
   iprint "lx1 = $nb_lx1_list"
   iprint "ly1 = $nb_ly1_list"
@@ -178,16 +183,15 @@ if [ ${nb_debug_scripts} = true ]; then
   iprint "lp_min = $nb_lp_min"
   iprint "lp_max = $nb_lp_max"
   iprint "machine = $nb_machine"
-  iprint "test = $nb_test_list"
+  iprint "tag = $nb_tag"
   $NB_EXIT_CMD
 fi
 
-#-----------------------------------------------------------------------
 # Check if the requited variables are set
 #-----------------------------------------------------------------------
 if [ ${nb_lx1_set} = false ] || [ ${nb_lelt_set} = false ] \
-      || [ ${nb_np_set} = false ]; then
-  iprint "All lx1, lelt, and np parameters must be provided. Exitting ..."
+      || [ ${nb_np_set} = false ] || [ $nb_tag_set = false ] ; then
+  iprint "lx1, lelt, tag and np parameters must be provided. Exitting ..."
   $NB_EXIT_CMD
 fi
 
@@ -216,6 +220,15 @@ if [ ${#nb_lz1_list[@]} -eq 0 ]; then
 fi
 
 #-----------------------------------------------------------------------
+# Convert input lists to bash arrays
+#-----------------------------------------------------------------------
+nb_lx1_list=("$nb_lx1_list")
+nb_ly1_list=("$nb_ly1_list")
+nb_lz1_list=("$nb_lz1_list")
+nb_lelt_list=("$nb_lelt_list")
+nb_np_list=("$nb_np_list")
+
+#-----------------------------------------------------------------------
 # Create the benchmark directories
 #-----------------------------------------------------------------------
 mkdir -p $NB_BENCH_DIR/$nb_machine 2> /dev/null
@@ -242,16 +255,7 @@ else
   fi
 fi
 
-
 #-----------------------------------------------------------------------
-# Go through the test list and perform them
+# Run the case with the tag
 #-----------------------------------------------------------------------
-for tst in $nb_test_list; do
-   if [ $tst = "scaling" ]; then
-     . ./scaling.sh
-   elif [ $tst = "pingpong" ]; then
-     . ./pingpong.sh
-   else
-     iprint "Invalid test type: $tst. Skipping ..."
-   fi
-done
+. ./bench.sh $nb_tag
