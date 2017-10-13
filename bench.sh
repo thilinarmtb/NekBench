@@ -25,7 +25,7 @@ for lelt in $nb_lelt_list; do
 
         if [ ! -f ./nek5000 ]; then
           iprint "Build failed. See 'build.error'. Exitting ..." 2
-          iprint "==================================================== "
+          iprint "====================================================="
           $NB_EXIT_CMD
         fi
 
@@ -59,7 +59,7 @@ done
 # Dump the benchmark metadata to a README file inside the tag directory
 dump_metadata
 
-iprint "==================================================== "
+iprint "====================================================="
 
 cd $NB_BASE_DIR
 

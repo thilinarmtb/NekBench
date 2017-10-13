@@ -53,7 +53,7 @@ options:
                                  (e.g., scaling, pingpong,...; Default: scaling)
    -c|--case case_name       Specify the path of the case to be used
                                  in benchmarking (e.g.,/home/nek_user/cases/box)
-   -p|--plot options         Plot the benchmark data
+   --plot options            Plot the benchmark data
    --even-lxd                Round down lxd to an even value
    clean                     Clean the runs directory
 "
@@ -61,7 +61,7 @@ options:
 #-----------------------------------------------------------------------
 # Variables
 #-----------------------------------------------------------------------
-nb_debug_scripts=false
+nb_debug_scripts=true
 nb_test_functions=false
 
 nb_lx1_list=
@@ -161,7 +161,7 @@ while [ $# -gt 0 ]; do
          --plot)
            shift
            nb_plot_set=true
-           nb_tag_list=$1
+           nb_tag_list="$1"
            nb_tag_set=true
            ;;
          --even-lxd)
@@ -177,43 +177,38 @@ while [ $# -gt 0 ]; do
 done # end reading arguments
 
 #-----------------------------------------------------------------------
-# Print debug information
-#-----------------------------------------------------------------------
-if [ ${nb_debug_scripts} = true ]; then
-  iprint "$nb_lx1_set"
-  iprint "$nb_lelt_set"
-  iprint "$nb_np_set"
-  iprint "$nb_machine_set"
-  iprint "$nb_tag_set"
-  iprint "$nb_case_set"
-  iprint "lx1 = $nb_lx1_list"
-  iprint "ly1 = $nb_ly1_list"
-  iprint "lz1 = $nb_lz1_list"
-  iprint "lelt = $nb_lelt_list"
-  iprint "np = $nb_np_list"
-  iprint "lp_min = $nb_lp_min"
-  iprint "lp_max = $nb_lp_max"
-  iprint "machine = $nb_machine"
-  iprint "tag = $nb_tag"
-  $NB_EXIT_CMD
-fi
-
-#-----------------------------------------------------------------------
 # Check if user wants to plot. If so, plot and exit
 #-----------------------------------------------------------------------
 if [ $nb_plot_set = true ]; then
-  if [ ${#nb_runid_list} -eq 0 ]; then
-    echo "No runid's are given for plotting. Exitting ..."
-    iprint "No runid's are given for plotting. Exitting ..."
+  if [ "${#nb_tag_list}" -eq 0 ]; then
+    iprint "No tags are given for plotting. Exitting ..."
   else
-    for runid in $nb_runid_list; do
-      for tst in $nb_test_list; do
-        . ./plot.sh $nb_machine $tst $runid
-      done
+    for tag in "$nb_tag_list"; do
+      . ./plot.sh $nb_machine $tag
     done
   fi
 
   $NB_EXIT_CMD
+fi
+
+#-----------------------------------------------------------------------
+# Convert input lists to bash arrays
+#-----------------------------------------------------------------------
+nb_lx1_list=(${nb_lx1_list})
+nb_ly1_list=(${nb_ly1_list})
+nb_lz1_list=(${nb_lz1_list})
+nb_lelt_list=(${nb_lelt_list})
+nb_np_list=(${nb_np_list})
+nb_ppn_list=(${nb_ppn_list})
+
+#-----------------------------------------------------------------------
+# Set ly1 and lz1 to lx1 by default if not specified
+#-----------------------------------------------------------------------
+if [ ${#nb_ly1_list[@]} -eq 0 ]; then
+  nb_ly1_list=(${nb_lx1_list[@]})
+fi
+if [ ${#nb_lz1_list[@]} -eq 0 ]; then
+  nb_lz1_list=(${nb_lx1_list[@]})
 fi
 
 #-----------------------------------------------------------------------
@@ -240,23 +235,28 @@ if [ ${nb_ppn_set} = true ]; then
 fi
 
 #-----------------------------------------------------------------------
-# Set ly1 and lz1 to lx1 by default if not specified
+# Print debug information
 #-----------------------------------------------------------------------
-if [ ${#nb_ly1_list[@]} -eq 0 ]; then
-  nb_ly1_list=$nb_lx1_list
+if [ ${nb_debug_scripts} = true ]; then
+  echo "lx1_set = $nb_lx1_set"
+  echo "lelt_set = $nb_lelt_set"
+  echo "np_set = $nb_np_set"
+  echo "ppn_set = $nb_ppn_set"
+  echo "machine_set = $nb_machine_set"
+  echo "tag_set = $nb_tag_set"
+  echo "case_set = $nb_case_set"
+  echo "lx1 = ${nb_lx1_list[@]}; ${#nb_lx1_list[@]}"
+  echo "ly1 = ${nb_ly1_list[@]}; ${#nb_ly1_list[@]}"
+  echo "lz1 = ${nb_lz1_list[@]}; ${#nb_lz1_list[@]}"
+  echo "lelt = ${nb_lelt_list[@]}; ${#nb_lelt_list[@]}"
+  echo "np = ${nb_np_list[@]}; ${#nb_np_list[@]}"
+  echo "lp_min = $nb_lp_min"
+  echo "lp_max = $nb_lp_max"
+  echo "machine = $nb_machine"
+  echo "ppn = ${nb_ppn_list[@]}; ${#nb_ppn_list[@]}"
+  echo "tag = $nb_tag"
+  $NB_EXIT_CMD
 fi
-if [ ${#nb_lz1_list[@]} -eq 0 ]; then
-  nb_lz1_list=$nb_lx1_list
-fi
-
-#-----------------------------------------------------------------------
-# Convert input lists to bash arrays
-#-----------------------------------------------------------------------
-nb_lx1_list=("$nb_lx1_list")
-nb_ly1_list=("$nb_ly1_list")
-nb_lz1_list=("$nb_lz1_list")
-nb_lelt_list=("$nb_lelt_list")
-nb_np_list=("$nb_np_list")
 
 #-----------------------------------------------------------------------
 # Create the benchmark directories

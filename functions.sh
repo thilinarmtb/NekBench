@@ -122,11 +122,10 @@ function dump_metadata()
 {
   local git_sha=$(cd $nb_nek5_dir; git rev-parse HEAD; cd ..)
 
-  echo "git commit: ${git_sha}"              >> README
-  echo "lelt      : ${nb_lelt_list}"         >> README
-  echo "lx1       : ${nb_lx1_list}"          >> README
-  echo "np        : ${nb_np_list}"           >> README
-  echo "ppn       : ${nb_ppn_list:-$nb_ppn}" >> README
+  echo "git_commit: ${git_sha}"      >> README
+  echo "lelt: ${nb_lelt_list}"       >> README
+  echo "lx1: ${nb_lx1_list}"         >> README
+  echo "np: ${nb_np_list}"           >> README
 }
 
 #-----------------------------------------------------------------------

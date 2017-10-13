@@ -1,19 +1,13 @@
 #-----------------------------------------------------------------------
 # Plot the benchmark data:
-#   - Three inputs: machine, test and runid
+#   - Three inputs: machine, tag and plot type
 #-----------------------------------------------------------------------
-plt_machine=$1
-plt_test=$2
-plt_runid=$3
+plt_machine="$1"
+plt_tag="$2"
+plt_type="$3"
 
-nb_readme="$NB_BENCH_DIR/$plt_machine/$plt_test/$plt_runid/README"
-count=0
-while IFS= read -r line; do
-    l=($l)
-    echo "${l[@]:1}"
-done < "$nb_readme"
+nb_readme="$NB_BENCH_DIR/${plt_machine}/${plt_tag}/README"
+readarray a < "${nb_readme}"
 
-#data=$(cat $nb_readme)
-#data=(`echo $data | tr ":" "\n"`)
-#echo $data
-#IFS=':'; arrdata=( $data ); unset IFS;
+l=( ${a[0]} )
+echo ${l[1]}
