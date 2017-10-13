@@ -19,10 +19,10 @@ cd $nb_tag
 #-----------------------------------------------------------------------
 # Create the rest of directory hierarchy
 #-----------------------------------------------------------------------
-for lelt in $nb_lelt_list; do
+for lelt in ${nb_lelt_list[@]}; do
   mkdir lelt_"${lelt}" 2>/dev/null
   cd lelt_"${lelt}"
-  for lx1 in $nb_lx1_list; do
+  for lx1 in ${nb_lx1_list[@]}; do
     mkdir lx_"${lx1}" 2>/dev/null
     cd lx_"${lx1}"
       cp -r "${nb_case}" .

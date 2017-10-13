@@ -61,7 +61,7 @@ options:
 #-----------------------------------------------------------------------
 # Variables
 #-----------------------------------------------------------------------
-nb_debug_scripts=true
+nb_debug_scripts=false
 nb_test_functions=false
 
 nb_lx1_list=
@@ -180,7 +180,7 @@ done # end reading arguments
 # Check if user wants to plot. If so, plot and exit
 #-----------------------------------------------------------------------
 if [ $nb_plot_set = true ]; then
-  if [ "${#nb_tag_list}" -eq 0 ]; then
+  if [ ${#nb_tag_list[@]} -eq 0 ]; then
     iprint "No tags are given for plotting. Exitting ..."
   else
     for tag in "$nb_tag_list"; do

@@ -10,9 +10,9 @@ export nb_nek5_dir
 # cd to the test dir
 cd $NB_BENCH_DIR/$nb_machine/$nb_tag
 
-for lelt in $nb_lelt_list; do
+for lelt in ${nb_lelt_list[@]}; do
   cd lelt_"${lelt}"
-  for lx1 in $nb_lx1_list; do
+  for lx1 in ${nb_lx1_list[@]}; do
     cd lx_"${lx1}"
       cd $nb_case_basename
         # Build the case
@@ -32,7 +32,7 @@ for lelt in $nb_lelt_list; do
         iprint "Build successful ..." 2
         # Do the pingpong test
         if [ $nb_ppn_set = false ]; then
-          for nb_np in $nb_np_list; do
+          for nb_np in ${nb_np_list[@]}; do
             . ${NB_MCHN_DIR}/${nb_machine}
             iprint "Running the case with np=${nb_np} ppn=${nb_ppn}..." 2
             ${NB_RUN_CMD} ${NB_JOBS_DIR}/${nb_machine}.submit \
@@ -40,8 +40,7 @@ for lelt in $nb_lelt_list; do
           done
         else
           index=0
-          nb_ppn_list=($nb_ppn_list)
-          for nb_np in $nb_np_list; do
+          for nb_np in ${nb_np_list[@]}; do
             nb_ppn=${nb_ppn_list[$index]}
             . ${NB_MCHN_DIR}/${nb_machine}
             iprint "Running the case with np=${nb_np} ppn=${nb_ppn}..." 2

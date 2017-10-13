@@ -9,5 +9,6 @@ plt_type="$3"
 nb_readme="$NB_BENCH_DIR/${plt_machine}/${plt_tag}/README"
 readarray a < "${nb_readme}"
 
-l=( ${a[0]} )
-echo ${l[1]}
+for index in ${!a}; do
+ echo $index
+done
