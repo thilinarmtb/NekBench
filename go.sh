@@ -170,7 +170,7 @@ while [ $# -gt 0 ]; do
          clean)
            rm -rf $NB_RUNS_DIR/*
            echo "rm -rf $NB_RUNS_DIR/*"
-           exit
+           $NB_EXIT_CMD
            ;;
   esac
   shift
