@@ -41,7 +41,7 @@ for lelt in ${nb_plt_lelt[@]}; do
     nb_plt_logprfx="${nb_plt_case}.log.${nb_plt_tag}."
     nb_plt_logpath="${nb_plt_tagdir}/lelt_${lelt}/lx_${lx}/${nb_plt_case}/"
     cd ${nb_plt_logpath}
-      rm nprocs.nbdata time.nbdata
+      rm nprocs.nbdata time.nbdata 2>/dev/null
 
       for logfile in ${nb_plt_logprfx}*; do
         tmp=($(grep "Number of processors" $logfile))
@@ -54,6 +54,11 @@ for lelt in ${nb_plt_lelt[@]}; do
   done
 done
 
+python scaling_plots.py -x $nb_plt_lx1  \
+                        -e $nb_plt_lelt \
+                        -n $nb_plt_np   \
+                        -t tst          \
+                        -tm 1.0
 #echo "$nb_plt_lx1"
 #echo "$nb_plt_lelt"
 #echo "$nb_plt_case"
