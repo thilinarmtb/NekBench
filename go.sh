@@ -20,6 +20,7 @@ NB_BENCH_DIR="$NB_BASE_DIR/benchmarks"
 NB_JOBS_DIR="$NB_BASE_DIR/jobscripts"
 NB_MKNK_DIR="$NB_BASE_DIR/makeneks"
 NB_MCHN_DIR="$NB_BASE_DIR/machines"
+NB_TIME_DATA="time.nbdata"
 NB_RUN_DIR_PREFIX="run"
 NB_RUN_DIR_NUM_LEN=3
 
@@ -91,9 +92,8 @@ nb_case_set=false
 
 nb_even_lxd=false
 
+np_plot_type=
 nb_plot_set=false
-nb_tag_list=
-nb_tag_set=false
 
 #-----------------------------------------------------------------------
 # Include helper functions
@@ -160,9 +160,8 @@ while [ $# -gt 0 ]; do
            ;;
          --plot)
            shift
+           nb_plot_type=$1
            nb_plot_set=true
-           nb_tag_list="$1"
-           nb_tag_set=true
            ;;
          --even-lxd)
            nb_even_lxd=true
@@ -179,14 +178,8 @@ done # end reading arguments
 #-----------------------------------------------------------------------
 # Check if user wants to plot. If so, plot and exit
 #-----------------------------------------------------------------------
-if [ $nb_plot_set = true ]; then
-  if [ ${#nb_tag_list[@]} -eq 0 ]; then
-    iprint "No tags are given for plotting. Exitting ..."
-  else
-    for tag in "$nb_tag_list"; do
-      . ./plot.sh $nb_machine $tag
-    done
-  fi
+if [ $nb_plot_set = true ] && [ $nb_tag_set = true ]; then
+  . ./plot.sh scaling
 
   $NB_EXIT_CMD
 fi

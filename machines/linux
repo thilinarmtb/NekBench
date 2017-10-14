@@ -4,7 +4,7 @@
 # Variables referenced from outside: $nb_np
 
 nb_np=${nb_np:-4}
-nb_ppn=${nb_ppn:-4}
+nb_ppn=${nb_ppn:-$np_np}
 
 if [ $nb_np = 0 ]; then
   NB_RUN_CMD=":"
