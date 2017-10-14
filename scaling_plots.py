@@ -50,7 +50,7 @@ fig.suptitle("Strong scaling study of case: " + case + " (tag: " + tag + ")")
 for e in lelt:
     for x in lx:
         f = directory + "/" + machine + "/" + tag + "/lelt_" + str(e) \
-                         + "/lx_" + str(x) + "/" + case + "/" + data_file
+            + "/lx_" + str(x) + "/" + case + "/" + data_file
         time_data = readfile(f)
         print(time_data)
         ax_list[0].plot(nprocs, time_data, '-o', \
