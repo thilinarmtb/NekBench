@@ -30,7 +30,6 @@ for lelt in ${nb_lelt_list[@]}; do
         fi
 
         iprint "Build successful ..." 2
-        # Do the pingpong test
         if [ $nb_ppn_set = false ]; then
           for nb_np in ${nb_np_list[@]}; do
             . ${NB_MCHN_DIR}/${nb_machine}

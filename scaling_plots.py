@@ -52,12 +52,12 @@ for e in lelt:
         f = directory + "/" + machine + "/" + tag + "/lelt_" + str(e) \
             + "/lx_" + str(x) + "/" + case + "/" + data_file
         time_data = readfile(f)
-        print(time_data)
         ax_list[0].plot(nprocs, time_data, '-o', \
             label = 'lelt = ' + str(e) + ', lx = ' + str(x))
         perfect_data = [time_data[0]/p for p in nprocs]
-        ax_list[0].plot(nprocs, time_data, '--', \
+        ax_list[0].plot(nprocs, perfect_data, '--', \
             label = 'perfect scaling, lelt = ' + str(e) + ', lx = ' + str(x))
 
-plt.show()
-fig.savefig("ss_" + case + "_" + tag + ".pdf")
+pdfname = "scaling_" + case + "_" + tag + ".pdf"
+fig.savefig(pdfname)
+print("Scaling figure saved in: " + pdfname)

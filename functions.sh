@@ -127,6 +127,7 @@ function dump_metadata()
   echo "lelt: ${nb_lelt_list[@]}"  >> README
   echo "lx1: ${nb_lx1_list[@]}"    >> README
   echo "np: ${nb_np_list[@]}"      >> README
+  echo "ppn: ${nb_ppn_list[@]}"    >> README
 }
 
 #-----------------------------------------------------------------------

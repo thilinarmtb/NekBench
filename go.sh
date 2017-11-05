@@ -179,7 +179,7 @@ done # end reading arguments
 # Check if user wants to plot. If so, plot and exit
 #-----------------------------------------------------------------------
 if [ $nb_plot_set = true ] && [ $nb_tag_set = true ]; then
-  . ./plot.sh scaling
+  . ./plot.sh $nb_plot_type
 
   $NB_EXIT_CMD
 fi
