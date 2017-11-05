@@ -8,7 +8,7 @@ nb_plt_tagdir="$NB_BENCH_DIR/${nb_machine}/${nb_tag}"
 #-----------------------------------------------------------------------
 # Read input from README file in the tag directory
 #-----------------------------------------------------------------------
-nb_plt_readme="${nb_plt_tagdir}/README"
+nb_plt_readme="${nb_plt_tagdir}/$NB_README_FILE"
 readarray a < "${nb_plt_readme}"
 
 nb_plt_lx1=

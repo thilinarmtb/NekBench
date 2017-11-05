@@ -50,14 +50,16 @@ fig.suptitle("Strong scaling study of case: " + case + " (tag: " + tag + ")")
 for e in lelt:
     for x in lx:
         f = directory + "/" + machine + "/" + tag + "/lelt_" + str(e) \
-            + "/lx_" + str(x) + "/" + case + "/" + data_file
+                       + "/lx_" + str(x) + "/" + case + "/" + data_file
         time_data = readfile(f)
-        ax_list[0].plot(nprocs, time_data, '-o', \
-            label = 'lelt = ' + str(e) + ', lx = ' + str(x))
         perfect_data = [time_data[0]/p for p in nprocs]
-        ax_list[0].plot(nprocs, perfect_data, '--', \
+
+        ax_list[0].loglog(nprocs, time_data, '-o', \
+            label = 'lelt = ' + str(e) + ', lx = ' + str(x))
+
+        ax_list[0].loglog(nprocs, perfect_data, '--', \
             label = 'perfect scaling, lelt = ' + str(e) + ', lx = ' + str(x))
 
-pdfname = "scaling_" + case + "_" + tag + ".pdf"
+pdfname = case + "_" + tag + "_scaling.pdf"
 fig.savefig(pdfname)
 print("Scaling figure saved in: " + pdfname)
