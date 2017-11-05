@@ -177,15 +177,6 @@ while [ $# -gt 0 ]; do
 done # end reading arguments
 
 #-----------------------------------------------------------------------
-# Check if user wants to plot. If so, plot and exit
-#-----------------------------------------------------------------------
-if [ $nb_plot_set = true ] && [ $nb_tag_set = true ]; then
-  . ./plot.sh $nb_plot_type
-
-  $NB_EXIT_CMD
-fi
-
-#-----------------------------------------------------------------------
 # Convert input lists to bash arrays
 #-----------------------------------------------------------------------
 nb_lx1_list=(${nb_lx1_list})
@@ -194,6 +185,17 @@ nb_lz1_list=(${nb_lz1_list})
 nb_lelt_list=(${nb_lelt_list})
 nb_np_list=(${nb_np_list})
 nb_ppn_list=(${nb_ppn_list})
+nb_machine_list=(${nb_machine}) # For plotting, nb_machine can be a list
+nb_tag_list=(${nb_tag}) # For plotting, nb_tag can be a list
+
+#-----------------------------------------------------------------------
+# Check if user wants to plot. If so, plot and exit
+#-----------------------------------------------------------------------
+if [ $nb_plot_set = true ] && [ $nb_tag_set = true ]; then
+  . ./plot.sh $nb_plot_type
+
+  $NB_EXIT_CMD
+fi
 
 #-----------------------------------------------------------------------
 # Set ly1 and lz1 to lx1 by default if not specified
