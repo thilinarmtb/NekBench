@@ -10,22 +10,22 @@ def readfile(f):
     return np.array(time)
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-x"  , "--lx"  , nargs="*", \
-                           help = "lx1 value lists" , required = True)
-parser.add_argument("-e"  , "--lelt", nargs="*", type = int,\
-                           help = "lelt value lists", required = True)
-parser.add_argument("-n"  , "--np"  , nargs="+", type = int,\
-                           help = "np value list"  , required = True )
-parser.add_argument("-m"  , "--machine" , nargs="?", type = str,\
-                           help = "Machine name"       , required = True )
-parser.add_argument("-t"  , "--tag" , nargs="?", type = str,\
-                           help = "Tag value"       , required = True )
-parser.add_argument("-c"  , "--case", nargs="?", type = str,\
-                           help = "Case name"       , required = True )
-parser.add_argument("-dir", "--directory", nargs="?", \
-                           help = "Benchmark directory" , required = True )
-parser.add_argument("-df", "--data_file", nargs="?", \
-                           help = "Data file to read" , required = True )
+parser.add_argument("-x"  , "--lx"  , nargs="+",                 \
+                         help = "lx1 value lists"    , required = True)
+parser.add_argument("-e"  , "--lelt", nargs="+",      type = int,\
+                         help = "lelt value lists"   , required = True)
+parser.add_argument("-n"  , "--np"  , nargs="+",      type = int,\
+                         help = "np value list"      , required = True)
+parser.add_argument("-m"  , "--machine" , nargs="+",             \
+                         help = "Machine name"       , required = True)
+parser.add_argument("-t"  , "--tag" , nargs="?",      type = str,\
+                         help = "Tag value"          , required = True)
+parser.add_argument("-c"  , "--case", nargs="?",      type = str,\
+                         help = "Case name"          , required = True)
+parser.add_argument("-dir", "--directory", nargs="?",            \
+                         help = "Benchmark directory", required = True)
+parser.add_argument("-df" , "--data_file", nargs="?", type = str,\
+                         help = "Data file to read"  , required = True)
 
 args = parser.parse_args()
 
@@ -47,18 +47,26 @@ ax_list[0].set_xlabel("Number of MPI ranks")
 ax_list[0].set_ylabel("Time (s)")
 fig.suptitle("Strong scaling study of case: " + case + " (tag: " + tag + ")")
 
-for e in lelt:
-    for x in lx:
-        f = directory + "/" + machine + "/" + tag + "/lelt_" + str(e) \
-                       + "/lx_" + str(x) + "/" + case + "/" + data_file
-        time_data = readfile(f)
-        perfect_data = [time_data[0]/p for p in nprocs]
+for m in machine:
+    for e in lelt:
+        for x in lx:
+            f = directory + "/" + m       +      \
+                            "/" + tag +          \
+                            "/lelt_" + str(e) +  \
+                            "/lx_" + str(x) +    \
+                            "/" + case +         \
+                            "/" + data_file
 
-        ax_list[0].loglog(nprocs, time_data, '-o', \
-            label = 'lelt = ' + str(e) + ', lx = ' + str(x))
+            time_data    = readfile(f)
+            perfect_data = [time_data[0]/p for p in nprocs]
 
-        ax_list[0].loglog(nprocs, perfect_data, '--', \
-            label = 'perfect scaling, lelt = ' + str(e) + ', lx = ' + str(x))
+            label = 'machine = ' + m + ', lelt = ' + str(e) + ', lx = ' + str(x)
+            ax_list[0].loglog(nprocs, time_data   , '-o', label = label)
+
+            label = 'perfect, ' + label
+            ax_list[0].loglog(nprocs, perfect_data, '--', label = label)
+
+ax_list[0].legend()
 
 pdfname = case + "_" + tag + "_scaling.pdf"
 fig.savefig(pdfname)

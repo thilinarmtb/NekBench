@@ -122,12 +122,12 @@ function dump_metadata()
 {
   local git_sha=$(cd $nb_nek5_dir; git rev-parse HEAD; cd - >/dev/null)
 
-  echo "case: ${nb_case_basename}" >> README
-  echo "git_commit: ${git_sha[0]}" >> README
-  echo "lelt: ${nb_lelt_list[@]}"  >> README
-  echo "lx1: ${nb_lx1_list[@]}"    >> README
-  echo "np: ${nb_np_list[@]}"      >> README
-  echo "ppn: ${nb_ppn_list[@]}"    >> README
+  echo "case: ${nb_case_basename}" >> $NB_README_FILE
+  echo "git_commit: ${git_sha[0]}" >> $NB_README_FILE
+  echo "lelt: ${nb_lelt_list[@]}"  >> $NB_README_FILE
+  echo "lx1: ${nb_lx1_list[@]}"    >> $NB_README_FILE
+  echo "np: ${nb_np_list[@]}"      >> $NB_README_FILE
+  echo "ppn: ${nb_ppn_list[@]}"    >> $NB_README_FILE
 }
 
 #-----------------------------------------------------------------------
