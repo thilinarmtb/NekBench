@@ -1,20 +1,21 @@
-cd $NB_BENCH_DIR/$nb_machine
+#-----------------------------------------------------------------------
+# Create tag directory
+#-----------------------------------------------------------------------
+mkdir -p $NB_BENCH_DIR/$nb_tag 2> /dev/null
+cd $NB_BENCH_DIR/$nb_tag
 
 iprint "Building directory structure ..."
 
 #-----------------------------------------------------------------------
-# See if the directory with the tag exist
+# See if the directory for the machine exist
 #-----------------------------------------------------------------------
-if [ -d $nb_tag ]; then
-  iprint "Directory with the given tag already exist. Exitting ..."
+if [ -d $nb_machine ]; then
+  iprint "Directory for the given machine already exist. Exitting ..."
   $NB_EXIT_CMD
 fi
 
-#-----------------------------------------------------------------------
-# Create tag directory
-#-----------------------------------------------------------------------
-mkdir $nb_tag 2>/dev/null
-cd $nb_tag
+mkdir $nb_machine
+cd $nb_machine
 
 #-----------------------------------------------------------------------
 # Create the rest of directory hierarchy
@@ -43,8 +44,5 @@ for lelt in ${nb_lelt_list[@]}; do
   done
   cd ..
 done
-
-## Get out of tag directory
-cd ..
 
 cd $NB_BASE_DIR

@@ -168,8 +168,8 @@ while [ $# -gt 0 ]; do
            nb_even_lxd=true
            ;;
          clean)
-           rm -rf $NB_RUNS_DIR/*
-           echo "rm -rf $NB_RUNS_DIR/*"
+           rm -rf $NB_BENCH_DIR/*
+           echo "rm -rf $NB_BENCH_DIR/*"
            $NB_EXIT_CMD
            ;;
   esac
@@ -257,7 +257,6 @@ fi
 #-----------------------------------------------------------------------
 # Create the benchmark directories
 #-----------------------------------------------------------------------
-mkdir -p $NB_BENCH_DIR/$nb_machine 2> /dev/null
 . ./build.sh
 
 #-----------------------------------------------------------------------
@@ -266,12 +265,12 @@ mkdir -p $NB_BENCH_DIR/$nb_machine 2> /dev/null
 # - Then look in the NB_BENCH_DIR
 # - If not found in the above places, clone from git
 #-----------------------------------------------------------------------
-nb_nek5_dir="$NB_BENCH_DIR/$nb_machine/Nek5000"
+nb_nek5_dir="$NB_BENCH_DIR/$nb_tag/Nek5000"
 if [ -d "$nb_nek5_dir" ]; then
   iprint "Using existing Nek5000 directory: $nb_nek5_dir"
 elif [ -d "$NB_BASE_DIR/Nek5000" ]; then
-  cp -r $NB_BASE_DIR/Nek5000  $nb_nek5_dir
   iprint "Using existing Nek5000 directory: $NB_BASE_DIR/Nek5000"
+  cp -r $NB_BASE_DIR/Nek5000  $nb_nek5_dir
 else
   iprint "Cloning Nek5000 from github to $nb_nek5_dir"
   git clone https://github.com/Nek5000/Nek5000.git $nb_nek5_dir > git.log 2> git.error
@@ -284,4 +283,4 @@ fi
 #-----------------------------------------------------------------------
 # Run the case with the tag
 #-----------------------------------------------------------------------
-. ./bench.sh $nb_tag
+. ./bench.sh
