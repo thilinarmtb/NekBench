@@ -14,6 +14,7 @@ if [ -d $nb_machine ]; then
   $NB_EXIT_CMD
 fi
 
+mkdir $nb_machine
 cd $nb_machine
 
 #-----------------------------------------------------------------------
