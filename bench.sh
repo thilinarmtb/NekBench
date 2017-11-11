@@ -8,7 +8,7 @@ iprint "submit script  : ${NB_JOBS_DIR}/${nb_machine}.submit"
 export nb_nek5_dir
 
 # cd to the test dir
-cd $NB_BENCH_DIR/$nb_machine/$nb_tag
+cd $NB_BENCH_DIR/$nb_tag/$nb_machine
 
 for lelt in ${nb_lelt_list[@]}; do
   cd lelt_"${lelt}"
