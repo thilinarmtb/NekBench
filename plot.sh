@@ -66,7 +66,7 @@ for tag in ${nb_tag_list[@]}; do
             logfile="${nb_plt_logprfx}${np}.${ppn}"
 
             tmp=($(grep "total solver time" ${logfile}*))
-            echo "$tag $machine $lelt $lx1 $case ${tmp[6]}" >> ${NB_BENCH_DIRr}/${tag}/${NB_TIME_DATA}
+            echo "$tag $machine $lelt $lx $case ${tmp[6]}" >> ${NB_BENCH_DIR}/${tag}/${NB_TIME_DATA}
           done
         cd - > /dev/null
       done
