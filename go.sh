@@ -168,8 +168,8 @@ while [ $# -gt 0 ]; do
            nb_even_lxd=true
            ;;
          clean)
-           rm -rf $NB_RUNS_DIR/*
-           echo "rm -rf $NB_RUNS_DIR/*"
+           rm -rf $NB_BENCH_DIR/*
+           echo "rm -rf $NB_BENCH_DIR/*"
            $NB_EXIT_CMD
            ;;
   esac
@@ -283,4 +283,4 @@ fi
 #-----------------------------------------------------------------------
 # Run the case with the tag
 #-----------------------------------------------------------------------
-. ./bench.sh $nb_tag
+. ./bench.sh
