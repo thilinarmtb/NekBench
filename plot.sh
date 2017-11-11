@@ -7,10 +7,10 @@ nb_plt_type="$1"
 #-----------------------------------------------------------------------
 # Variables that store metadata
 #-----------------------------------------------------------------------
-nb_plt_lx1=
-nb_plt_lelt=
-nb_plt_case=
-nb_plt_np=
+declare -A nb_plt_lx1
+declare -A nb_plt_lelt
+declare -A nb_plt_case
+declare -A nb_plt_np
 
 #-----------------------------------------------------------------------
 # Read timing data
@@ -55,18 +55,18 @@ for machine in ${nb_machine_list[@]}; do
     done
 
     # Convert input lists to bash arrays
-    nb_machine_plt_lx1=(${nb_machine_plt_lx1})
-    nb_machine_plt_lelt=(${nb_machine_plt_lelt})
-    nb_machine_plt_case=(${nb_machine_plt_case})
-    nb_machine_plt_np=(${nb_machine_plt_np})
-    nb_machine_plt_ppn=(${nb_machine_plt_ppn})
+#    nb_machine_plt_lx1=(${nb_machine_plt_lx1})
+#    nb_machine_plt_lelt=(${nb_machine_plt_lelt})
+#    nb_machine_plt_case=(${nb_machine_plt_case})
+#    nb_machine_plt_np=(${nb_machine_plt_np})
+#    nb_machine_plt_ppn=(${nb_machine_plt_ppn})
 
     # Save in the global lists
-    nb_plt_lx1=(${nb_machine_plt_lx1[@]})
-    nb_plt_lelt=(${nb_machine_plt_lelt[@]})
-    nb_plt_case=(${nb_machine_plt_case[@]})
-    nb_plt_np=(${nb_machine_plt_np[@]})
-    nb_plt_ppn=(${nb_machine_plt_ppn[@]})
+    nb_plt_lx1[$machine]=${nb_machine_plt_lx1[@]}
+    nb_plt_lelt[$machine]=${nb_machine_plt_lelt[@]}
+    nb_plt_case[$machine]=${nb_machine_plt_case[@]}
+    nb_plt_np[$machine]=${nb_machine_plt_np[@]}
+    nb_plt_ppn[$machine]=${nb_machine_plt_ppn[@]}
 
     # Read data from log files
     for lelt in ${nb_plt_lelt[@]}; do
