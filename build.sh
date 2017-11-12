@@ -1,10 +1,10 @@
+iprint "Building directory structure ..."
+
 #-----------------------------------------------------------------------
 # Create tag directory
 #-----------------------------------------------------------------------
 mkdir -p $NB_BENCH_DIR/$nb_tag 2> /dev/null
 cd $NB_BENCH_DIR/$nb_tag
-
-iprint "Building directory structure ..."
 
 #-----------------------------------------------------------------------
 # See if the directory for the machine exist

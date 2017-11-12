@@ -76,7 +76,7 @@ for tag in ${nb_tag_list[@]}; do
               # TODO Change this to a function
               logfile="${nb_plt_logprfx}${np}.${ppn}"
               tmp=($(grep "total solver time" ${logfile}*))
-              # TODO Change this to a function
+              # TODO Change this to a function, printing tag here is redundant
               echo "$tag $machine $lelt $lx $cse $np $ppn ${tmp[6]}" >> \
                        ${NB_BENCH_DIR}/${tag}/${NB_TIME_DATA}
             done
