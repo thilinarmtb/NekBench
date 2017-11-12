@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import argparse
 import os
+import sys
 
 def readfile(f):
     data = []
@@ -53,6 +54,7 @@ title =  "Scaling study"
 ylabel = "Time (s)"
 xlabel = ""
 pdfname =""
+xvar=""
 
 if machines.size == 1:
     machine_name_in_title = True
@@ -84,14 +86,20 @@ if ppns.size == 1:
 # if len(lelts) = len(nps) = 1 ==> lx variation study
 # if len(lxs) = len(nps) = 1   ==> lelt variation study ?
 if lelt_in_title and lx_in_title:
+    xvar = "np"
     xlabel = "Number of MPI ranks"
     pdfname = "time_vs_np" + pdfname
-if lelt_in_title and np_in_title:
+elif lelt_in_title and np_in_title:
+    xvar = "lx"
     xlabel = "Degrees of freedom (lx1)"
     pdfname = "time_vs_dof" + pdfname
-if lx_in_title and np_in_title:
+elif lx_in_title and np_in_title:
+    xvar = "lelt"
     xlabel = "Maximum element per rank (lelt)"
     pdfname = "time_vs_lelt" + pdfname
+else:
+    print("Too many variants !, Exitting ...")
+    sys.exit()
 
 ## Anatomy of a figure: https://matplotlib.org/faq/usage_faq.html
 fig          = plt.figure()
@@ -108,16 +116,17 @@ for m in machines:
             for e in lelts:
                 for x in lxs:
                     for np in nps:
-                        perfect_data = [time_data[0]/p for p in nprocs]
+                        if xvar == "np":
+                            perfect_data = [time_data[0]/p for p in nprocs]
 
-                        label = 'machine = ' + m + 'tag = ' + t + \
-                                      ', lelt = ' + str(e) + ', lx = ' + str(x)
-                        ax_list[0].loglog(nprocs, time_data   , '-o', label = label)
+                            label = m + ', lelt = ' + str(e) + ', lx = ' + str(x)
+                            ax_list[0].loglog(nprocs, time_data   , '-o', label = label)
 
-                        label = 'perfect, ' + label
-                        ax_list[0].loglog(nprocs, perfect_data, '--', label = label)
+                            label = 'perfect, ' + label
+                            ax_list[0].loglog(nprocs, perfect_data, '--', label = label)
+                        elif xvar == "lx":
+                        else:
 
 ax_list[0].legend()
-pdfname = case + "_" + tag + "_scaling.pdf"
 fig.savefig(pdfname)
 print("Scaling figure saved in: " + pdfname)
