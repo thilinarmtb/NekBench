@@ -111,21 +111,29 @@ ax_list[0].set_ylabel(ylabel)
 fig.suptitle(title)
 
 for m in machines:
-    for case in cases:
-        for ppn in ppns:
-            for e in lelts:
-                for x in lxs:
-                    for np in nps:
-                        if xvar == "np":
-                            perfect_data = [time_data[0]/p for p in nprocs]
+    m_data = data[data[:, 1] == m]
+    for c in cases:
+        c_data = m_data[m_data[:, 4] == c]
+        for p in ppns:
+            p_data = c_data[c_data[:, 6] == p]
 
-                            label = m + ', lelt = ' + str(e) + ', lx = ' + str(x)
-                            ax_list[0].loglog(nprocs, time_data   , '-o', label = label)
+            label = ""
+            if not machine_name_in_title:
+                label = label + str(m)
+            if not case_name_in_title:
+                label = label + str(c)
+            if not ppn_in_title:
+                label = label + ",ppn=" + str(p)
 
-                            label = 'perfect, ' + label
-                            ax_list[0].loglog(nprocs, perfect_data, '--', label = label)
-                        elif xvar == "lx":
-                        else:
+            if xvar == "np":
+                 label = 'lx=' + str(lxs[0]) + 'lelt=' + str(lelts[0]) + label
+                 ax_list[0].loglog(p_data[:, 5], p_data[:, 7], '-o', label = label)
+            elif xvar == "lx":
+                 label = 'np=' + str(nps[0]) + 'lelt=' + str(lelts[0]) + label
+                 ax_list[0].loglog(p_data[:, 3], p_data[:, 7], '-o', label = label)
+            else:
+                 label = 'np=' + str(nps[0]) + 'lx=' + str(lxs[0]) + label
+                 ax_list[0].loglog(p_data[:, 2], p_data[:, 7], '-o', label = label)
 
 ax_list[0].legend()
 fig.savefig(pdfname)
