@@ -8,7 +8,7 @@ def readfile(f):
     with open(f, "r") as timedata:
         for t in timedata:
             data.append(t.split())
-    return data
+    return np.array(data)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--tag" , nargs="+",                 \
