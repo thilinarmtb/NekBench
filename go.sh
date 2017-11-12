@@ -37,6 +37,10 @@ $NB_THIS_FILE [options]
 
 options:
    -h|--help                 Print this usage information and exit
+   -t|--tag name             Specify a tag for the run (unique identifier)
+                                 (e.g., scaling, pingpong,...; Default: scaling)
+   -m|--machine machine_name Specify a machine for the run
+                                 (Mandatory, e.g., linux, theta, cetus, ..)
    -x|--lx1 \"<list>\"         Specify a list of lx1 values for the run
                                  (Mandatory, e.g., \"3 4 5 6\")
    -y|--ly1 \"<list>\"         Specify a list of ly1 values for the run
@@ -49,15 +53,12 @@ options:
                                  (e.g., \"2 4 8\"; Default: 1)
    -p|--ppn \"<list>\"         Specify a list of MPI ranks per node for the run
                                  (e.g., \"2 4 8\"; Default: 1)
-   -m|--machine machine_name Specify a machine for the run
-                                 (Mandatory, e.g., theta, cetus, ..)
-   -t|--tag name             Specify a name for the run
-                                 (e.g., scaling, pingpong,...; Default: scaling)
    -c|--case case_name       Specify the path of the case to be used
                                  in benchmarking (e.g.,/home/nek_user/cases/box)
-   --plot options            Plot the benchmark data
+   --plot plot_type          Plot the benchmark data using matplotlib
+                                 (plot_type can be scaling, ping_pong, etc.)
    --even-lxd                Round down lxd to an even value
-   clean                     Clean the runs directory
+   clean                     Clean the benchmark directory
 "
 
 #-----------------------------------------------------------------------

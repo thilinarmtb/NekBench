@@ -1,13 +1,13 @@
 ## NekBench - Scripts for benchmarking Nek5000
 
-(Documentation is outdated, will be updated soon)
-
 ### Introduction
 
-This repository contains scripts for benchmarking [Nek5000](https://nek5000.mcs.anl.gov/), a fast and scalable open-source
-spectral element solver for CFD in different platforms from normal linux desktop and laptop
-machines to super computers at ALCF, NERSC, etc. This is written using bash scripting language
-and should run without any problem on any Unix-like operating system which supports bash.
+This repository contains scripts for benchmarking
+[Nek5000](https://nek5000.mcs.anl.gov/), a fast and scalable open-source
+spectral element solver for CFD in different platforms from normal linux
+desktop and laptop machines to super computers at ALCF, NERSC, etc. This
+is written using bash scripting language and should run without any
+problem on any Unix-like operating system which supports bash.
 
 ### Setting up the repository
 
@@ -15,48 +15,56 @@ You can clone the git repository directly using `git`:
 ```bash
 git clone https://github.com/thilinarmtb/NekBench.git
 ```
-or you can download the repository as a zip archive by clicking the `clone or download` button
-in this page.
+or you can download the repository as a zip archive by clicking the
+`clone or download` button in this page.
 
 ### Running benchmarks
 
-Main script used in benchmarking is the ``go.sh`` which can be found on the source root of the
-repository. If you run ``./go.sh --help`` or ``go.sh -h``, it will print out a basic help message
-describing all the parameters that can be passed into the ``go.sh`` script.
+Main script used in benchmarking is the ``go.sh`` which can be found on
+the source root of the repository. If you run ``./go.sh --help`` or
+``./go.sh -h``, it will print out a basic help message describing all
+the parameters that can be passed into the ``go.sh`` script.
 
 ```
 go.sh [options]
 
 options:
    -h|--help                 Print this usage information and exit
-   -x|--lx1 "<list>"         Specify a list of lx1 values for the run
-                               (Mandatory, e.g., "3 4 5 6")
-   -y|--ly1 "<list>"         Specify a list of ly1 values for the run
-                               (Optional, Default: lx1 list)
-   -z|--lz1 "<list>"         Specify a list of lz1 values for the run
-                               (Optional, Default: lx1 list)
-   -e|--lelt "<list>"        Specify a list of lelt values for the run
-                               (Mandatory, e.g., "128 256")
-   -n|--np "<list>"          Specify a list of MPI ranks for the run
-                               (e.g., "2 4 8"; Default: 1)
+   -t|--tag name             Specify a tag for the run (unique identifier)
+                                 (e.g., scaling, pingpong,...; Default: scaling)
    -m|--machine machine_name Specify a machine for the run
-                               (Mandatory, e.g., theta, cetus, ..)
-   -t|--test "<list>"        Specify a list of tests to be run
-                               (e.g., scaling, pingpong,...; Default: scaling)
+                                 (Mandatory, e.g., linux, theta, cetus, ..)
+   -x|--lx1 \"<list>\"         Specify a list of lx1 values for the run
+                                 (Mandatory, e.g., \"3 4 5 6\")
+   -y|--ly1 \"<list>\"         Specify a list of ly1 values for the run
+                                 (Optional, Default: lx1 list)
+   -z|--lz1 \"<list>\"         Specify a list of lz1 values for the run
+                                 (Optional, Default: lx1 list)
+   -e|--lelt \"<list>\"        Specify a list of lelt values for the run
+                                 (Mandatory, e.g., \"128 256\")
+   -n|--np \"<list>\"          Specify a list of MPI ranks for the run
+                                 (e.g., \"2 4 8\"; Default: 1)
+   -p|--ppn \"<list>\"         Specify a list of MPI ranks per node for the run
+                                 (e.g., \"2 4 8\"; Default: 1)
    -c|--case case_name       Specify the path of the case to be used
-                               in benchmarking (e.g.,/home/nek_user/cases/box)
+                                 in benchmarking (e.g.,/home/nek_user/cases/box)
+   --plot plot_type          Plot the benchmark data using matplotlib
+                                 (plot_type can be scaling, ping_pong, etc.)
    --even-lxd                Round down lxd to an even value
-   clean                     Clean the runs directory
+   clean                     Clean the benchmark directory
 ```
 
 Below is an example usage of the ``go.sh`` script:
 
 ```sh
-./go.sh -x "6 7" -e "100 200" -n "4 8" -m "linux" -t "scaling" -c "/home/foo/NekTests/eddy_uv"
+./go.sh -t run1 -m "linux" -x "6" -e "100" -n "2 4 8" -p "2 4 8" -c "/home/foo/NekTests/eddy_uv"
 ```
-Once this command is executed, it will create a benchmark run for a scaling study under a
-folder named ``runs``. Note that all the parameters are lists except `-m / --machine` and
-`-c / --case`. The directory structure will look like follows:
+Once this command is executed, it will create a benchmark run under a
+folder named ``benchmarks``. Note that all the parameters can be lists
+except `-t / --tag`, `-m / --machine` and `-c / --case`. See note [1]
+for an explanation why this is.
+
+The directory structure will look like follows:
 
 ```
 .
@@ -80,8 +88,8 @@ folder named ``runs``. Note that all the parameters are lists except `-m / --mac
 │                   └── eddy_uv
 └── scaling.sh
 ```
-Under the `runs` directory, there will be a directory named after your `case`. In the case of
-a ping-pong test, a built-in case called `pngpng` will be created. Under the `case` directory,
+Under the `benchmarks` directory, there will be a directory named after
+your tag. In the case of a ping-pong test, a built-in case called `pngpng` will be created. Under the `case` directory,
 a separate directory will be created for each value in `test` list. Since we only specified
 `scaling` in the test list, we only see one directory here (May be creating a separate directory
 for each test is not necessary, we will figure that out when we start using this for real
@@ -132,3 +140,10 @@ respectively.
 - `lx1`, `lelt`, `lp`, `lpmin`, `lpmax` and `lxd` in your case's `SIZE` file should have integer
   expressions initializing them i.e., you can't have something like `parameter(lelt=lelg/lpmin + 4)`,
   If this is the case, sed substitution fails (We will support these expressions in future).
+
+### Notes
+
+1. Since, tag value is used as the unique identifier for a run within a
+   machine, it does not make sense to have multiple tag values. Also,
+   NekBench is run only in a single machine so it does not make sense to
+   have multiple machine parameters as well.
