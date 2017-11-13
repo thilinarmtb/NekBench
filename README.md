@@ -59,52 +59,79 @@ Below is an example usage of the ``go.sh`` script:
 ```sh
 ./go.sh -t run1 -m "linux" -x "6" -e "100" -n "2 4 8" -p "2 4 8" -c "/home/foo/NekTests/eddy_uv"
 ```
-Once this command is executed, it will create a benchmark run under a
-folder named ``benchmarks``. Note that all the parameters can be lists
-except `-t / --tag`, `-m / --machine` and `-c / --case`. See note [1]
-for an explanation why this is.
+Note that all the parameters can be lists except `-t / --tag`,
+`-m / --machine` and `-c / --case`. See [1] under section `Notes` for
+an explanation why this is.
 
-The directory structure will look like follows:
+Once this command is executed, it will create a benchmark run under a
+folder named ``benchmarks``. The directory structure will look like
+follows:
 
 ```
+├── AUTHORS
+├── benchmarks
+│   └── run1
+│       ├── linux
+│       │   ├── lelt_100
+│       │   │   ├── lx_6
+│       │   │   │   └── eddy_uv
+│       │   │   └── lx_8
+│       │   │       └── eddy_uv
+│       │   ├── lelt_200
+│       │   │   ├── lx_6
+│       │   │   │   └── eddy_uv
+│       │   │   └── lx_8
+│       │   │       └── eddy_uv
+│       │   └── README
+│       └── Nek5000
+│           ├── 3rd_party
+│           │
 .
+.
+├── bench.sh
 ├── build.sh
+├── functions.sh
 ├── go.sh
-.
-.
+├── jobscripts
+│   ├── bgq.submit
+│   ├── cori.haswell.submit
+.   .
+│   └── theta.submit
+├── machines
+│   ├── bgq
+│   ├── cori.haswell
+.   .
+│   └── theta
+├── makeneks
+│   ├── bgq.makenek
+│   ├── cori.haswell.makenek
+.   .
+│   └── theta.makenek
+├── plot.sh
 ├── README.md
-├── runs
-│   └── linux
-│       └── scaling
-│           ├── lelt_100
-│           │   ├── lx_6
-│           │   │   └── eddy_uv
-│           │   └── lx_7
-│           │       └── eddy_uv
-│           └── lelt_200
-│               ├── lx_6
-│               │   └── eddy_uv
-│               └── lx_7
-│                   └── eddy_uv
-└── scaling.sh
+└── scaling_plots.py
+
 ```
 Under the `benchmarks` directory, there will be a directory named after
-your tag. In the case of a ping-pong test, a built-in case called `pngpng` will be created. Under the `case` directory,
-a separate directory will be created for each value in `test` list. Since we only specified
-`scaling` in the test list, we only see one directory here (May be creating a separate directory
-for each test is not necessary, we will figure that out when we start using this for real
-benchmarks).
+your tag. Then there will be a directory named after your machine parameter
+under the `tag` directory.
 
-Under each test directory, there will be a separate directory for each value in the `lelt`
-list. Similarly, under each of these `lelt` directories, there will be a separate directory for
-each `lx1` value (Currently, `ly1`, and `lz1` list values are ignored) and the case specified
-in the script will be copied inside of this directory. Finally, when the benchmarks are run,
-for a scaling test, each of these low level cases are run for all the values in the `np` list.
+Under each machine directory, there will be a separate directory for
+each value in the `lelt` list. Similarly, under each of these `lelt`
+directories, there will be a separate directory for each `lx1` value
+(Currently, `ly1`, and `lz1` list values are ignored) and the case
+specified in the script will be copied inside these lower level `lx1`
+directories.
 
-Currently, NekBench has been succesfully tested on linux laptops/desktops, ALCF Theta, NeRSC cori
-(KNL and Haswell) and NeRSC Edison machines for `scaling` tests. Machine (`-m / --machine`) parameter
-for each of the previous machines are `linux`, `theta`, `cori.knl / cori.haswell` and `edison`
-respectively.
+Finally, when the benchmarks are run, this case will be run for all the
+values in the `np` list with appropriate `ppn` value from `ppn` list if
+`ppn` is set. Otherwise, machine specific `ppn` value set in
+`machines/<machine>` will be used.
+
+Currently, NekBench has been succesfully tested on linux laptops/desktops,
+ALCF Theta, NeRSC cori (KNL and Haswell) and NeRSC Edison machines.
+Machine (`-m / --machine`) parameter for each of the previous machines
+are `linux`, `theta`, `cori.knl / cori.haswell` and `edison` respectively.
 
 ### Important notes (must read before using the script !)
 
