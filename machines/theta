@@ -5,11 +5,15 @@
 
 nb_np=${nb_np:-64}
 nb_ppn=${nb_ppn:-64}
-nb_project=GasJetsCyl_tesp
+nb_project=GasJetsCylPrio_tesp
 nb_queue=default
 nb_time=60
 
 nb_nnodes=$(( nb_np/nb_ppn ))
+
+if [ $nb_nnodes -le 4 ]; then
+  nb_queue=debug-flat-quad
+fi
 
 if [ $nb_nnodes = 0 ]; then
   NB_RUN_CMD=":"
