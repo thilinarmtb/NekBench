@@ -58,28 +58,28 @@ xvar=""
 
 if machines.size == 1:
     machine_name_in_title = True
-    title = title + ", machine= " + str(machines[0])
-    pdfname = pdfname + "_machine_ " + str(machines[0])
+    title = title + ", machine=" + str(machines[0])
+    pdfname = pdfname + "_machine_" + str(machines[0])
 if lelts.size == 1:
     lelt_in_title = True
-    title = title + ", lelt= " + str(lelts[0])
-    pdfname = pdfname + "_lelt_ " + str(lelts[0])
+    title = title + ", lelt=" + str(lelts[0])
+    pdfname = pdfname + "_lelt_" + str(lelts[0])
 if lxs.size == 1:
     lx_in_title = True
-    title = title + ", lx= " + str(lxs[0])
-    pdfname = pdfname + "_lx_ " + str(lxs[0])
+    title = title + ", lx=" + str(lxs[0])
+    pdfname = pdfname + "_lx_" + str(lxs[0])
 if cases.size == 1:
     case_name_in_title = True
-    title = title + ", case= " + str(cases[0])
-    pdfname = pdfname + "_case_ " + str(cases[0])
+    title = title + ", case=" + str(cases[0])
+    pdfname = pdfname + "_case_" + str(cases[0])
 if nps.size == 1:
     np_in_title = True
-    title = title + ", np= " + str(nps[0])
-    pdfname = pdfname + "_np_ " + str(nps[0])
+    title = title + ", np=" + str(nps[0])
+    pdfname = pdfname + "_np_" + str(nps[0])
 if ppns.size == 1:
     ppn_in_title = True
-    title = title + ", ppn= " + str(ppns[0])
-    pdfname = pdfname + "_ppn_ " + str(ppns[0])
+    title = title + ", ppn=" + str(ppns[0])
+    pdfname = pdfname + "_ppn_" + str(ppns[0])
 
 # Candidates for x-axis: np, lx, lelt
 # if len(lelts) = len(lxs) = 1 ==> scaling study
@@ -119,22 +119,21 @@ for m in machines:
 
             label = ""
             if not machine_name_in_title:
-                label = label + str(m)
+                label = label + str(m) + " "
             if not case_name_in_title:
-                label = label + str(c)
+                label = label + str(c) + " "
             if not ppn_in_title:
-                label = label + ",ppn=" + str(p)
+                label = label + "ppn=" + str(p) + " "
 
             if xvar == "np":
-                 label = 'lx=' + str(lxs[0]) + 'lelt=' + str(lelts[0]) + label
-                 ax_list[0].loglog(p_data[:, 5], p_data[:, 7], '-o', label = label)
+                 ax_list[0].loglog(p_data[:, 5], p_data[:, 7], 'o-', label = label)
             elif xvar == "lx":
-                 label = 'np=' + str(nps[0]) + 'lelt=' + str(lelts[0]) + label
-                 ax_list[0].loglog(p_data[:, 3], p_data[:, 7], '-o', label = label)
+                 ax_list[0].loglog(p_data[:, 3], p_data[:, 7], 'o-', label = label)
             else:
-                 label = 'np=' + str(nps[0]) + 'lx=' + str(lxs[0]) + label
-                 ax_list[0].loglog(p_data[:, 2], p_data[:, 7], '-o', label = label)
+                 ax_list[0].loglog(p_data[:, 2], p_data[:, 7], 'o-', label = label)
 
-ax_list[0].legend()
+if label is not "":
+    ax_list[0].legend()
+pdfname = pdfname + ".pdf"
 fig.savefig(pdfname)
 print("Scaling figure saved in: " + pdfname)
