@@ -1,14 +1,26 @@
 #!/bin/sh
 
-# Machine: BG/Q
-# Variables referenced from outside: $nb_np
+#-------------------------------------------------------------------------------
+# Set default values for compilation
+#-------------------------------------------------------------------------------
+: ${nb_fc:="mpixlf77"}
+: ${nb_cc:="mpixlc"}
+: ${nb_fflags:="-qsuppress=cmpmsg"}
+: ${nb_cflags:=}
+: ${nb_usr_lflags:=}
 
-nb_np=${nb_np:-32}
-nb_ppn=${nb_ppn:-32}
-nb_project=ATPESC2017
-nb_queue=default
-nb_time=60
+#-------------------------------------------------------------------------------
+# Submission parameters
+#-------------------------------------------------------------------------------
+: ${nb_np:=32}
+: ${nb_ppn:=32}
+: ${nb_project:=ATPESC2017}
+: ${nb_queue:=default}
+: ${nb_time:=60}
 
+#-------------------------------------------------------------------------------
+# Build the run command for the machine
+#-------------------------------------------------------------------------------
 nb_nnodes=$(( nb_np/nb_ppn ))
 
 if [ $nb_nnodes = 0 ]; then

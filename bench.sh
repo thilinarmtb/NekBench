@@ -1,7 +1,7 @@
 iprint "================ Benchmark Run: $nb_tag ================ "
 iprint "case name      : ${nb_case_basename}"
 iprint "Nek5000        : ${nb_nek5_dir}"
-iprint "makenek script : ${NB_MKNK_DIR}/${nb_machine}.makenek"
+iprint "makenek script : ${nb_nek5_dir}/bin/makenek"
 iprint "submit script  : ${NB_JOBS_DIR}/${nb_machine}.submit"
 
 # Get rid of this export and matching unset
@@ -15,21 +15,29 @@ for lelt in ${nb_lelt_list[@]}; do
   for lx1 in ${nb_lx1_list[@]}; do
     cd lx_"${lx1}"
       cd $nb_case_basename
-        # Build the case
         iprint "Building lelt=${lelt}, lx1=${lx1} ..." 1
-        cp $NB_MKNK_DIR/${nb_machine}.makenek .
+
+        # Copy the makenek and update it for the machine
+        cp ${nb_nek5_dir}/bin/makenek .
+        . $NB_BASE_DIR/makenek.sh `pwd`/makenek
+
+        # Clean if a previous build exist
         iprint "Cleaning existing build ..." 2
-        ./${nb_machine}.makenek realclean > clean.log 2> clean.error
-        iprint "Building ..." 2
-        ./${nb_machine}.makenek $nb_case_basename > build.log 2>build.error
+        printf "y\n" | ./makenek clean > clean.log 2> clean.error
+        iprint "Cleaning successful." 3
+
+        # Build the case
+        iprint "Building the case ..." 2
+        ./makenek $nb_case_basename > build.log 2> build.error
 
         if [ ! -f ./nek5000 ]; then
-          iprint "Build failed. See 'build.error'. Exitting ..." 2
+          iprint "Build failed. See 'build.error'. Exitting ..." 3
           iprint "====================================================="
           $NB_EXIT_CMD
         fi
+        iprint "Build successful." 3
 
-        iprint "Build successful ..." 2
+        iprint "Submitting the jobs ..." 2
         if [ $nb_ppn_set = false ]; then
           for nb_np in ${nb_np_list[@]}; do
             . ${NB_MCHN_DIR}/${nb_machine}
@@ -47,6 +55,7 @@ for lelt in ${nb_lelt_list[@]}; do
                            ${nb_case_basename} ${nb_tag} ${nb_np} ${nb_ppn}
             index=$(( index + 1 ))
           done
+        iprint "Submitting successful." 3
         fi
       cd ..
     cd ..

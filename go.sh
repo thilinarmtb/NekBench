@@ -18,7 +18,6 @@
 NB_BASE_DIR="$PWD"
 NB_BENCH_DIR="$NB_BASE_DIR/benchmarks"
 NB_JOBS_DIR="$NB_BASE_DIR/jobscripts"
-NB_MKNK_DIR="$NB_BASE_DIR/makeneks"
 NB_MCHN_DIR="$NB_BASE_DIR/machines"
 NB_TIME_DATA="time.nbdata"
 NB_README_FILE="README"
@@ -75,6 +74,9 @@ nb_lz1_list=
 nb_lelt_list=
 nb_lelt_set=false
 
+#-----------------------------------------------------------------------
+# TODO: Read these from a user config file
+#-----------------------------------------------------------------------
 nb_np_list="4" # <- default value
 nb_np_set=true
 nb_lp_min="4"  # <- default value
@@ -96,6 +98,9 @@ nb_even_lxd=false
 
 np_plot_type=
 nb_plot_set=false
+#-----------------------------------------------------------------------
+# TODO: End
+#-----------------------------------------------------------------------
 
 #-----------------------------------------------------------------------
 # Include helper functions
