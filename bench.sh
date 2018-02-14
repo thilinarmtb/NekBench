@@ -1,11 +1,8 @@
-iprint "================ Benchmark Run: $nb_tag ================ "
-iprint "case name      : ${nb_case_basename}"
-iprint "Nek5000        : ${nb_nek5_dir}"
-iprint "makenek script : ${nb_nek5_dir}/bin/makenek"
-iprint "submit script  : ${NB_JOBS_DIR}/${nb_machine}.submit"
-
-# Get rid of this export and matching unset
-export nb_nek5_dir
+printf "================ Benchmark Run: $nb_tag ================\n"
+printf "case name : ${nb_case_basename}\n"
+printf "Nek5000   : ${nb_nek5_dir}\n"
+printf "makenek   : ${nb_nek5_dir}/bin/makenek\n"
+printf "submit    : ${NB_JOBS_DIR}/${nb_machine}.submit\n"
 
 # cd to the test dir
 cd $NB_BENCH_DIR/$nb_tag/$nb_machine
@@ -32,7 +29,7 @@ for lelt in ${nb_lelt_list[@]}; do
 
         if [ ! -f ./nek5000 ]; then
           iprint "Build failed. See 'build.error'. Exitting ..." 3
-          iprint "====================================================="
+          printf "====================================================="
           $NB_EXIT_CMD
         fi
         iprint "Build successful." 3
@@ -41,7 +38,7 @@ for lelt in ${nb_lelt_list[@]}; do
         if [ $nb_ppn_set = false ]; then
           for nb_np in ${nb_np_list[@]}; do
             . ${NB_MCHN_DIR}/${nb_machine}
-            iprint "Running the case with np=${nb_np} ppn=${nb_ppn}..." 2
+            iprint "Submitting the case with np=${nb_np} ppn=${nb_ppn}..." 3
             ${NB_RUN_CMD} ${NB_JOBS_DIR}/${nb_machine}.submit \
                            ${nb_case_basename} ${nb_tag} ${nb_np} ${nb_ppn}
           done
@@ -50,7 +47,7 @@ for lelt in ${nb_lelt_list[@]}; do
           for nb_np in ${nb_np_list[@]}; do
             nb_ppn=${nb_ppn_list[$index]}
             . ${NB_MCHN_DIR}/${nb_machine}
-            iprint "Running the case with np=${nb_np} ppn=${nb_ppn}..." 2
+            iprint "Submitting the case with np=${nb_np} ppn=${nb_ppn}..." 3
             ${NB_RUN_CMD} ${NB_JOBS_DIR}/${nb_machine}.submit \
                            ${nb_case_basename} ${nb_tag} ${nb_np} ${nb_ppn}
             index=$(( index + 1 ))
