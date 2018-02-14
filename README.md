@@ -1,6 +1,6 @@
 ## NekBench - Scripts for benchmarking Nek5000
 
-(Documentation is outdated, will be updated soon.)
+**(Documentation is outdated, will be updated soon.)**
 
 ### Introduction
 
