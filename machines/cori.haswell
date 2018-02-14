@@ -1,13 +1,25 @@
 #!/bin/sh
 
-# Machine: Cori -  Haswell
-# Variables referenced from outside: $nb_np
+#-------------------------------------------------------------------------------
+# Set default values for compilation
+#-------------------------------------------------------------------------------
+: ${nb_fc:="ftn"}
+: ${nb_cc:="cc"}
+: ${nb_fflags:=}
+: ${nb_cflags:=}
+: ${nb_usr_lflags:=}
 
-nb_np=${nb_np:-32}
-nb_ppn=${nb_ppn:-32}
-nb_partition=regular
-nb_time=01:00:00
+#-------------------------------------------------------------------------------
+# Submission parameters
+#-------------------------------------------------------------------------------
+: ${nb_np:=32}
+: ${nb_ppn:=32}
+: ${nb_partition:="regular"}
+: ${nb_time:=60}
 
+#-------------------------------------------------------------------------------
+# Build the run command for the machine
+#-------------------------------------------------------------------------------
 nb_nnodes=$(( nb_np/nb_ppn ))
 
 if [ $nb_nnodes = 0 ]; then

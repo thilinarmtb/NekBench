@@ -1,16 +1,27 @@
 #!/bin/sh
 
-# Machine: Theta
-# Variables referenced from outside: $nb_np
+#-------------------------------------------------------------------------------
+# Set default values for compilation
+#-------------------------------------------------------------------------------
+: ${nb_fc:="ftn"}
+: ${nb_cc:="cc"}
+: ${nb_fflags:=}
+: ${nb_cflags:=}
+: ${nb_usr_lflags:=}
 
-nb_np=${nb_np:-64}
-nb_ppn=${nb_ppn:-64}
-nb_project=GasJetsCylPrio_tesp
-nb_queue=default
-nb_time=60
+#-------------------------------------------------------------------------------
+# Submission parameters
+#-------------------------------------------------------------------------------
+: ${nb_np:=64}
+: ${nb_ppn:=64}
+: ${nb_project:="GasJetsCylPrio_tesp"}
+: ${nb_queue:="default"}
+: ${nb_time:=60}
 
+#-------------------------------------------------------------------------------
+# Build the run command for the machine
+#-------------------------------------------------------------------------------
 nb_nnodes=$(( nb_np/nb_ppn ))
-
 if [ $nb_nnodes -le 4 ]; then
   nb_queue=debug-flat-quad
 fi
