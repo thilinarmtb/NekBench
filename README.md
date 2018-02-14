@@ -1,5 +1,7 @@
 ## NekBench - Scripts for benchmarking Nek5000
 
+(Documentation is outdated, will be updated soon.)
+
 ### Introduction
 
 This repository contains scripts for benchmarking
