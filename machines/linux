@@ -10,16 +10,22 @@
 : ${nb_usr_lflags:=}
 
 #-------------------------------------------------------------------------------
-# Submission parameters
-#-------------------------------------------------------------------------------
-: ${nb_np:=4}
-: ${nb_ppn:=4}
-
-#-------------------------------------------------------------------------------
 # Build the run command for the machine
 #-------------------------------------------------------------------------------
-if [ $nb_np = 0 ]; then
-  NB_RUN_CMD=":"
-else
-  NB_RUN_CMD="."
-fi
+function linux_submit() {
+  local nb_casename=$1
+  local nb_tag=$2
+  local nb_np=$3
+  local nb_ppn=$4
+
+  local nb_nnodes=$(( nb_np/nb_ppn ))
+  local NB_SUBMIT_CMD=""
+
+  if [ $nb_np = 0 ]; then
+    NB_SUBMIT_CMD=":"
+  else
+    NB_SUBMIT_CMD="."
+  fi
+
+  ${NB_SUBMIT_CMD} ${NB_JOBS_DIR}/${nb_machine}.submit $1 $2 $3 $4
+}

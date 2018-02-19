@@ -39,8 +39,8 @@ for lelt in ${nb_lelt_list[@]}; do
           for nb_np in ${nb_np_list[@]}; do
             . ${NB_MCHN_DIR}/${nb_machine}
             iprint "Submitting the case with np=${nb_np} ppn=${nb_ppn}..." 3
-            ${NB_RUN_CMD} ${NB_JOBS_DIR}/${nb_machine}.submit \
-                           ${nb_case_basename} ${nb_tag} ${nb_np} ${nb_ppn}
+            # Call submit function
+            ${nb_machine}_submit ${nb_case_basename} ${nb_tag} ${nb_np} ${nb_ppn}
           done
         else
           index=0
@@ -48,8 +48,8 @@ for lelt in ${nb_lelt_list[@]}; do
             nb_ppn=${nb_ppn_list[$index]}
             . ${NB_MCHN_DIR}/${nb_machine}
             iprint "Submitting the case with np=${nb_np} ppn=${nb_ppn}..." 3
-            ${NB_RUN_CMD} ${NB_JOBS_DIR}/${nb_machine}.submit \
-                           ${nb_case_basename} ${nb_tag} ${nb_np} ${nb_ppn}
+            # Call submit function
+            ${nb_machine}_submit ${nb_case_basename} ${nb_tag} ${nb_np} ${nb_ppn}
             index=$(( index + 1 ))
           done
         iprint "Submitting successful." 3

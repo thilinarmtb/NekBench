@@ -8,7 +8,7 @@ ppn=$4
 echo ${case}      >  SESSION.NAME
 echo `pwd`'/'    >>  SESSION.NAME
 mpiexec -np ${nprocs} ./nek5000 > \
-     ${case}.log.${test_type}.${nprocs}.${nb_ppn} &
+     ${case}.log.${test_type}.${nprocs}.${ppn} &
 pid=$!
 wait ${pid}
 sleep 2

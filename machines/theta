@@ -19,18 +19,29 @@
 : ${nb_time:=60}
 
 #-------------------------------------------------------------------------------
-# Build the run command for the machine
+# Build the submit command for the machine
 #-------------------------------------------------------------------------------
-nb_nnodes=$(( nb_np/nb_ppn ))
-if [ $nb_nnodes -le 4 ]; then
-  nb_queue=debug-flat-quad
-fi
+function theta_submit() {
+  local nb_casename=$1
+  local nb_tag=$2
+  local nb_np=$3
+  local nb_ppn=$4
 
-if [ $nb_nnodes = 0 ]; then
-  NB_RUN_CMD=":"
-else
-  NB_RUN_CMD="qsub -n $nb_nnodes
-                   -q $nb_queue
-                   -t $nb_time
-                   -A $nb_project"
-fi
+  local nb_nnodes=$(( nb_np/nb_ppn ))
+  local NB_SUBMIT_CMD=""
+
+  if [ $nb_nnodes -le 4 ]; then
+    nb_queue=debug-flat-quad
+  fi
+  
+  if [ $nb_nnodes = 0 ]; then
+    NB_SUBMIT_CMD=":"
+  else
+    NB_SUBMIT_CMD="qsub -n $nb_nnodes
+                     -q $nb_queue
+                     -t $nb_time
+                     -A $nb_project"
+  fi
+
+  ${NB_SUBMIT_CMD} ${NB_JOBS_DIR}/${nb_machine}.submit $1 $2 $3 $4
+}
