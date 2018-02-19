@@ -20,7 +20,7 @@
 #-------------------------------------------------------------------------------
 # Build the submit command for the machine
 #-------------------------------------------------------------------------------
-function cori_knl_submit() {
+function knl_cori_submit() {
   local nb_casename=$1
   local nb_tag=$2
   local nb_np=$3
