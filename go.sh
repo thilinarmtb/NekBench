@@ -31,7 +31,7 @@ else
    NB_EXIT_CMD=exit
 fi
 
-NB_HELP_MSG="
+NB_HELP_MSG="""
 $NB_THIS_FILE [options]
 
 options:
@@ -58,7 +58,7 @@ options:
                                  (plot_type can be scaling, ping_pong, etc.)
    --even-lxd                Round down lxd to an even value
    clean                     Clean the benchmark directory
-"
+"""
 
 #-----------------------------------------------------------------------
 # Variables
@@ -117,7 +117,7 @@ source ./functions.sh
 while [ $# -gt 0 ]; do
   case "$1" in
          -h|--help)
-           iprint "$NB_HELP_MSG"
+           echo "$NB_HELP_MSG"
            $NB_EXIT_CMD
            ;;
          -x|--lx1)
