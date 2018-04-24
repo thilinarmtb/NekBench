@@ -74,9 +74,6 @@ nb_lz1_list=
 nb_lelt_list=
 nb_lelt_set=false
 
-#-----------------------------------------------------------------------
-# TODO: Read these from a user config file
-#-----------------------------------------------------------------------
 nb_np_list="4" # <- default value
 nb_np_set=true
 nb_lp_min="4"  # <- default value
@@ -98,9 +95,10 @@ nb_even_lxd=false
 
 np_plot_type=
 nb_plot_set=false
-#-----------------------------------------------------------------------
-# TODO: End
-#-----------------------------------------------------------------------
+
+if [ -f $NB_BASE_DIR/nb.config ]; then
+    source $NB_BASE_DIR/nb.config # load configuration
+fi
 
 #-----------------------------------------------------------------------
 # Include helper functions
