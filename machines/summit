@@ -1,0 +1,33 @@
+#!/bin/sh
+
+module load pgi
+#-------------------------------------------------------------------------------
+# Set default values for compilation
+#-------------------------------------------------------------------------------
+: ${nb_fc:="mpif77"}
+: ${nb_cc:="mpicc"}
+: ${nb_fflags:=""}
+: ${nb_cflags:=}
+: ${nb_usr_lflags:=}
+
+#-------------------------------------------------------------------------------
+# Submission parameters
+#-------------------------------------------------------------------------------
+: ${nb_np:=1}
+: ${nb_ppn:=42}
+: ${nb_project:=CSC275MERZARI}
+: ${nb_queue:=default}
+: ${nb_time:=120}
+
+#-------------------------------------------------------------------------------
+# Build the submit command for the machine
+#-------------------------------------------------------------------------------
+function summit_submit() {
+  local nb_casename=$1
+  local nb_tag=$2
+  local nb_np=$3
+  local nb_ppn=$4
+  local NB_SUBMIT_CMD=""
+
+  ${NB_SUBMIT_CMD} ${NB_JOBS_DIR}/${nb_machine}.submit $1 $2 $3 $4
+}

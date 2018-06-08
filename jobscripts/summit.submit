@@ -1,0 +1,50 @@
+#! /bin/bash
+set -e
+
+PROJECT="CSC275MERZARI"
+REQ_WALLTIME="120"
+REAFILE=$1
+TAG=$2
+CORECOUNT=$3
+PPN=$4
+NODECOUNT=$((CORECOUNT/PPN))
+
+SESSION=${REAFILE%.rea}
+
+echo "*** running session $SESSION"
+
+echo $1        >  SESSION.NAME
+echo `pwd`'/' >>  SESSION.NAME
+
+OUTFILE="`pwd`/$SESSION.np=$CORECOUNT-summit-cpu-`date "+%F_%H_%M_%S"`"
+touch $SESSION.rea
+
+if ! bsubfile=`mktemp $SESSION.pbs.XXXXXX` ; then
+   echo "Failed to create temp file for qsub! Exiting"
+   exit 1
+fi
+
+chmod 777 $bsubfile
+
+echo "#!/bin/bash" >> $bsubfile
+echo "#BSUB -P $PROJECT" >> $bsubfile
+echo "#BSUB -J $SESSION" >> $bsubfile
+echo "#BSUB -o $PWD/$SESSION.np=$CORECOUNT-summit-cpu-`date "+%F_%H_%M_%S"`.output" >> $bsubfile
+echo "#BSUB -e $PWD/$SESSION.np=$CORECOUNT-summit-cpu-`date "+%F_%H_%M_%S"`.error"  >> $bsubfile
+echo "#BSUB -W $REQ_WALLTIME" >> $bsubfile
+echo "#BSUB -nnodes $NODECOUNT " >> $bsubfile
+#echo "export PGI_ACC_NOTIFY=1" >> $bsubfile
+
+echo " cd `pwd`">> $bsubfile
+echo " jsrun -n$CORECOUNT -a1 -c1 -g0 ./nek5000  ">> $bsubfile
+
+myjobs=$(bjobs | wc -l)
+while [ $myjobs -ge 6 ]; do
+  echo 'Queue quota exceeded; sleeping for 10 seconds.'
+  sleep 10
+  myjobs=$(bjobs | wc -l)
+done 
+
+bsub  $bsubfile
+rm $bsubfile
+echo "job submitted on OLCF Summit, #CPU Cores=$CORECOUNT, #nodes=$NODECOUNT"
