@@ -32,9 +32,11 @@ for j in ${!NB_PAR[@]}; do
     for i_val in "${nb_par_i_vals[@]}"; do
     for j_val in "${nb_par_j_vals[@]}"; do
       mkdir p_"$i"_"$i_val"_"$j"_"$j_val"
+      cd p_"$i"_"$i_val"_"$j"_"$j_val"
       cp -r "${nb_case}" .
       cd $nb_case_basename
 ##      // Change .rea parameter
+      cd ..
       cd ..
     done
     done

@@ -7,12 +7,21 @@ printf "submit    : ${NB_JOBS_DIR}/${nb_machine}.submit\n"
 # cd to the test dir
 cd $NB_BENCH_DIR/$nb_tag/$nb_machine
 
-for lelt in ${nb_lelt_list[@]}; do
-  cd lelt_"${lelt}"
-  for lx1 in ${nb_lx1_list[@]}; do
-    cd lx_"${lx1}"
+for i in ${!NB_PAR[@]}; do
+for j in ${!NB_PAR[@]}; do
+  par_i=(${NB_PAR[$i]})
+  par_j=(${NB_PAR[$j]})
+  if [ $i -ne $j ]; then
+    nb_par_i_id=${pari[0]}
+    nb_par_i_vals=${pari[@]:1}
+    nb_par_j_id=${parj[0]}
+    nb_par_j_vals=${parj[@]:1}
+    for i_val in "${nb_par_i_vals[@]}"; do
+    for j_val in "${nb_par_j_vals[@]}"; do
+      mkdir p_"$i"_"$i_val"_"$j"_"$j_val"
+      cd p_"$i"_"$i_val"_"$j"_"$j_val"
       cd $nb_case_basename
-        iprint "Building lelt=${lelt}, lx1=${lx1} ..." 1
+        iprint "Building ..." 1
 
         # Copy the makenek and update it for the machine
         cp ${nb_nek5_dir}/bin/makenek .
@@ -55,13 +64,11 @@ for lelt in ${nb_lelt_list[@]}; do
         iprint "Submitting successful." 3
         fi
       cd ..
-    cd ..
-  done
-  cd ..
+    done
+    done
+  fi
 done
-
-# Dump the benchmark metadata to a README file inside the tag directory
-dump_metadata
+done
 
 iprint "====================================================="
 
