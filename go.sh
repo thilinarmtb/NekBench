@@ -100,6 +100,10 @@ if [ -f $NB_BASE_DIR/nb.config ]; then
     source $NB_BASE_DIR/nb.config # load configuration
 fi
 
+while read -r line; do
+   nb_par+=("$line")
+done <<< "$par"
+
 #-----------------------------------------------------------------------
 # Include helper functions
 #-----------------------------------------------------------------------
