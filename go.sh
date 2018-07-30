@@ -96,13 +96,17 @@ nb_even_lxd=false
 np_plot_type=
 nb_plot_set=false
 
+NB_PAR=()
+
 if [ -f $NB_BASE_DIR/nb.config ]; then
     source $NB_BASE_DIR/nb.config # load configuration
 fi
 
-while read -r line; do
-   nb_par+=("$line")
-done <<< "$par"
+while IFS= read -r line || [[ "$line" ]]; do
+  NB_PAR+=("${line}")
+done <<< "${nb_par}"
+
+echo "${NB_PAR[1]}"
 
 #-----------------------------------------------------------------------
 # Include helper functions
