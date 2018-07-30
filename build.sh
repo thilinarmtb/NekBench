@@ -35,7 +35,8 @@ for j in ${NB_PAR[@]}; do
       cd p_"$i"_"$i_val"_"$j"_"$j_val"
       cp -r "${nb_case}" .
       cd $nb_case_basename
-##      // Change .rea parameter
+      sed -i.bu "$((nb_par_i_id+4))s/^ *\S*/${i_val}/" *.rea
+      sed -i.bu "$((nb_par_j_id+4))s/^ *\S*/${j_val}/" *.rea
       cd ..
       cd ..
     done
