@@ -7,15 +7,15 @@ printf "submit    : ${NB_JOBS_DIR}/${nb_machine}.submit\n"
 # cd to the test dir
 cd $NB_BENCH_DIR/$nb_tag/$nb_machine
 
-for i in ${!NB_PAR[@]}; do
-for j in ${!NB_PAR[@]}; do
+for i in ${NB_PAR[@]}; do
+for j in ${NB_PAR[@]}; do
   par_i=(${NB_PAR[$i]})
   par_j=(${NB_PAR[$j]})
   if [ $i -ne $j ]; then
-    nb_par_i_id=${pari[0]}
-    nb_par_i_vals=${pari[@]:1}
-    nb_par_j_id=${parj[0]}
-    nb_par_j_vals=${parj[@]:1}
+    nb_par_i_id=${par_i[0]}
+    nb_par_i_vals=${par_i[@]:1}
+    nb_par_j_id=${par_j[0]}
+    nb_par_j_vals=${par_j[@]:1}
     for i_val in "${nb_par_i_vals[@]}"; do
     for j_val in "${nb_par_j_vals[@]}"; do
       mkdir p_"$i"_"$i_val"_"$j"_"$j_val"

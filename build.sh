@@ -20,8 +20,8 @@ cd $nb_machine
 #-----------------------------------------------------------------------
 # Create the rest of directory hierarchy
 #-----------------------------------------------------------------------
-for i in ${!NB_PAR[@]}; do
-for j in ${!NB_PAR[@]}; do
+for i in ${NB_PAR[@]}; do
+for j in ${NB_PAR[@]}; do
   par_i=(${NB_PAR[$i]})
   par_j=(${NB_PAR[$j]})
   if [ $i -ne $j ]; then
