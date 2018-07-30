@@ -20,29 +20,26 @@ cd $nb_machine
 #-----------------------------------------------------------------------
 # Create the rest of directory hierarchy
 #-----------------------------------------------------------------------
-for lelt in ${nb_lelt_list[@]}; do
-  mkdir lelt_"${lelt}" 2>/dev/null
-  cd lelt_"${lelt}"
-  for lx1 in ${nb_lx1_list[@]}; do
-    mkdir lx_"${lx1}" 2>/dev/null
-    cd lx_"${lx1}"
+for i in ${!NB_PAR[@]}; do
+for j in ${!NB_PAR[@]}; do
+  par_i=(${NB_PAR[$i]})
+  par_j=(${NB_PAR[$j]})
+  if [ $i -ne $j ]; then
+    nb_par_i_id=${pari[0]}
+    nb_par_i_vals=${pari[@]:1}
+    nb_par_j_id=${parj[0]}
+    nb_par_j_vals=${parj[@]:1}
+    for i_val in "${nb_par_i_vals[@]}"; do
+    for j_val in "${nb_par_j_vals[@]}"; do
+      mkdir p_"$i"_"$i_val"_"$j"_"$j_val"
       cp -r "${nb_case}" .
       cd $nb_case_basename
-        lxd=$(( 3*lx1/2 ))
-        if [ ${nb_even_lxd} = true ]; then
-          lxd=$(( $lxd - ($lxd % 2) ))
-        fi
-        perl -pe "s/lx1=.*?(?=(,|\)))/lx1=${lx1}/" SIZE      | \
-        perl -pe "s/lxd=.*?(?=(,|\)))/lxd=${lxd}/"           | \
-        perl -pe "s/lelt=.*?(?=(,|\)))/lelt=${lelt}/"        | \
-        perl -pe "s/lpmin=.*?(?=(,|\)))/lpmin=${nb_lp_min}/" | \
-        perl -pe "s/lpmax=.*?(?=(,|\)))/lpmax=${nb_lp_max}/" | \
-        perl -pe "s/lp=.*?(?=(,|\)))/lp=${nb_lp_max}/"       > nb.SIZE
-        mv nb.SIZE SIZE
+##      // Change .rea parameter
       cd ..
-    cd ..
-  done
-  cd ..
+    done
+    done
+  fi
+done
 done
 
 cd $NB_BASE_DIR
