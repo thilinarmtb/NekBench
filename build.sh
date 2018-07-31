@@ -43,8 +43,8 @@ for j in ${!NB_PAR[@]}; do
       cd "${dir}"
       cp -r "${nb_case}" .
       cd $nb_case_basename
-      sed -i.bu "$((nb_par_i_id+4))s/.*/${i_val} p${nb_par_i}/" *.rea
-      sed -i.bu "$((nb_par_j_id+4))s/.*/${j_val} p${nb_par_j}/" *.rea
+      sed -i.bu "$((nb_par_i_id+4))s/.*/${i_val} p${nb_par_i_id}/" *.rea
+      sed -i.bu "$((nb_par_j_id+4))s/.*/${j_val} p${nb_par_j_id}/" *.rea
       cd ..
       cd ..
     done
