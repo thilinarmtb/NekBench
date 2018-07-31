@@ -63,7 +63,7 @@ for j in ${!NB_PAR[@]}; do
           done
         iprint "Submitting successful." 3
         fi
-      cd ..
+      cd ../..
     done
     done
   fi
